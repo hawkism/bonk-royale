@@ -26,3 +26,7 @@ Safety:
 To update later, upload the new files the same way. Claude rebuilds this folder whenever a track changes.
 
 Netlify Drop (app.netlify.com/drop) also works: drag this folder onto the page.
+
+## License
+
+None. Copyright © 2026 hawkism. **All rights reserved.** See [LICENSE](LICENSE). The files are public only so GitHub Pages can serve the game; that does not grant any right to copy or reuse them.

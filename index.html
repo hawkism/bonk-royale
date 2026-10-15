@@ -1,12 +1,15 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"></head><body><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"></head><body><!-- Bonk Royale 3D. Copyright (c) 2026 hawkism. All rights reserved. No license is granted; see LICENSE. -->
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <title>Bonk Royale 3D</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@600;800;900&display=swap">
 <style>
+/* @module src/css/01-base.css: Colours, fonts, page basics, and the iPhone notch insets (--sl/--sr). */
+/* iPhone notch / Dynamic Island: in landscape it sits on the left or right edge; --sl/--sr keep overlays clear of it */
 /* Layout: full-bleed WebGL canvas; HUD chips pinned to the corners; menus are one centered toy-box card */
-:root{
+:root{--sl:env(safe-area-inset-left,0px);--sr:env(safe-area-inset-right,0px);
   --sky:#86cdf5; --ink:#1b2235; --red:#e2312b; --red-dk:#a3201b; --yellow:#ffcb1f; --blue:#1f6fd6;
   --green:#3aa845; --plate:#fbf8f1; --plate-dk:#e8e2d4; --muted:#5b6478; --storm:#7a3fd1; --zombie:#5f8f2f;
   --display:"Lilita One","Arial Rounded MT Bold","Trebuchet MS",sans-serif;
@@ -19,11 +22,12 @@ html,body{height:100%;touch-action:manipulation;-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--sky);color:var(--ink);font-family:var(--body);overflow:hidden;-webkit-user-select:none;user-select:none}
 #game{position:fixed;inset:0;display:block;width:100%;height:100%;touch-action:none}
 .screen{position:fixed;inset:0;display:flex;padding:16px;overflow-y:auto;background:rgba(27,34,53,.32);z-index:10}
+/* @module src/css/02-lobby-hud.css: The lobby layout, cards and buttons, and the in-game HUD. */
 /* Fortnite-style lobby: your character on the left, settings card on the right */
 #menu,#locker,#shop{background:linear-gradient(90deg,transparent 40%,rgba(27,34,53,.35))}
 #menu .card,#locker .card,#shop .card{margin:auto 2vw auto auto;max-width:540px}
 #playBtn{background:var(--yellow);color:var(--ink);font-size:2.3rem;padding:14px 64px 12px;box-shadow:inset 0 -7px 0 rgba(0,0,0,.18),0 5px 0 #b38a00}
-#lobbyBar{position:fixed;left:16px;top:calc(16px + env(safe-area-inset-top,0px));z-index:11;display:grid;gap:10px;width:min(300px,calc(100% - 32px))}
+#lobbyBar{position:fixed;left:calc(16px + var(--sl));top:calc(16px + env(safe-area-inset-top,0px));z-index:11;display:grid;gap:10px;width:min(300px,calc(100% - 32px))}
 #lobbyBar .lvl{display:flex;gap:10px;align-items:center;background:rgba(27,34,53,.82);color:#fff;border-radius:12px;padding:8px 12px}
 #lvlNum{font-family:var(--display);font-weight:400;font-size:2rem;background:var(--yellow);color:var(--ink);border-radius:10px;min-width:48px;text-align:center;line-height:1.3}
 .lvlr{flex:1;display:grid;gap:3px}.lvlr span{font-family:var(--display);font-size:.9rem;letter-spacing:.06em;text-transform:uppercase}.lvlr small{font-weight:800;font-size:.78rem;opacity:.85}
@@ -65,8 +69,7 @@ h2{font-size:clamp(1.9rem,7vw,2.8rem);line-height:1;text-shadow:0 4px 0 rgba(0,0
 .seg input{position:absolute;opacity:0;pointer-events:none}
 .seg label{font-family:var(--display);font-size:1.08rem;padding:8px 13px;border-radius:7px;background:var(--plate-dk);cursor:pointer;box-shadow:inset 0 -4px 0 rgba(0,0,0,.12)}
 .seg input:checked+label{background:var(--blue);color:#fff}
-.seg.maps input:checked+label{background:var(--red)}
-.seg.modes input:checked+label{background:var(--green)}
+.seg.modes input:checked+label{background:var(--green);transform:translateY(-2px)}
 .seg input:focus-visible+label{outline:3px solid var(--yellow);outline-offset:2px}
 input[type=range]{width:100%;accent-color:var(--blue);height:28px}
 .btns{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
@@ -90,11 +93,11 @@ kbd{font-family:var(--display);font-size:.85rem;background:#fff;border-radius:5p
 #endBoard li.me{background:var(--yellow)}
 #endBoard li span:last-child{color:var(--muted);font-size:.9rem}
 #hud{position:fixed;inset:0;pointer-events:none;z-index:4}
-#tl{position:absolute;left:16px;top:calc(12px + env(safe-area-inset-top,0px));display:flex;flex-wrap:wrap;gap:8px;max-width:calc(100% - 220px)}
+#tl{position:absolute;left:calc(16px + var(--sl));top:calc(12px + env(safe-area-inset-top,0px));display:flex;flex-wrap:wrap;gap:8px;max-width:calc(100% - 220px)}
 .chip{font-family:var(--display);font-size:1.05rem;background:rgba(251,248,241,.94);padding:6px 12px 5px;border-radius:8px;box-shadow:0 3px 0 rgba(27,34,53,.25);font-variant-numeric:tabular-nums}
 .chip.storm{background:var(--storm);color:#fff}.chip.final{background:var(--red);color:#fff}.chip.zombie{background:var(--zombie);color:#fff}
-#squad{position:absolute;left:16px;top:calc(58px + env(safe-area-inset-top,0px));display:grid;gap:4px}.sq{background:rgba(27,34,53,.74);color:#fff;border-radius:6px;padding:3px 8px 4px;font-weight:800;font-size:.8rem;min-width:150px}.sq i{display:block;height:4px;border-radius:2px;margin-top:2px}
-#tr{position:absolute;right:16px;top:calc(12px + env(safe-area-inset-top,0px));display:grid;gap:8px;justify-items:end}
+#squad{position:absolute;left:calc(16px + var(--sl));top:calc(58px + env(safe-area-inset-top,0px));display:grid;gap:4px}.sq{background:rgba(27,34,53,.74);color:#fff;border-radius:6px;padding:3px 8px 4px;font-weight:800;font-size:.8rem;min-width:150px}.sq i{display:block;height:4px;border-radius:2px;margin-top:2px}
+#tr{position:absolute;right:calc(16px + var(--sr));top:calc(12px + env(safe-area-inset-top,0px));display:grid;gap:8px;justify-items:end}
 #mini{width:160px;height:160px;border-radius:10px;box-shadow:0 3px 0 rgba(27,34,53,.25);background:rgba(251,248,241,.88)}
 #feed{display:grid;gap:4px;justify-items:end;font-size:.85rem;max-width:260px}
 #feed div{background:rgba(27,34,53,.74);color:#fff;padding:3px 9px;border-radius:6px;font-weight:800;text-align:right}
@@ -115,7 +118,7 @@ kbd{font-family:var(--display);font-size:.85rem;background:#fff;border-radius:5p
 #sh{width:100%;height:12px;background:rgba(27,34,53,.6);border-radius:6px;overflow:hidden;position:relative}#shfill{height:100%;background:linear-gradient(#8fdcff,#2f8fff);width:0;transition:width .15s}#shtxt{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--display);font-size:.72rem;color:#fff}
 #useBar{position:fixed;left:50%;top:calc(50% + 44px);transform:translateX(-50%);width:210px;background:rgba(27,34,53,.82);border-radius:8px;padding:6px 10px;color:#fff;font-weight:900;font-size:.85rem;text-align:center;z-index:5;pointer-events:none}#useBar i{display:block;height:6px;border-radius:3px;background:#5cff7a;margin-top:4px;width:0}
 #elim{position:fixed;left:50%;top:calc(50% + 80px);transform:translateX(-50%);text-align:center;color:#fff;font-family:var(--display);z-index:5;pointer-events:none;-webkit-text-stroke:4px var(--ink);paint-order:stroke fill;white-space:nowrap}#elim span{color:#ff5a5a;font-size:1.3rem}#elim b{font-weight:400;font-size:1.6rem}#elim small{display:block;font-size:.95rem}#elim.pop{animation:pop .35s cubic-bezier(.2,1.6,.4,1)}
-#poi{position:fixed;left:16px;right:16px;top:24%;text-align:center;font-family:var(--display);font-size:clamp(1.6rem,5vw,2.6rem);color:#fff;-webkit-text-stroke:6px var(--ink);paint-order:stroke fill;letter-spacing:.05em;text-transform:uppercase;z-index:5;pointer-events:none;animation:poi 2.8s ease forwards}
+#poi{position:fixed;left:calc(16px + var(--sl));right:calc(16px + var(--sr));top:24%;text-align:center;font-family:var(--display);font-size:clamp(1.6rem,5vw,2.6rem);color:#fff;-webkit-text-stroke:6px var(--ink);paint-order:stroke fill;letter-spacing:.05em;text-transform:uppercase;z-index:5;pointer-events:none;animation:poi 2.8s ease forwards}
 @keyframes poi{0%{opacity:0;transform:translateY(10px)}12%,75%{opacity:1;transform:none}100%{opacity:0}}
 #announce.victory .big{color:var(--yellow);font-size:clamp(2.6rem,9vw,5.2rem);-webkit-text-stroke:9px var(--ink);text-shadow:0 8px 0 var(--ink)}
 #buildHint{font-weight:900;font-size:.82rem;color:#fff;text-shadow:0 1px 0 var(--ink),0 0 4px var(--ink)}
@@ -136,28 +139,29 @@ kbd{font-family:var(--display);font-size:.85rem;background:#fff;border-radius:5p
 #cross::before{left:12px;top:0;width:2px;height:26px}#cross::after{top:12px;left:0;height:2px;width:26px}
 #cross.on::before,#cross.on::after{background:#ff4d4d}
 #cross.hit{transform:scale(1.35) rotate(45deg)}
-#announce{position:fixed;left:16px;right:16px;top:15%;text-align:center;pointer-events:none;z-index:5}
+#announce{position:fixed;left:calc(16px + var(--sl));right:calc(16px + var(--sr));top:15%;text-align:center;pointer-events:none;z-index:5}
 #announce .big{font-family:var(--display);font-size:clamp(2rem,6.5vw,3.6rem);color:#fff;line-height:1;-webkit-text-stroke:7px var(--ink);paint-order:stroke fill;text-shadow:0 6px 0 var(--ink)}
 #announce .sub{margin-top:10px;font-weight:900;font-size:1.1rem;color:#fff;text-shadow:0 2px 0 var(--ink),0 0 6px var(--ink)}
 #announce.pop{animation:pop .45s cubic-bezier(.2,1.6,.4,1)}
 @keyframes pop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
-#respawn{position:fixed;left:16px;right:16px;top:60%;text-align:center;font-family:var(--display);font-size:clamp(1.3rem,4vw,2rem);color:#fff;-webkit-text-stroke:5px var(--ink);paint-order:stroke fill;pointer-events:none;z-index:5}
+#respawn{position:fixed;left:calc(16px + var(--sl));right:calc(16px + var(--sr));top:60%;text-align:center;font-family:var(--display);font-size:clamp(1.3rem,4vw,2rem);color:#fff;-webkit-text-stroke:5px var(--ink);paint-order:stroke fill;pointer-events:none;z-index:5}
 #prompt{position:fixed;left:50%;bottom:170px;transform:translateX(-50%);font-weight:900;background:rgba(27,34,53,.82);color:#fff;padding:6px 14px;border-radius:8px;z-index:5;white-space:nowrap}
 #prompt kbd{color:var(--ink)}
-#pingChip{position:fixed;left:16px;bottom:calc(58px + env(safe-area-inset-bottom,0px));z-index:5;font-family:var(--display);font-size:.95rem;background:rgba(27,34,53,.78);padding:4px 10px 3px;border-radius:8px;pointer-events:none}
+#pingChip{position:fixed;left:calc(16px + var(--sl));bottom:calc(58px + env(safe-area-inset-bottom,0px));z-index:5;font-family:var(--display);font-size:.95rem;background:rgba(27,34,53,.78);padding:4px 10px 3px;border-radius:8px;pointer-events:none}
 body.touch #pingChip{display:none!important}
 #netTag{position:fixed;left:50%;top:38%;transform:translateX(-50%);z-index:4;pointer-events:none;font-family:var(--display);font-size:1.15rem;color:#fff;background:rgba(27,34,53,.78);padding:6px 14px 5px;border-radius:999px;white-space:nowrap}
-#trackBadge{position:absolute;top:calc(12px + env(safe-area-inset-top,0px));right:14px;z-index:3;font-family:var(--display);font-size:1rem;padding:5px 12px 4px;border-radius:999px;color:#fff;box-shadow:0 3px 0 rgba(0,0,0,.25)}#trackBadge.alpha{background:#c2185b}#trackBadge.beta{background:#6a3fd6}
+#trackBadge{position:absolute;top:calc(12px + env(safe-area-inset-top,0px));right:calc(14px + var(--sr));z-index:3;font-family:var(--display);font-size:1rem;padding:5px 12px 4px;border-radius:999px;color:#fff;box-shadow:0 3px 0 rgba(0,0,0,.25)}#trackBadge.alpha{background:#c2185b}#trackBadge.beta{background:#6a3fd6}
 .mpask{display:flex;flex-direction:column;gap:6px;margin:8px 0}.askrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;background:rgba(255,203,31,.16);border:2px solid var(--yellow);border-radius:10px;padding:6px 10px}.askrow span{flex:1;min-width:140px}.askwait{font-family:var(--display);font-size:1.1rem;margin:4px 0}
 #askPop{position:fixed;top:calc(64px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);z-index:6;margin:0;background:rgba(27,34,53,.92);padding:8px;border-radius:12px;width:min(92vw,520px);color:#fff}
 .mpkick{display:inline-block;margin-left:6px;padding:0 6px;border-radius:6px;background:rgba(226,49,43,.85);color:#fff;font-size:.85em}
 .chatlog{max-height:150px;overflow:auto;background:rgba(0,0,0,.22);border-radius:8px;padding:6px 8px;font-size:.95rem;margin-bottom:6px}.chatlog .me b,#chatFeed .me b{color:var(--yellow)}
 .chatquick{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
-#chatFeed{position:fixed;left:16px;bottom:calc(96px + env(safe-area-inset-bottom,0px));z-index:4;pointer-events:none;display:flex;flex-direction:column;gap:3px;max-width:min(60vw,420px)}
+#chatFeed{position:fixed;left:calc(16px + var(--sl));bottom:calc(96px + env(safe-area-inset-bottom,0px));z-index:4;pointer-events:none;display:flex;flex-direction:column;gap:3px;max-width:min(60vw,420px)}
 #chatFeed div{background:rgba(27,34,53,.75);color:#fff;padding:3px 9px;border-radius:8px;font-size:.95rem}
-body.touch #chatFeed{bottom:auto;top:34%;left:12px;max-width:44vw}
-#chatBtn{position:fixed;right:16px;top:30%;z-index:6;width:48px;height:48px;border-radius:50%;border:2px solid rgba(255,255,255,.7);background:rgba(27,34,53,.8);color:#fff;font-size:1.4rem;cursor:pointer}
+body.touch #chatFeed{bottom:auto;top:34%;left:calc(12px + var(--sl));max-width:44vw}
+#chatBtn{position:fixed;right:calc(16px + var(--sr));top:30%;z-index:6;width:48px;height:48px;border-radius:50%;border:2px solid rgba(255,255,255,.7);background:rgba(27,34,53,.8);color:#fff;font-size:1.4rem;cursor:pointer}
 #chatBar{position:fixed;left:50%;top:22%;transform:translateX(-50%);z-index:7;background:rgba(27,34,53,.95);padding:10px;border-radius:14px;width:min(92vw,520px)}#chatBar .btns{flex-wrap:nowrap}#chatBar input{flex:1;min-width:0}
+.mplog{max-height:180px;overflow:auto;background:rgba(0,0,0,.28);color:#e8f0ff;border-radius:8px;padding:6px 8px;font:12px/1.35 ui-monospace,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere;margin:4px 0 6px}
 #scoreboard{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:8;background:rgba(27,34,53,.92);color:#fff;border-radius:14px;padding:12px 16px;min-width:min(460px,92vw);max-height:80vh;overflow:auto;box-shadow:0 10px 30px rgba(0,0,0,.4)}
 #scoreboard h3{margin:0 0 8px;font-family:var(--display);font-weight:400;font-size:1.4rem;color:var(--yellow)}#scoreboard table{width:100%;border-collapse:collapse;font-weight:800;font-size:.95rem}
 #scoreboard th{text-align:left;font-size:.75rem;text-transform:uppercase;opacity:.7;padding:2px 6px}#scoreboard td{padding:5px 6px;border-top:1px solid rgba(255,255,255,.12)}#scoreboard tr.me td{background:rgba(255,203,31,.18)}
@@ -165,15 +169,17 @@ body.touch #chatFeed{bottom:auto;top:34%;left:12px;max-width:44vw}
 #autoTag{position:fixed;left:50%;bottom:calc(205px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:4;pointer-events:none;font-family:var(--display);font-size:1.1rem;color:#fff;background:linear-gradient(90deg,#7a3fd1,#1f6fd6);padding:6px 14px 5px;border-radius:999px;box-shadow:0 3px 0 rgba(27,34,53,.35);animation:wpulse 1.6s ease-in-out infinite;white-space:nowrap}
 #lockHint{position:fixed;left:50%;top:calc(50% + 34px);transform:translateX(-50%);font-weight:900;color:#fff;background:rgba(27,34,53,.7);padding:4px 12px;border-radius:8px;z-index:5;pointer-events:none}
 #stormVig{position:fixed;inset:0;pointer-events:none;box-shadow:inset 0 0 120px 30px rgba(122,63,209,.75);opacity:0;transition:opacity .3s;z-index:3}
-#muteBtn{position:fixed;left:16px;bottom:calc(14px + env(safe-area-inset-bottom,0px));pointer-events:auto;font-family:var(--display);font-size:.95rem;border:0;border-radius:8px;padding:7px 12px 6px;background:rgba(251,248,241,.92);color:var(--ink);cursor:pointer;box-shadow:0 3px 0 rgba(27,34,53,.25);z-index:6}
+#muteBtn{position:fixed;left:calc(16px + var(--sl));bottom:calc(14px + env(safe-area-inset-bottom,0px));pointer-events:auto;font-family:var(--display);font-size:.95rem;border:0;border-radius:8px;padding:7px 12px 6px;background:rgba(251,248,241,.92);color:var(--ink);cursor:pointer;box-shadow:0 3px 0 rgba(27,34,53,.25);z-index:6}
 #loadErr{position:fixed;inset:auto 16px 16px;z-index:20;background:var(--red);color:#fff;font-weight:900;padding:12px 16px;border-radius:10px}
 @media (max-width:640px){#bottom{bottom:60px}#prompt{bottom:210px}#tl{max-width:100%;top:184px}}
+/* @module src/css/03-layers-touch.css: Layer order while playing, and the touch controls (buttons stay inside the safe area). */
 /* layer order while playing (bottom → top): world · screen effects 2 · touch move/look area 3 · messages 4 · HUD 5 · touch buttons 6 · editor 7 · menus 10+ */
 #scope,#stormVig{z-index:2}
 #announce,#prompt,#elim,#poi,#respawn,#useBar,#lockHint{z-index:4;pointer-events:none}
 #hud,#cross{z-index:5}
 #touch{position:fixed;inset:0;z-index:3;touch-action:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
-#tbtns{position:fixed;inset:0;z-index:6;pointer-events:none;-webkit-touch-callout:none}
+/* the buttons live inside the safe area: clear of the notch / Dynamic Island and the home bar */
+#tbtns{position:fixed;inset:env(safe-area-inset-top,0px) var(--sr) env(safe-area-inset-bottom,0px) var(--sl);z-index:6;pointer-events:none;-webkit-touch-callout:none}
 .tb{position:absolute;transform:translate(-50%,-50%);width:var(--s,70px);height:var(--s,70px);border-radius:50%;border:3px solid rgba(255,255,255,.75);background:rgba(27,34,53,.42);color:#fff;pointer-events:auto;
   display:grid;place-items:center;align-content:center;gap:0;padding:0;font-family:var(--display);touch-action:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;opacity:var(--o,1);box-shadow:0 3px 0 rgba(27,34,53,.3)}
 .tb b{font-size:calc(var(--s,70px)*.36);line-height:1;font-weight:400}.tb span{font-size:calc(var(--s,70px)*.15);letter-spacing:.04em;text-shadow:0 1px 0 rgba(0,0,0,.4);max-width:96%;line-height:1.05;text-align:center}
@@ -201,6 +207,7 @@ body.touch #bottom{width:min(calc(100% - 380px),420px);min-width:250px}
 body.touch #prompt{bottom:auto;top:calc(50% + 70px);white-space:normal;max-width:min(420px,44vw);text-align:center}
 @media (max-height:520px){body.touch #bottom{transform:translateX(-50%) scale(.82);transform-origin:50% 100%}body.touch .chip{font-size:.85rem;padding:4px 9px 3px}body.touch #mini{width:96px;height:96px}body.touch #feed{top:46px}}
 #fsBtn,#tCustomBtn{margin-top:8px}
+/* @module src/css/04-welcome.css: The welcome screen. */
 /* ---------- welcome screen ---------- */
 #welcome{background:radial-gradient(ellipse at 75% 45%,rgba(27,34,53,.28),transparent 60%),linear-gradient(90deg,transparent 40%,rgba(27,34,53,.3));overflow:hidden}
 .wcol{margin:auto 4vw auto auto;width:min(500px,92vw);display:grid;justify-items:center;gap:14px;text-align:center;position:relative;z-index:1}
@@ -230,17 +237,18 @@ body.touch #prompt{bottom:auto;top:calc(50% + 70px);white-space:normal;max-width
 @media (max-width:900px){.wcol{margin:auto}.wgrid{grid-template-columns:repeat(3,1fr)}}
 @media (max-height:520px){.wl1 span{font-size:3.4rem}.wl2 span{font-size:2.1rem}.wcol{gap:8px}#wPlay{font-size:2rem;padding:8px 46px 6px}.wtag{display:none}.wbtn i{font-size:1.3rem}}
 @media (prefers-reduced-motion:reduce){.wl1 span,.wl2 span,.wl2 em,#wPlay,.wrays,#wFloat span{animation:none}}
+/* @module src/css/05-play-screen.css: The play screen: mode cards and map tiles. */
 /* ---------- play screen: mode cards + map tiles ---------- */
 .seg.modes,.seg.maps{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:8px}
 .seg.modes label,.seg.maps label{display:grid;justify-items:center;align-content:center;gap:3px;text-align:center;padding:10px 6px 9px;font-size:.98rem;line-height:1.1;min-height:74px}
 .seg.modes label i,.seg.maps label i{font-style:normal;font-size:1.9rem;line-height:1}
 .seg.maps label{background:linear-gradient(160deg,var(--mc,#45b04f) 0 55%,var(--mc2,#2f8a3a));color:#fff;-webkit-text-stroke:4px #1b2235;paint-order:stroke fill;text-shadow:0 2px 0 #1b2235;border:3px solid transparent}
 .seg.maps input:checked+label{background:linear-gradient(160deg,var(--mc,#45b04f) 0 55%,var(--mc2,#2f8a3a));border-color:var(--yellow);box-shadow:0 0 0 3px var(--ink),inset 0 -4px 0 rgba(0,0,0,.15);transform:translateY(-2px)}
-.seg.modes input:checked+label{transform:translateY(-2px)}
-#playBtn{background:var(--yellow);color:var(--ink);box-shadow:inset 0 -7px 0 rgba(0,0,0,.18),0 5px 0 #b38a00}#playBtn::before{display:none}
+#playBtn::before{display:none}
 #matchSum{font-weight:900}
 .card.wide{max-width:860px}.card-top.green{background:var(--green)}
 #menu .card{max-width:620px}
+/* @module src/css/06-settings.css: The settings screen. */
 /* ---------- settings ---------- */
 #settings .card{display:flex;flex-direction:column;max-height:calc(100vh - 32px)}
 .setwrap{display:grid;grid-template-columns:210px 1fr;gap:18px;overflow:hidden;min-height:0;flex:1}
@@ -254,6 +262,7 @@ body.touch #prompt{bottom:auto;top:calc(50% + 70px);white-space:normal;max-width
 #resetProg.sure{background:var(--red);color:#fff}
 @media (max-height:520px){#settings .card-top,#help .card-top{padding:10px 18px}#settings .card-top h2,#help .card-top h2{font-size:1.5rem}.setnav button{padding:7px 10px;font-size:.92rem}.setfoot{padding:0 18px 10px}.setfoot .brick{font-size:1.2rem;padding:8px 22px 6px}}
 @media (max-width:640px){.setwrap{grid-template-columns:1fr}.setnav{display:flex;overflow-x:auto;gap:6px}.setnav button{white-space:nowrap;padding:8px 10px;font-size:.95rem}}
+/* @module src/css/07-about-help.css: The About and Help screens. */
 /* ---------- about + help ---------- */
 .about p{margin:0;font-weight:700;line-height:1.45}.about h3,.hpage h3{margin:4px 0 0;font-family:var(--display);font-weight:400;font-size:1.3rem}.about ul{margin:0;padding-left:20px;font-weight:700;line-height:1.55}
 #help .card{display:flex;flex-direction:column;max-height:calc(100vh - 32px)}#help .card-body{overflow-y:auto;min-height:0}
@@ -275,6 +284,7 @@ body.touch #prompt{bottom:auto;top:calc(50% + 70px);white-space:normal;max-width
 .mpchip i{width:24px;height:24px;border-radius:50%;border:2px solid #1b2235}.mpchip.me{background:#fff7c2}.mpchip em{font-style:normal;font-size:.7rem;background:var(--ink);color:#fff;border-radius:6px;padding:1px 5px}
 .mpgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}#mpStart{background:var(--yellow);color:var(--ink)}#mpStart::before{display:none}
 @media (max-width:640px){.mpentry,.mpgrid{grid-template-columns:1fr}}
+/* @module src/css/08-touch-editor.css: The touch layout editor. */
 /* layout editor */
 body.tediting #tbtns{background-image:linear-gradient(rgba(255,255,255,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.12) 1px,transparent 1px);background-size:5% 5%;background-color:rgba(27,34,53,.25)}
 body.tediting .tb{cursor:grab;outline:2px dashed rgba(255,255,255,.7);outline-offset:3px;animation:none}body.tediting .tb.sel{outline:3px solid #ffcb1f;background:rgba(255,203,31,.55)}
@@ -318,7 +328,7 @@ body.tediting .tb.ghost{opacity:.3}body.tediting #lobbyBar{display:none!importan
 <div id="askPop" class="mpask" hidden></div>
 <div id="chatFeed"></div>
 <button id="chatBtn" type="button" hidden aria-label="Chat">💬</button>
-<div id="chatBar" hidden><div class="btns"><input id="chatIn" class="mpinput" maxlength="80" placeholder="Say something nice" autocomplete="off"><button class="brick small" id="chatSend" type="button">Send</button></div><div class="chatquick" id="chatQuick"></div></div>
+<div id="chatBar" hidden><div class="btns"><input type="text" id="chatIn" class="mpinput" maxlength="80" placeholder="Say something nice" autocomplete="off"><button class="brick small" id="chatSend" type="button">Send</button></div><div class="chatquick" id="chatQuick"></div></div>
 <div id="netTag" hidden></div>
 <div id="scoreboard" hidden></div>
 <div id="autoTag" hidden>🤖 AUTOPILOT · <span id="autoTagKey">press O</span> to take over</div>
@@ -350,7 +360,7 @@ body.tediting .tb.ghost{opacity:.3}body.tediting #lobbyBar{display:none!importan
   <div id="wFloat" aria-hidden="true"></div>
   <div id="trackBadge" hidden></div>
   <div class="wcol">
-    <div class="wlogo" aria-label="Bonk Royale 3D"><div class="wrays"></div>
+    <div class="wlogo" role="img" aria-label="Bonk Royale 3D"><div class="wrays"></div>
       <div class="wl1"><span>B</span><span>O</span><span>N</span><span>K</span></div>
       <div class="wl2"><span>R</span><span>O</span><span>Y</span><span>A</span><span>L</span><span>E</span><em>3D</em></div>
     </div>
@@ -405,10 +415,10 @@ body.tediting .tb.ghost{opacity:.3}body.tediting #lobbyBar{display:none!importan
     <div class="card-top purple"><div class="studs"></div><h2>🌐 Play with friends</h2><p class="tag" id="mpLobStatus"></p></div>
     <div class="card-body">
       <div id="mpEntry">
-        <div class="opt"><div class="opt-label">Your name</div><input id="mpName2" class="mpinput" maxlength="16" placeholder="Type a nickname" autocomplete="off"></div>
+        <div class="opt"><div class="opt-label">Your name</div><input type="text" id="mpName2" class="mpinput" maxlength="16" placeholder="Type a nickname" autocomplete="off"></div>
         <div class="mpentry">
           <div class="mpbig"><h3>📣 Host a game</h3><p class="opt-desc">Get a room code to give your friends. You pick the game, the map and the teams.</p><button class="brick" id="mpHostBtn" type="button">Host a game</button></div>
-          <div class="mpbig"><h3>➡️ Join a game</h3><p class="opt-desc">Type the 4-letter code from the host's screen.</p><div class="btns"><input id="mpJoinCode2" class="mpinput code big" maxlength="4" placeholder="CODE" autocomplete="off"><button class="brick" id="mpJoinBtn" type="button">Join</button></div></div>
+          <div class="mpbig"><h3>➡️ Join a game</h3><p class="opt-desc">Type the 4-letter code from the host's screen.</p><div class="btns"><input type="text" id="mpJoinCode2" class="mpinput code big" maxlength="4" placeholder="CODE" autocomplete="off"><button class="brick" id="mpJoinBtn" type="button">Join</button></div></div>
         </div>
         <p class="opt-desc" id="mpLobMsg"></p>
         <p class="opt-desc" id="mpHowNote">Everyone plays from this same game page on claude.ai, so it must be shared with each player. To host, a player needs “can edit” access. Games go through the internet, so every device needs to be online.</p>
@@ -418,7 +428,7 @@ body.tediting .tb.ghost{opacity:.3}body.tediting #lobbyBar{display:none!importan
         <div class="mpcodebox"><span>Room code</span><b id="mpCodeBig">----</b><small>Friends tap <b>🌐 Multiplayer → Join</b> and type this code.</small></div>
         <div id="mpAsk" class="mpask" hidden></div>
         <div class="opt"><div class="opt-label">Players <span id="mpPlayersCount"></span></div><div id="mpPlayers"></div></div>
-        <div class="opt" id="mpChatBox" hidden><div class="opt-label">💬 Chat</div><div id="mpChatLog" class="chatlog"></div><div class="btns"><input id="mpChatIn" class="mpinput" maxlength="80" placeholder="Say something nice" autocomplete="off"><button class="brick small" id="mpChatSend" type="button">Send</button></div><div class="chatquick" id="mpQuick"></div></div>
+        <div class="opt" id="mpChatBox" hidden><div class="opt-label">💬 Chat</div><div id="mpChatLog" class="chatlog"></div><div class="btns"><input type="text" id="mpChatIn" class="mpinput" maxlength="80" placeholder="Say something nice" autocomplete="off"><button class="brick small" id="mpChatSend" type="button">Send</button></div><div class="chatquick" id="mpQuick"></div></div>
         <div id="mpHostCtl">
           <div class="mpgrid">
             <label class="te-row">Game <select id="mpMode"></select></label>
@@ -544,7 +554,7 @@ body.tediting .tb.ghost{opacity:.3}body.tediting #lobbyBar{display:none!importan
         <section data-page="mp" hidden>
           <h3>🌐 Multiplayer</h3>
           <p class="opt-desc" id="mpStatus"></p>
-          <div class="opt"><div class="opt-label">Your name</div><input id="mpName" class="mpinput" maxlength="16" placeholder="Type a nickname" autocomplete="off"><p class="opt-desc">Friends see this above your head.</p></div>
+          <div class="opt"><div class="opt-label">Your name</div><input type="text" id="mpName" class="mpinput" maxlength="16" placeholder="Type a nickname" autocomplete="off"><p class="opt-desc">Friends see this above your head.</p></div>
           <div class="opt"><div class="opt-label">Teams when you host</div>
             <div class="seg"><input type="radio" name="mpsTm" id="mpsTmHost" value="host"><label for="mpsTmHost">Host picks</label><input type="radio" name="mpsTm" id="mpsTmRandom" value="random"><label for="mpsTmRandom">🎲 Random</label><input type="radio" name="mpsTm" id="mpsTmSelf" value="self"><label for="mpsTmSelf">Pick your own</label><input type="radio" name="mpsTm" id="mpsTmFfa" value="ffa"><label for="mpsTmFfa">Everyone vs everyone</label></div></div>
           <div class="opt"><div class="opt-label">Most players in a room</div><div class="seg"><input type="radio" name="mpsMax" id="mpsMax2" value="2"><label for="mpsMax2">2</label><input type="radio" name="mpsMax" id="mpsMax4" value="4"><label for="mpsMax4">4</label><input type="radio" name="mpsMax" id="mpsMax6" value="6"><label for="mpsMax6">6</label><input type="radio" name="mpsMax" id="mpsMax8" value="8"><label for="mpsMax8">8</label></div></div>
@@ -552,10 +562,11 @@ body.tediting .tb.ghost{opacity:.3}body.tediting #lobbyBar{display:none!importan
           <div class="opt"><div class="opt-label">💬 Chat in rooms I host</div><div class="seg"><input type="radio" name="mpsChat" id="mpsChatN" value="off"><label for="mpsChatN">Off</label><input type="radio" name="mpsChat" id="mpsChatY" value="on"><label for="mpsChatY">On</label></div><p class="opt-desc">Off unless you turn it on. Swear words in English, Spanish, French, Portuguese, German and Italian are always hidden, in chat and in player names.</p></div>
           <div class="opt"><div class="opt-label">Ping meter</div><div class="seg"><input type="radio" name="mpsPing" id="mpsPingY" value="on"><label for="mpsPingY">📶 Show</label><input type="radio" name="mpsPing" id="mpsPingN" value="off"><label for="mpsPingN">Hide</label></div><p class="opt-desc">Ping is how long a message takes to go to the host and back. Under 100 ms is green, under 200 ms yellow. The scoreboard (hold Tab, or tap 🏆) shows everyone's ping.</p></div>
           <div class="opt"><div class="opt-label">🏠 Home server (extra fast on the same Wi-Fi)</div><p class="opt-desc">A grown-up can run the game from a Windows PC at home. Then everyone on your Wi-Fi plays through that PC: faster, and no claude.ai account needed. On the PC, double-click <b>Start Bonk Server</b> in the game's folder, then type the address it shows (like <b>http://192.168.1.20:8080</b>) into Safari or Chrome on each device. See Help → 🏠 Home server.</p></div>
-          <div class="opt"><div class="opt-label">🛰️ Relay server (for grown-ups, website only)</div><p class="opt-desc">On the Bonk Royale website, devices connect directly. Some school or office networks block that, and then a free relay is used. If friends still can't connect, you can add your own TURN relay here. Leave it empty to use the free one.</p><div class="te-row"><input id="mpsTurnUrl" class="mpinput" placeholder="turn:relay.example.com:3478" autocomplete="off"></div><div class="te-row"><input id="mpsTurnUser" class="mpinput" placeholder="Username" autocomplete="off"><input id="mpsTurnPass" class="mpinput" type="password" placeholder="Password" autocomplete="off"></div></div>
+          <div class="opt"><div class="opt-label">🛰️ Relay server (for grown-ups, website only)</div><p class="opt-desc">On the Bonk Royale website, devices connect directly. That works at home and on most Wi-Fi. Phones on cellular data, and some school or office networks, block direct links. Then a relay carries the game instead. One is built in, so you don't need to do anything. Only fill this in to use your own relay (TURN) server instead.</p><div class="te-row"><input type="text" id="mpsTurnUrl" class="mpinput" placeholder="turn:relay.example.com:3478" autocomplete="off"></div><div class="te-row"><input type="text" id="mpsTurnUser" class="mpinput" placeholder="Username" autocomplete="off"><input id="mpsTurnPass" class="mpinput" type="password" placeholder="Password" autocomplete="new-password"></div></div>
+          <div class="opt"><div class="opt-label">📋 Connection log</div><p class="opt-desc">If a game freezes, says the host paused, or sends you back to the lobby, the reason is written here. Tap <b>Copy log</b> and paste it to Claude or a grown-up.</p><pre id="mpLogOut" class="mplog"></pre><div class="btns"><button class="brick small" id="mpLogCopy" type="button">📋 Copy log</button><button class="brick small" id="mpLogClear" type="button">🧹 Clear</button></div></div>
           <div class="opt"><div class="opt-label">Connection test</div><p class="opt-desc">Checks whether this device can play with friends.</p><div class="btns"><button class="brick small" id="mpRun" type="button">🔌 Run connection test</button></div><ul class="mpout" id="mpTestOut"></ul></div>
           <div class="opt"><div class="opt-label">Test with a friend</div><p class="opt-desc">One device taps <b>Make a code</b>, the other types that code and taps <b>Join</b>. It shows how fast the two devices can talk.</p>
-            <div class="btns"><button class="brick small" id="mpHost" type="button">📣 Make a code</button><input id="mpJoinCode" class="mpinput code" maxlength="4" placeholder="CODE" autocomplete="off"><button class="brick small" id="mpJoin" type="button">➡️ Join</button><button class="brick small" id="mpFriendStop" type="button" hidden>✖ Stop</button></div><div id="mpFriendOut"></div></div>
+            <div class="btns"><button class="brick small" id="mpHost" type="button">📣 Make a code</button><input type="text" id="mpJoinCode" class="mpinput code" maxlength="4" placeholder="CODE" autocomplete="off"><button class="brick small" id="mpJoin" type="button">➡️ Join</button><button class="brick small" id="mpFriendStop" type="button" hidden>✖ Stop</button></div><div id="mpFriendOut"></div></div>
           <div id="mpBox"></div>
         </section>
         <section data-page="profile" hidden>
@@ -588,6 +599,7 @@ body.tediting .tb.ghost{opacity:.3}body.tediting #lobbyBar{display:none!importan
       <h3>Who made it</h3>
       <p>Designed by a parent and their kid, and built together with Claude, an AI assistant made by Anthropic. Every sound and song is made by the game itself while you play.</p>
       <p class="opt-desc" id="aboutVer"></p>
+      <p class="opt-desc">© 2026 hawkism. All rights reserved.</p>
       <div class="btns"><button class="brick" id="aboutDone" type="button">✔ Done</button></div>
     </div>
   </div>
@@ -611,7 +623,7 @@ body.tediting .tb.ghost{opacity:.3}body.tediting #lobbyBar{display:none!importan
 <div id="pause" class="screen" hidden><div class="card"><div class="card-top blue"><div class="studs"></div><h2>Paused</h2></div>
   <div class="card-body"><div class="btns"><button class="brick" id="resumeBtn" type="button">Resume</button><button class="brick small" id="quitBtn" type="button">🏠 Quit to home</button><button class="brick small" id="tCustomBtn2" type="button" hidden>🎮 Customize controls</button></div>
   <p class="note">Resuming locks the mouse to the game again. Press Esc any time to free it.</p></div></div></div>
-<div id="end" class="screen" hidden><div class="card"><div class="card-top" id="endTop"><div class="studs"></div><h2 id="endTitle"></h2><p class="tag" id="endSub"></p></div>
+<div id="end" class="screen" hidden><div class="card"><div class="card-top" id="endTop"><div class="studs"></div><h2 id="endTitle">Match over</h2><p class="tag" id="endSub"></p></div>
   <div class="card-body"><div class="stats" id="endStats"></div><ol id="endBoard" hidden></ol>
   <div class="btns"><button class="brick" id="againBtn" type="button">Play again</button><button class="brick small" id="menuBtn" type="button">🎮 Change mode / map</button><button class="brick small" id="homeBtn" type="button">🏠 Home</button></div></div></div></div>
 
@@ -619,10 +631,25 @@ body.tediting .tb.ghost{opacity:.3}body.tediting #lobbyBar{display:none!importan
 <script>
 // Release track of this copy: "stable" (main), "beta" or "alpha" (newest features). Set when a copy is published.
 const BONK_TRACK="stable";
+// Version: 0.1 is the first numbered release; every push to GitHub after that adds 0.1. "-dev" = not released yet.
+const BONK_VERSION="0.1";
+// Relay (TURN) for the website's direct links, from the owner's Metered.ca account (free plan, no card on file).
+// Only used when two devices cannot link directly (cellular data, strict school/office networks). These details are
+// public inside the website; the worst case of misuse is running out of the free monthly allowance, never a bill.
+const BONK_RELAY={username:'36ceb2ae0f10b67a30278e3b',credential:'4zUsxknZ6fUqluIR',urls:['turn:global.relay.metered.ca:80','turn:global.relay.metered.ca:80?transport=tcp','turn:global.relay.metered.ca:443','turns:global.relay.metered.ca:443?transport=tcp']};
 (()=>{
+// @module src/js/01-core.js: Start of the game script: the $ shortcut for document.getElementById and the "only redraw when changed" helpers.
+// Main: $, setHtmlIfChanged, htmlSink
+// See also: every module
 'use strict';
 const $=id=>document.getElementById(id);
+// only touch the page when the content really changed, so buttons are not swapped out under a finger mid-tap
+const setHtmlIfChanged=(el,html)=>{if(el._html!==html){el._html=html;el.innerHTML=html;}};
+const htmlSink=el=>({set html(v){setHtmlIfChanged(el,v);}});
 if(!window.THREE){$('loadErr').hidden=false;return;}
+// @module src/js/02-helpers.js: Small maths and utility helpers, saving to localStorage (store), and HTML escaping.
+// Main: clamp, lerp, rand, pick, dist, angDiff, mulberry32, store, shadeHex, esc
+// See also: every module
 /* ================= helpers ================= */
 const TAU=Math.PI*2;
 const clamp=(v,a,b)=>v<a?a:v>b?b:v;
@@ -638,7 +665,9 @@ const store={get(k){try{return JSON.parse(localStorage.getItem(k));}catch(e){ret
 const shadeHex=(hex,f)=>{const n=parseInt(hex.slice(1),16);let r=(n>>16)&255,g=(n>>8)&255,b=n&255;if(f>1){r+=(255-r)*(f-1);g+=(255-g)*(f-1);b+=(255-b)*(f-1);}else{r*=f;g*=f;b*=f;}
   return '#'+[r,g,b].map(v=>Math.round(clamp(v,0,255)).toString(16).padStart(2,'0')).join('');};
 const esc=s=>s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
-
+// @module src/js/03-audio.js: Sound effects, synthesised with Web Audio (no sound files), and the mute switch.
+// Main: AU, audioInit, tone, noise, SFX, sfx, setMuted
+// See also: music, net-sync (sounds are sent to players as events)
 /* ================= audio ================= */
 const AU={c:null,m:null,nb:null,muted:false};
 function audioInit(){
@@ -697,6 +726,10 @@ const SFX={
   bus(){[392,523,659].forEach((f,i)=>tone('triangle',f,0,0.3,0.15,i*0.12));}
 };
 function sfx(name,src){if(NET_CTX&&!src){netTell(NET_CTX,'sfx',name);return;}if(src&&NETH()&&netNear(src.x,src.y))netEv(['s',name,ri(src.x),ri(src.y)],1);if(!AU.c||AU.muted)return;let v=1;if(src&&G&&G.player){const p=G.lp||G.player;v=clamp(1-Math.hypot(src.x-p.x,src.y-p.y)/950,0,1);if(v<0.03)return;}try{SFX[name](v);}catch(e){}}
+function setMuted(m){AU.muted=m;if(AU.m)AU.m.gain.value=m?0:0.55*VOL.m;document.querySelectorAll('input[name="sfxOn"]').forEach(r=>r.checked=(r.value==='off')===m);$('muteBtn').textContent='Sound: '+(m?'off':'on');store.set('bbr3d-muted',m);}
+// @module src/js/04-music.js: A tiny built-in band (bass, lead, drums) that plays music made by code.
+// Main: MUS, TRACKS, musicTick, musicStart, musicPick, setMusic
+// See also: audio
 /* ================= music: a tiny built-in band (bass, lead, drums) =================
    Notes are scheduled a little ahead of time on the Web Audio clock, one 16th-note step at a time. */
 const MUS={on:store.get('bonk-music')!==false,g:null,track:null,want:'lobby',step:0,nextT:0,timer:0,vol:0.2};
@@ -736,7 +769,9 @@ function setMusic(on){MUS.on=on;store.set('bonk-music',on);document.querySelecto
 document.querySelectorAll('input[name="music"]').forEach(r=>{r.checked=(r.value==='on')===MUS.on;r.addEventListener('change',()=>{audioInit();musicStart();setMusic(r.value==='on');});});
 // browsers only allow sound after the first tap or key press
 ['pointerdown','keydown'].forEach(t=>addEventListener(t,()=>{audioInit();musicStart();},{capture:true}));
-
+// @module src/js/05-weapons.js: Every weapon and item: stats, rarity colours, loot tables, and how each one is drawn.
+// Main: WEAPONS, RAR_COL, FLOOR_LOOT, CHEST_LOOT, drawWeapon, ICON
+// See also: combat, pickups, cosmetics (gun wraps)
 /* ================= weapons ================= */
 const WEAPONS={
   fists:{name:'Pickaxe',kind:'melee',dmg:20,range:48,arc:1.4,cd:0.5,kb:160,rar:0,snd:'bonk',word:'THWACK!'},
@@ -797,7 +832,9 @@ function drawWeapon(g,id,t=0){ // 2D icon art for the HUD
 }
 const ICON={};
 for(const id in WEAPONS){const c=document.createElement('canvas');c.width=144;c.height=80;const g=c.getContext('2d');g.scale(2,2);g.translate(id==='ultra'||id==='laser'?13:id==='fists'?10:14,id==='banana'?28:20);g.scale(1.25,1.25);drawWeapon(g,id);ICON[id]=c.toDataURL();}
-
+// @module src/js/06-maps.js: The 9 maps: terrain tiles, buildings, water, points of interest, and ground height.
+// Main: MAPS, MAP, MAP_ID, genMap, tileAt, isBad (a map spot to avoid; the swear check is isSwear), groundAt
+// See also: three-setup (builds the 3D world), update
 /* ================= maps ================= */
 const T=80,N=30,WORLD=T*N,CH=46,STEP=16;
 const MAPS={
@@ -887,7 +924,9 @@ function genMap(id){
   for(let a=0,n=0;a<900&&n<7;a++){const x=R()*WORLD,y=R()*WORLD;if(!isBad(x,y)&&!inBuilding(x,y,60)&&free2(x,y,40)){PADS.push({x,y});n++;}}
   for(let a=0,n=0;a<900&&n<10;a++){const x=R()*WORLD,y=R()*WORLD;if(free(x,y,20)){CHEST_SPOTS.push({x,y});n++;}}
 }
-
+// @module src/js/07-three-setup.js: three.js renderer, scene, camera, lights and shared geometry/material caches; building the 3D world; re-measuring the screen (iOS fixes).
+// Main: renderer, scene, camera, resize, viewportChanged, GEO, mat, mesh, buildWorld
+// See also: maps, visuals
 /* ================= three.js setup ================= */
 const cv=$('game');
 const renderer=new THREE.WebGLRenderer({canvas:cv,antialias:true});
@@ -897,7 +936,14 @@ const scene=new THREE.Scene();
 const camera=new THREE.PerspectiveCamera(70,1,1,3400);
 let W=0,H=0;
 function resize(){W=innerWidth;H=innerHeight;renderer.setSize(W,H,false);camera.aspect=W/H;camera.updateProjectionMatrix();}
+// iOS home-screen apps can open sideways while still reporting the upright size, and never send a resize event.
+// So also listen for rotation and visual-viewport changes, re-measure a few times after start, and check every frame (frame()).
+function viewportChanged(){resize();try{if(TOUCH.on)layoutTouch();}catch(e){}}
 addEventListener('resize',resize);resize();
+addEventListener('orientationchange',()=>{viewportChanged();setTimeout(viewportChanged,300);});
+if(window.visualViewport)visualViewport.addEventListener('resize',viewportChanged);
+addEventListener('pageshow',viewportChanged);
+for(const ms of[100,400,1000,2500])setTimeout(viewportChanged,ms);
 const hemi=new THREE.HemisphereLight(0xffffff,0x667744,0.75);scene.add(hemi);
 const sun=new THREE.DirectionalLight(0xffffff,0.75);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);
 Object.assign(sun.shadow.camera,{left:-650,right:650,top:650,bottom:-650,near:10,far:2200});sun.shadow.bias=-0.0008;scene.add(sun);scene.add(sun.target);
@@ -919,7 +965,7 @@ function mesh(geo,col,x,y,z,sx,sy,sz,em,shadow=true){const m=new THREE.Mesh(GEO[
 const basic=(col,o)=>new THREE.MeshBasicMaterial(Object.assign({color:col},o||{}));
 
 /* ---------- world building (static map → instanced meshes) ---------- */
-let world=null,dyn=[],flames=[],crystals=[],ambPts=null,starPts=null,skyMesh=null;
+let world=null,flames=[],crystals=[],ambPts=null,starPts=null,skyMesh=null;
 const SPECS=[];
 function S(geo,col,x,y,z,w,h,d,o){SPECS.push({geo,col,x,y,z,w,h,d,rx:o&&o.rx||0,ry:o&&o.ry||0,rz:o&&o.rz||0,em:o&&o.em||0});}
 function propTree(o){const x=o.x,y=o.y,v=o.v;
@@ -932,7 +978,7 @@ function propTree(o){const x=o.x,y=o.y,v=o.v;
     case 'spire':S('cone','#2a1f33',x,y,0,30,180,30);S('cone','#3a2a48',x+12,y+6,0,16,90,16);S('sph','#ff7a1e',x,y,172,9,9,9,{em:1});break;
     case 'derrick':S('box','#5a5650',x,y,0,40,10,20);S('box','#2b2f3a',x-8,y,10,4,64,4,{rz:0.18});S('box','#2b2f3a',x+8,y,10,4,64,4,{rz:-0.18});S('box','#ffcb1f',x,y,70,80,8,8,{rz:0.2});S('box','#e2312b',x-40,y,52,12,22,10);break;
     case 'pine':{const g=['#1f6b3a','#2a7d45','#185c31'][v];S('cyl','#6b4a2b',x,y,0,10,30,10);S('cone',g,x,y,24,70,70,70);S('cone',g,x,y,64,54,60,54);S('cone',g,x,y,100,36,52,36);S('cone','#ffffff',x,y,128,18,26,18);break;}
-    case 'palm':{const lean=(v-1)*10;let px=0,py=0;for(let k=0;k<8;k++){px=lean*k/7*2.2;S('cyl',k%2?'#9c6b3a':'#8a5a2b',x+px,y,k*16,12,17,12);}const tx=x+px,tz=128;
+    case 'palm':{const lean=(v-1)*10;let px=0;for(let k=0;k<8;k++){px=lean*k/7*2.2;S('cyl',k%2?'#9c6b3a':'#8a5a2b',x+px,y,k*16,12,17,12);}const tx=x+px,tz=128;
       for(let k=0;k<7;k++){const a=k*TAU/7;S('box',k%2?'#3fae4b':'#2e9e44',tx+Math.cos(a)*20,y+Math.sin(a)*20,tz,46,4,14,{ry:-a,rz:-0.45});}
       S('sph','#6b4423',tx+4,y,tz-10,9,9,9);S('sph','#6b4423',tx-4,y+4,tz-10,9,9,9);break;}
     default:{const g=['#2e9e44','#3fb24f','#258a3a'][v],g2=['#3fb24f','#55c45f','#2e9e44'][v];S('cyl','#7a4f2a',x,y,0,20,112,20);S('cyl','#7a4f2a',x+10,y,70,8,40,8,{rz:-0.6});
@@ -999,7 +1045,7 @@ function buildWorld(){
   // instance everything
   const groups=new Map();for(const s of SPECS){const k=s.geo+'|'+s.col+'|'+s.em;if(!groups.has(k))groups.set(k,[]);groups.get(k).push(s);}
   const dmy=new THREE.Object3D();
-  for(const[k,list]of groups){const s0=list[0];const im=new THREE.InstancedMesh(GEO[s0.geo],mat(s0.col,s0.em),list.length);im.frustumCulled=false;im.castShadow=!MAP.dark;im.receiveShadow=true;
+  for(const[,list]of groups){const s0=list[0];const im=new THREE.InstancedMesh(GEO[s0.geo],mat(s0.col,s0.em),list.length);im.frustumCulled=false;im.castShadow=!MAP.dark;im.receiveShadow=true;
     list.forEach((s,i)=>{dmy.position.set(s.x,s.z,s.y);dmy.rotation.set(s.rx,s.ry,s.rz);dmy.scale.set(s.w,s.h,s.d);dmy.updateMatrix();im.setMatrixAt(i,dmy.matrix);});world.add(im);}
   // hazard flames / lava bubbles
   for(let j=0;j<N;j++)for(let i=0;i<N;i++)if(TILE[i+j*N]===4){const h=(i*73+j*151)%97;for(let q=0;q<(MAP.hurt==='fire'?2:1);q++)flames.push({x:(i+0.25+((h*(q+1))%50)/100)*T,y:(j+0.25+((h*(q+3))%50)/100)*T,z:0,s:MAP.hurt==='fire'?1+((h+q)%5)/6:0.6,lava:MAP.hurt==='lava'});}
@@ -1079,6 +1125,9 @@ function drawTag(c){const cv2=c.tagCanvas,g=cv2.getContext('2d');g.clearRect(0,0
   if(HBARS||c.hp<c.maxHp){const f=Math.max(0,c.hp/c.maxHp);g.fillStyle='rgba(27,34,53,.85)';rr(g,bx-3,38,bw+6,24,6);g.fill();g.fillStyle=f>.6?'#4cd05a':f>.3?'#ffcb1f':'#ff4d4d';rr(g,bx,41,Math.max(4,bw*f),18,4);g.fill();
     g.font='900 16px Nunito, sans-serif';g.lineWidth=4;g.strokeText(String(Math.ceil(c.hp)),128,56);g.fillStyle='#fff';g.fillText(String(Math.ceil(c.hp)),128,56);}
   c.tagTex.needsUpdate=true;}
+// @module src/js/08-cosmetics.js: Locker items (outfits, gliders, pickaxes, back bling, gun wraps), the Ticket Shop catalogue, and building a person from an outfit.
+// Main: OUTFITS, GLIDERS, PICKS, BACKS, WRAPS, SHOP, makeLook, buildPerson, gliderModel
+// See also: models, lobby-locker, ticket-shop
 /* ================= people: outfits, back bling, gliders, pickaxes ================= */
 const OUTFITS=[
   {id:'recruit',name:'Bonk Recruit',lvl:1,rar:1,top:'#e2312b',top2:'#ffffff',pants:'#1f4fa3',shoe:'#ffffff',glove:null,hair:'#5a3a1e',hairStyle:'short',hat:'cap',hatCol:'#1f6fd6',back:'none',skin:'#f1c27d'},
@@ -1199,7 +1248,9 @@ function pickModel(id){const P=PICKS.find(x=>x.id===id)||PICKS[0],[a,b]=P.c;cons
   B(a,0,0,12,2.8,2.8,28);if(id==='candy'){for(let k=0;k<5;k++)B(b,0,0,3+k*5.5,3,3,1.6);}
   if(id==='golden'){B(b,0,0,27,16,12,10);}else if(id==='lolly'){const s=new THREE.Mesh(GEO.cylC,mat(b));s.scale.set(16,3,16);s.rotation.x=Math.PI/2;s.position.set(0,6,27);g.add(s);}
   else{B(b,0,4,25,3.2,10,5).rotation.x=-0.35;B(b,0,-4,25,3.2,10,5).rotation.x=0.35;B(shadeHex(b,0.8),0,0,25,4,4,6);}return g;}
-
+// @module src/js/09-xp-levels.js: Saved progress (PROG): XP, levels, tickets, owned items, daily challenges.
+// Main: PROG, saveProg, xpEvent, finishXP, CHAL_DEFS
+// See also: screens (end of match), ticket-shop
 /* ================= XP, levels and challenges ================= */
 let PROG=store.get('bonk-prog')||{xp:0,wins:0,chal:null,locker:{outfit:'recruit',back:'outfit',glider:'classic',pick:'classic'}};if(PROG.tickets==null)PROG.tickets=200;PROG.owned=PROG.owned||[];PROG.locker.wrap=PROG.locker.wrap||'none';let shopPreview=null;
 const LVL_XP=600,levelOf=xp=>1+Math.floor(xp/LVL_XP);
@@ -1219,7 +1270,9 @@ function finishXP(p){const before=PROG.xp,lvl0=levelOf(before);let xp=100+p.kos*
   PROG.xp+=xp;const lvl1=levelOf(PROG.xp);const tk=30+p.kos*10+(G.win?150:p.place&&p.place<=3?50:0)+(G.tkBonus||0)+(lvl1-lvl0)*100;PROG.tickets+=tk;ensureChal();saveProg();
   const unl=[];for(let L=lvl0+1;L<=lvl1;L++)for(const list of[OUTFITS,GLIDERS,PICKS,BACKS])for(const it of unlockedAt(list,L))unl.push(it.name);
   return{xp,tk,lvl0,lvl1,unl};}
-
+// @module src/js/10-lobby-locker.js: The 3D character on the welcome screen and the Locker screen.
+// Main: rebuildLobby, lobbyFrame, renderLobbyBar, LOCK_TABS, renderLocker
+// See also: models, cosmetics, menus
 /* ================= lobby + locker ================= */
 let lobbyChar=null,lobbyMap='',lobbyT=0;
 function rebuildLobby(){if(lobbyChar)removeModel(lobbyChar);lobbyChar=makeChar('You','#e2312b',true);lobbyChar.state='alive';lobbyChar.slots=[{id:'fists'},null,null,null,null];lobbyMap='';}
@@ -1246,7 +1299,12 @@ function renderLocker(){const L=levelOf(PROG.xp);$('lockTabs').innerHTML=LOCK_TA
     return`<button type="button" class="litem${cur===it.id?' on':''}${locked?' locked':''}" data-id="${it.id}" ${locked?'disabled':''} style="--rc:${rc}"><b>${esc(it.name)}</b><span>${locked?(it.shop?'🎟️ In the Ticket Shop':it.wins?'Win a match to unlock':'Unlocks at level '+it.lvl):cur===it.id?'Equipped':'Tap to equip'}</span></button>`;}).join('');}
 document.addEventListener('click',e=>{const tb=e.target.closest('#lockTabs .ltab');if(tb){lockTab=tb.dataset.tab;renderLocker();return;}
   const li=e.target.closest('#lockGrid .litem');if(li&&!li.disabled){PROG.locker[lockTab]=li.dataset.id;saveProg();renderLocker();rebuildLobby();sfx('pickup');}});
-
+// @module src/js/11-models.js: 3D models: characters (from their outfit), held weapons, rescue drones, the battle bus.
+// Main: buildCharModel, setHeld, removeModel, droneModel, busModel
+// See also: cosmetics, visuals
+/* ================= 3D models: characters, drones, the battle bus =================
+   buildCharModel(c) builds a character from its outfit ("look"); setHeld shows the held weapon;
+   removeModel takes any model out of the scene. Outfit data and buildPerson live in 08-cosmetics. */
 function buildCharModel(c){
   // Fortnite-style cartoon person built from the outfit ("look")
   const g=new THREE.Group();g.rotation.order='YXZ';
@@ -1293,7 +1351,9 @@ function busModel(){const g=new THREE.Group();const env=new THREE.Mesh(GEO.sphC,
   g.add(mesh('boxC','#e2312b',-10,-70,0,110,30,46));g.add(mesh('boxC','#bfe8ff',-10,-66,24,90,12,1));g.add(mesh('boxC','#bfe8ff',-10,-66,-24,90,12,1));
   g.add(mesh('boxC','#e2312b',-150,30,0,40,60,6));g.add(mesh('boxC','#e2312b',-150,0,0,40,6,90));
   const prop=new THREE.Group();prop.position.set(-160,-70,0);const pb=mesh('boxC','#2b2f3a',0,0,0,2,50,6);prop.add(pb);g.add(prop);g.userData.prop=prop;scene.add(g);return g;}
-
+// @module src/js/12-game-state.js: Match options and the match itself: modes, rules, teams, creating characters, and newGame() which builds G.
+// Main: MODES, RULES, opts, G, newGame, makeChar, makeZombie, freeSpot, isEnemy
+// See also: update, screens, modes-extra
 /* ================= game state ================= */
 const DIFFS={easy:{aimErr:0.12,react:0.75,dmgMul:0.55,speed:148,cdMul:1.7,vision:420,zSpeed:76,zDmg:6},medium:{aimErr:0.06,react:0.42,dmgMul:0.8,speed:166,cdMul:1.25,vision:480,zSpeed:90,zDmg:9},hard:{aimErr:0.025,react:0.22,dmgMul:1,speed:180,cdMul:1.0,vision:540,zSpeed:104,zDmg:12}};
 const MODES={royale:{desc:'Ride the battle bus, glide down, and be the last one standing. The storm shrinks, and rescue drones fly you back in until the final circle.'},
@@ -1386,7 +1446,9 @@ function newGame(){
 function cleanupGame(){engineStop();cleanupLoot();if(XM[G.mode]&&XM[G.mode].cleanup)XM[G.mode].cleanup();for(const car of (G.cars||[]))scene.remove(car.m);for(const c of G.chars)removeModel(c);for(const a of[G.items,G.chests,G.projs,G.traps,G.texts,G.beams])for(const o of a)removeModel(o);
   for(const d of G.drones)scene.remove(d.m);for(const p of G.pieces)scene.remove(p.mesh);if(G.bus)scene.remove(G.bus.m);if(G.crate&&G.crate.mesh)scene.remove(G.crate.mesh);
   if(stormMesh){stormMesh.visible=false;nextRing.visible=false;}}
-
+// @module src/js/13-hud-helpers.js: On-screen messages: big announcements, floating text, the kill feed, toasts, eliminations, emotes, victory dance.
+// Main: announce, addText, feed, toast, showElim, startEmote, startVictory
+// See also: hud, combat
 /* ================= HUD helpers ================= */
 const annEl=$('announce');let annTimer=0;
 function announce(big,sub,dur=2.6,cls){if(NET_CTX){netTell(NET_CTX,'ann',[big,sub,dur,cls]);return;}if(NETH()&&!NET_NOFWD&&NET_ANN_OK.test(String(big)))netEv(['an',big,sub,dur,cls]);annEl.innerHTML='';annEl.className=cls||'';const b=document.createElement('div');b.className='big';b.textContent=big;annEl.appendChild(b);
@@ -1419,7 +1481,9 @@ let parts=[];const CONF=['#e2312b','#ffcb1f','#1f6fd6','#3aa845','#ff4fa3','#43f
 const toRGB=h=>{let c=colCache.get(h);if(!c){c=new THREE.Color(h);colCache.set(h,c);}return c;};
 function burst(x,y,z,n,type,col,spd=160){if(NETH()&&n>=3&&netNear(x,y))netEv(['b',ri(x),ri(y),ri(z),Math.min(n,40),type,col||0,spd],1);for(let i=0;i<n;i++){const a=Math.random()*TAU,s=rand(0.3,1)*spd;
   parts.push({x,y,z,vx:Math.cos(a)*s,vy:Math.sin(a)*s,vz:rand(60,260)*(type==='puff'?0.25:1),life:rand(0.5,1.1),type,col:col||pick(CONF)});}if(parts.length>PMAX+PUMAX)parts.splice(0,parts.length-PMAX-PUMAX);}
-
+// @module src/js/14-combat.js: Shooting, melee, lasers and damage. In multiplayer only the host applies damage, and it rewinds targets by the shooter's lag ("favour the shooter").
+// Main: fire, fireInner, shoot, laserShot, meleeHit, damage, damageInner, useItem
+// See also: weapons, net-sync, bots
 /* ================= combat ================= */
 function handPos(c){const a=c.face;return{x:c.x+Math.cos(a)*12-Math.sin(a)*9,y:c.y+Math.sin(a)*12+Math.cos(a)*9,z:c.z+28};}
 function norm3(v){const l=Math.hypot(v.x,v.y,v.z)||1;return{x:v.x/l,y:v.y/l,z:v.z/l};}
@@ -1559,7 +1623,9 @@ function checkWin(){if(G.net){if(NETH())netCheckWin();return;}
 }
 function ranking(){const R=RULES[G.rule||'kills'],list=G.chars.filter(c=>!c.zombie).map(c=>({c,s:R.score(c)}));list.sort((a,b)=>b.s[0]-a.s[0]||b.s[1]-a.s[1]);
   list.forEach(e=>{e.place=1+list.filter(o=>o.s[0]>e.s[0]||(o.s[0]===e.s[0]&&o.s[1]>e.s[1])).length;});return list;}
-
+// @module src/js/15-building.js: Building walls, ramps, floors and roofs, editing walls, and damaging pieces.
+// Main: setBuildMode, build, placePiece, editWall, damagePiece
+// See also: input, touch-controls
 /* ================= building ================= */
 const BCOST=10,MAT_HP={wood:150,stone:260,metal:380},MATCOL={wood:'#d9a066',stone:'#c5ccd6',metal:'#8fc8ff'},MAT_MESH={wood:['#a0632e','#8a5a2b','#b07a45'],stone:['#9aa3ad','#8a939e','#a8b0ba'],metal:['#6f7886','#7d8796','#646d7a']};
 // where a piece would go: the grid cell in front of you, one level higher when you look up
@@ -1623,7 +1689,9 @@ function applyWallEdit(best){for(const o of best.parts)removeOb(o);const B=best.
   scene.add(m);best.mesh=m;}
 function damagePiece(p,amt){if(!p||p.dead||NETC())return;p.hp-=amt;p.mesh.position.y+=(Math.random()-.5)*1.5;if(p.hp<=0){p.dead=true;for(const o of p.parts)removeOb(o);scene.remove(p.mesh);G.pieces.splice(G.pieces.indexOf(p),1);
   burst(p.cx,p.cy,p.ob.z0+30,26,'confetti','#a0632e',200);sfx('crack',{x:p.cx,y:p.cy});}}
-
+// @module src/js/16-drones.js: Friendly rescue drones that carry bonked players away and drop them back in.
+// Main: pickupDrone, deliverDrone, updateDrones
+// See also: update, squads
 /* ================= drones ================= */
 function pickupDrone(c){const a=Math.random()*TAU;G.drones.push({mode:'in',x:c.x+Math.cos(a)*650,y:c.y+Math.sin(a)*650,z:c.z+260,c,t:0,ox:Math.cos(a),oy:Math.sin(a),m:droneModel()});sfx('drone',c);}
 function deliverDrone(c,x,y){const a=Math.random()*TAU;c.state='delivering';const gz=groundAt(x,y,400);const d={mode:'deliver',x:x+Math.cos(a)*650,y:y+Math.sin(a)*650,z:gz+300,tx:x,ty:y,gz,c,t:0,ox:Math.cos(a),oy:Math.sin(a),m:droneModel()};
@@ -1641,7 +1709,9 @@ function updateDrones(dt){
     if(d.dead){scene.remove(d.m);G.drones.splice(i,1);}
   }
 }
-
+// @module src/js/17-storm-supply-zombies.js: The battle royale storm, supply drops, and zombie waves.
+// Main: updateStorm, safeCircle, dropSupply, startWave, spawnZombie, updateZombies
+// See also: update, modes-extra
 /* ================= storm, supply, zombies ================= */
 function dropSupply(x,y,sub){G.crate={x,y,z:groundAt(x,y,400)+800,gz:groundAt(x,y,400),landed:false,taken:false};
   const g=new THREE.Group();g.add(mesh('box','#2c6fe0',0,0,0,34,30,34));g.add(mesh('box','#ffc21a',0,12,0,36,6,36));
@@ -1674,7 +1744,9 @@ function updateZombies(dt){const Z=G.z;
       for(const p of G.chars.filter(c=>c.human||c===G.player)){if(p.state==='alive'){p.hp=Math.min(100,p.hp+25);addText(p.x,p.y,p.z+50,'+25','#5cff7a',16);}(p.mats||G.mats).wood+=20;}}}
   for(let i=G.chars.length-1;i>=0;i--){const c=G.chars[i];if(c.zombie&&c.state==='gone'){removeModel(c);G.chars.splice(i,1);}}
   Z.groanT-=dt;if(Z.groanT<=0){Z.groanT=rand(1.5,3.5);const zs=G.chars.filter(c=>c.zombie&&c.state==='alive');if(zs.length)sfx('groan',pick(zs));}}
-
+// @module src/js/18-pickups.js: Picking up and swapping weapons and items.
+// Main: tryPickup, playerSwap, giveUltra
+// See also: weapons, input
 /* ================= pickups ================= */
 function tryPickup(c,it){
   if(c.zombie)return 'no';
@@ -1694,7 +1766,9 @@ function giveUltra(c){let idx=-1;for(let i=1;i<5;i++)if(!c.slots[i]){idx=i;break
   if(idx<0){idx=c.cur>0?c.cur:4;const old=c.slots[idx];G.items.push(makeItem(old.id,c.x+15,c.y+15,old.ammo,2,getR(old)));}
   c.slots[idx]={id:'ultra',ammo:8,r:4};c.cur=idx;G.crate.taken=true;scene.remove(G.crate.mesh);burst(c.x,c.y,c.z+30,60,'confetti',null,220);sfx('alert');
   announce(c.isPlayer?'You got the ULTRA RIFLE!':c.name+' grabbed the ULTRA RIFLE!',c.isPlayer?'8 super shots. Make them count!':(c.team&&c.team===G.player.team?'Nice, a teammate has it!':'Watch out!'),3);}
-
+// @module src/js/19-net-remote-players.js: Multiplayer, on the host: characters controlled by other players. asRemote runs code "as" a remote player so effects go to the right screen.
+// Main: NET_CTX, makeRemote, asRemote, netTell, remoteStep, applyKin, clickDown
+// See also: net-sync, input
 /* ================= multiplayer: remote players on the host =================
    A remote player is an ordinary character whose controls arrive over the network (c.remote, c.rin).
    Their own device moves them (so it feels instant) and reports where they are; the host runs everything
@@ -1737,6 +1811,9 @@ function remoteStep(c,dt){c.swapIt=null;
     if(Math.abs(c.kx)+Math.abs(c.ky)>2){netTell(c,'kb',[Math.round(c.kx),Math.round(c.ky)]);c.kx=c.ky=0;}
     charTail(c,dt);});}
 function netLocalKey(k){return !!(G&&G.net&&G.net.role==="client"&&netClientKey(k));}
+// @module src/js/20-autopilot.js: Autopilot: the game plays for you, on foot and in cars (O key or the robot button).
+// Main: setAutopilot, autoCam, carAuto
+// See also: bots, cars
 /* ================= autopilot: the game plays for you (on foot and in cars) ================= */
 const autoOn=c=>!!(G&&G.auto&&c===G.lp&&!NET_CTX);
 function setAutopilot(on){if(!G||G.ended||(G.net&&G.net.role==='client'))return;const p=G.player;G.auto=on;
@@ -1754,6 +1831,9 @@ function carAuto(car,dt){const A=car.auto||(car.auto={gx:null,gy:null,t:0,stuck:
   if(Math.abs(car.speed)<35){A.stuck+=dt;if(A.stuck>1.2){A.stuck=0;A.rev=0.9;A.rs=-Math.sign(da||1);A.gx=null;}}else A.stuck=0;
   const ahead=pointBlocked(car.x+Math.cos(car.ang)*55,car.y+Math.sin(car.ang)*55,22)||hurtAt(car.x+Math.cos(car.ang)*55,car.y+Math.sin(car.ang)*55);
   return{thr:ahead?0.3:Math.abs(da)>1.4?0.55:1,str:ahead?(str>=0?1:-1):str};}
+// @module src/js/21-input.js: Keyboard and mouse: held keys, one-off key actions (shared by touch buttons and remote players), pointer lock, pause keys.
+// Main: keys, keyAction, cycleWeapon, requestLock, jumpFromBus
+// See also: touch-controls, aiming
 /* ================= input ================= */
 const keys=new Set();let buildHeld=false,mouseDown=false,aimDown=false,locked=false,hadLock=false;
 const lookDir=()=>({x:Math.cos(G.pitch)*Math.cos(G.yaw),y:Math.cos(G.pitch)*Math.sin(G.yaw),z:Math.sin(G.pitch)});
@@ -1764,13 +1844,14 @@ addEventListener('keydown',e=>{
   keys.add(k);if(e.repeat)return;
   if(k==='m'){setMuted(!AU.muted);return;}
   if(!G||G.ended)return;
-  if(k==='escape'||k==='p'){if(!locked)setPaused(!G.paused);return;}
+  // P always pauses; Esc only when the mouse is free (with the mouse captured, the browser uses Esc to free it)
+  if(k==='p'||(k==='escape'&&!locked)){setPaused(!G.paused);return;}
   if(G.paused)return;if(k===' '&&G.net&&G.player.eliminated){specNext();return;}if(netLocalKey(k))return;keyAction(k);
 });
 // one key press of the player: shared by the keyboard, touch buttons and remote players
 function keyAction(k){const p=G.player;if(k==='o'){if(!NET_CTX)setAutopilot(!G.auto);return;}
   if(k>='1'&&k<='5'){const i=+k-1;G.buildMode=null;if(p.slots[i]&&p.cur!==i){p.cur=i;aimDown=false;}}
-  else if(k==='q'){}
+  else if(k==='q')return; // Q has no action
   else if(k==='e')interact();
   else if(k==='z')setBuildMode('wall');else if(k==='x')setBuildMode('ramp');else if(k==='c')setBuildMode('floor');else if(k==='v')setBuildMode('cone');else if(k==='g')editWall();
   else if(k==='t'){const L=['wood','stone','metal'];G.matSel=L[(L.indexOf(G.matSel)+1)%3];sfx('pickup',p);}
@@ -1783,7 +1864,7 @@ function keyAction(k){const p=G.player;if(k==='o'){if(!NET_CTX)setAutopilot(!G.a
   else if(k==='f'){if(p.vehicle)exitCar(p);else{const car=nearestCar(p);if(car&&p.state==='alive')enterCar(p,car);}}
 }
 addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));
-addEventListener('blur',()=>{keys.clear();mouseDown=false;aimDown=false;if(G&&!G.ended&&!G.paused)setPaused(true);});
+addEventListener('blur',()=>{keys.clear();mouseDown=false;aimDown=false;if(G&&!G.ended&&!G.paused){if(G.net)netLog('window lost focus (game keeps running)');else setPaused(true);}});
 function cycleWeapon(dir){const p=G.player;for(let n=1;n<=5;n++){const i=((p.cur+n*dir)%5+5)%5;if(p.slots[i]){p.cur=i;break;}}}
 function requestLock(){if(TOUCH.on)return;try{const r=cv.requestPointerLock&&cv.requestPointerLock();if(r&&r.catch)r.catch(()=>{});}catch(e){}}
 cv.addEventListener('mousedown',e=>{if(!G||G.ended||G.paused)return;if(!locked)requestLock();if(e.button===0)clickDown();if(e.button===2)aimDown=true;});
@@ -1791,13 +1872,16 @@ addEventListener('mouseup',e=>{if(e.button===0){mouseDown=false;buildHeld=false;
 cv.addEventListener('contextmenu',e=>e.preventDefault());
 const LZ=[[2,35],[4,18],[8,9]];let laserZ=1;
 addEventListener('wheel',e=>{if(G&&!G.ended&&!G.paused){const s=G.player.slots[G.player.cur];if(aimDown&&s&&s.id==='laser'){const n=clamp(laserZ+(e.deltaY<0?1:-1),0,2);if(n!==laserZ){laserZ=n;sfx('pickup');}return;}G.buildMode=null;if(NETC())netClientWheel(e.deltaY>0?1:-1);cycleWeapon(e.deltaY>0?1:-1);}},{passive:true});
-document.addEventListener('pointerlockchange',()=>{locked=document.pointerLockElement===cv;if(locked)hadLock=true;else{mouseDown=false;aimDown=false;if(G&&!G.ended&&!G.paused&&hadLock)setPaused(true);}});
+document.addEventListener('pointerlockchange',()=>{locked=document.pointerLockElement===cv;if(locked)hadLock=true;else{mouseDown=false;aimDown=false;if(G&&!G.ended&&!G.paused&&hadLock){if(G.net)netLog('mouse released (game keeps running)');else setPaused(true);}}});
 addEventListener('mousemove',e=>{if(!G||G.ended||G.paused)return;lastMouseMove=performance.now();if(!locked&&e.target!==cv)return;const s=(locked?0.0022:0.004)*(camera.fov/70)*MSENS;G.yaw+=e.movementX*s;G.pitch=clamp(G.pitch-e.movementY*s,-1.25,1.0);});
 function playerSpace(){const p=G.player;if(p.vehicle){sfx('honk');return;}
   if(p.state==='bus'){jumpFromBus(p);return;}
   if(p.state==='sky'){if(!p.glide){p.glide=true;sfx('glide');}return;}
   if(p.state==='alive'&&p.onGround&&p.stun<=0){p.vz=MAP.lowG?380:360;p.onGround=false;sfx('jump',p);}}
 function jumpFromBus(c){if(c.isPlayer)for(const m of G.chars)if(isMate(m)&&m.state==='bus')m.jumpAt=G.bus.t+0.3+Math.random()*0.6;c.state='sky';c.x=G.bus.x;c.y=G.bus.y;c.z=G.bus.z-80;c.vz=0;c.glide=false;if(c.isPlayer){sfx('glide');G.pitch=-0.5;}}
+// @module src/js/22-touch-controls.js: Phone and tablet controls: floating joystick, look-drag, buttons (TACT), saved layouts, and the layout editor. Buttons stay inside the safe area (notch, home bar).
+// Main: TOUCH, TACT, TSAVE, TL, layoutTouch, renderTButtons, setTouch, isCoarse, openTEdit
+// See also: input, aiming
 /* ================= touch controls (phones + tablets) =================
    Joystick + look areas sit low (under the HUD); the buttons sit on their own top layer.
    Every button is an entry in a saved layout {a: action, x/y: screen fractions, s: size, o: opacity},
@@ -1835,7 +1919,9 @@ function vib(ms){if(TL().g.vibe&&navigator.vibrate)try{navigator.vibrate(ms);}ca
 function renderTButtons(){const box=$('tbtns');box.innerHTML='';for(const b of TL().btns){const A=TACT[b.a],el=document.createElement('button');el.type='button';
   el.className='tb'+(A.small?' small':'')+(b.a==='fire'?' fire':'')+(b.a==='act'?' act':'')+(PIECE_A.includes(b.a)?' piece':'');el.dataset.id=b.id;el.dataset.a=b.a;
   el.innerHTML=`<b>${A.i}</b>${A.l?`<span>${A.l}</span>`:''}`;b.el=el;box.appendChild(el);}layoutTouch();}
-function layoutTouch(){const k=tScale();for(const b of TL().btns){if(!b.el)continue;const sz=Math.round(b.s*k);b.el.style.left=(b.x*100)+'%';b.el.style.top=(b.y*100)+'%';b.el.style.setProperty('--s',sz+'px');b.el.style.setProperty('--o',b.o);}
+// buttons are placed by their centre; keep the whole button inside the safe button area (#tbtns) on any screen size
+function layoutTouch(){const k=tScale(),box=$('tbtns'),cw=box.clientWidth||innerWidth,ch=box.clientHeight||innerHeight;for(const b of TL().btns){if(!b.el)continue;const sz=Math.round(b.s*k),h=sz/2+2;
+  b.el.style.left=clamp(b.x*cw,h,Math.max(h,cw-h))+'px';b.el.style.top=clamp(b.y*ch,h,Math.max(h,ch-h))+'px';b.el.style.setProperty('--s',sz+'px');b.el.style.setProperty('--o',b.o);}
   const st=$('tStick');st.style.setProperty('--r',Math.round(130*k*TL().g.stick)+'px');if(!TOUCH.stick){st.style.left=(innerWidth*(TL().g.side==='right'?0.85:0.15))+'px';st.style.top=(innerHeight*0.72)+'px';}}
 function setTouch(v){if(TOUCH.on===v)return;TOUCH.on=v;try{helpShots=null;}catch(e){}document.body.classList.toggle('touch',v);touchRelease();applyGfx();syncTouchDesc();if(v)renderTButtons();}
 function syncTouchDesc(){const d=$('touchDesc');if(d)d.textContent=TOUCH.pref==='auto'?(TOUCH.on?'Touch controls are on because this looks like a phone or tablet.':'Keyboard and mouse. Touch controls turn on by themselves when you touch the screen.'):TOUCH.pref==='on'?'Touch controls are always on.':'Touch controls are off.';
@@ -1950,7 +2036,7 @@ function tEditShow(){const L=TL(),tab=TOUCH.tab;
 (()=>{const tb=$('tbtns');
   tb.addEventListener('pointerdown',e=>{if(!TOUCH.editing)return;const btn=e.target.closest('.tb');if(!btn)return;e.preventDefault();e.stopPropagation();
     const b=TL().btns.find(x=>x.id===btn.dataset.id);TOUCH.sel=b;tDrag={b,id:e.pointerId,sx:e.clientX,sy:e.clientY,bx:b.x,by:b.y,moved:false};try{tb.setPointerCapture(e.pointerId);}catch(_){}tEditShow();},true);
-  tb.addEventListener('pointermove',e=>{if(!TOUCH.editing||!tDrag||tDrag.id!==e.pointerId)return;e.preventDefault();e.stopPropagation();const d=tDrag,dx=(e.clientX-d.sx)/innerWidth,dy=(e.clientY-d.sy)/innerHeight;
+  tb.addEventListener('pointermove',e=>{if(!TOUCH.editing||!tDrag||tDrag.id!==e.pointerId)return;e.preventDefault();e.stopPropagation();const d=tDrag,dx=(e.clientX-d.sx)/(tb.clientWidth||innerWidth),dy=(e.clientY-d.sy)/(tb.clientHeight||innerHeight);
     if(Math.abs(e.clientX-d.sx)+Math.abs(e.clientY-d.sy)>4)d.moved=true;const snap=v=>$('teSnap').checked?Math.round(v*100)/100:v;
     d.b.x=+clamp(snap(d.bx+dx),0.02,0.98).toFixed(4);d.b.y=+clamp(snap(d.by+dy),0.03,0.97).toFixed(4);layoutTouch();},true);
   const end=e=>{if(!TOUCH.editing||!tDrag||tDrag.id!==e.pointerId)return;e.stopPropagation();tDrag=null;saveTouch();};
@@ -1978,7 +2064,9 @@ function applyGfx(){const lvl=GFX==='auto'?(TOUCH.on?'low':'high'):GFX;const pr=
   if(sun.shadow.mapSize.x!==ms){sun.shadow.mapSize.set(ms,ms);if(sun.shadow.map){sun.shadow.map.dispose();sun.shadow.map=null;}}}
 document.querySelectorAll('input[name="touchPref"]').forEach(r=>{r.checked=r.value===TOUCH.pref;r.addEventListener('change',()=>{TOUCH.pref=r.value;store.set('bonk-touch-pref',r.value);setTouch(r.value==='on'||(r.value==='auto'&&isCoarse()));syncTouchDesc();});});
 document.querySelectorAll('input[name="gfx"]').forEach(r=>{r.checked=r.value===GFX;r.addEventListener('change',()=>{GFX=r.value;store.set('bonk-gfx',r.value);applyGfx();});});
-
+// @module src/js/23-aiming.js: Camera position, aim point, and turning player input into movement each frame.
+// Main: camPos, aimPoint, playerInput
+// See also: input, touch-controls, update
 /* ================= aiming ================= */
 const camPos=new THREE.Vector3();
 function aimPoint(maxD=1700){
@@ -2008,7 +2096,9 @@ function playerInput(c,dt){if(G.victory)return[0,0,false];
   else if(!NETC()){c.useT=0;c.fullWarn=0;}
   return[ix,iy,(keys.has('shift')||(tStick&&TOUCH.sprint))&&f>0&&!c.useT];
 }
-
+// @module src/js/24-bots.js: Bot brains: picking targets and weapons, moving, aiming, getting unstuck; zombie behaviour.
+// Main: decide, steer, botAim, botUpdate, zombieUpdate
+// See also: update, combat
 /* ================= bots ================= */
 function los(a,b){const dx=b.x-a.x,dy=b.y-a.y,d=Math.hypot(dx,dy),n=Math.ceil(d/24);for(let k=1;k<n;k++){if(blocked3D(a.x+dx*k/n,a.y+dy*k/n,lerp(a.z,b.z,k/n)+26))return false;}return true;}
 function wScore(id,d){const w=WEAPONS[id],r=RATING[id];switch(w.kind){case 'melee':return d<w.range+60?r*1.2:r*0.45;case 'shot':return d<w.speed*w.life*0.75?r:r*0.3;case 'chicken':return d<600?r:r*0.3;case 'grenade':return d>110&&d<380?r:0.5;case 'trap':return d<140?3.5:0.2;case 'heal':return 0;case 'rocket':return d>140&&d<800?r:r*0.3;default:return 10;}}
@@ -2068,7 +2158,9 @@ function zombieUpdate(c,dt){const ai=c.ai;ai.think-=dt;if(c.frozen>0||c.bubbled>
   if(d<30&&Math.abs(t.z-c.z)<40){ai.wantMove=false;if(c.cd<=0){c.cd=0.9;c.swingT=0.25;addText(t.x,t.y,t.z+56,'CHOMP!','#b6ff3b',15);sfx('chomp',c);damage(t,G.diff.zDmg,c,'zombie',dx/d*120,dy/d*120);}return[0,0];}
   if(ai.breakP&&!ai.breakP.dead&&Math.hypot(ai.breakP.cx-c.x,ai.breakP.cy-c.y)<70&&c.cd<=0){c.cd=0.9;c.swingT=0.25;damagePiece(ai.breakP,25);sfx('chomp',c);}
   let mx=dx/d,my=dy/d;if(ai.unstuckT>0){ai.unstuckT-=dt;mx=ai.ux;my=ai.uy;}[mx,my]=steer(c,mx,my);ai.wantMove=!!(mx||my);return[mx,my];}
-
+// @module src/js/25-cars.js: Cars: models, driving physics, collisions, getting in and out, engine sound.
+// Main: spawnCars, updateCars, enterCar, exitCar, damageCar
+// See also: update, autopilot
 /* ================= cars ================= */
 const CAR_COLS=['#e2312b','#1f6fd6','#ffcb1f','#3aa845','#ff7b1c','#9b6bff','#ff4fa3'];
 function carModel(col){const g=new THREE.Group();
@@ -2153,7 +2245,9 @@ function engineStart(){if(!AU.c||eng)return;try{const c=AU.c,o=c.createOscillato
 function engineStop(){if(!eng)return;try{const t=AU.c.currentTime;eng.g.gain.setTargetAtTime(0.0001,t,0.08);eng.o.stop(t+0.4);eng.o2.stop(t+0.4);}catch(e){}eng=null;}
 function engineUpdate(){if(!eng)return;const car=G&&G.player.vehicle;if(!car||G.ended){engineStop();return;}const s=Math.abs(car.speed);
   eng.o.frequency.value=50+s*0.22;eng.o2.frequency.value=75+s*0.33;eng.g.gain.value=(AU.muted||G.paused)?0.0001:0.035+s/430*0.05;}
-
+// @module src/js/26-modes-extra.js: The extra game modes: Car Race, Floor is Lava, Capture the Crown, Capture the Flag, King of the Hill, Build Battle, Training Room; mode rules (MODEFLAGS) and end-of-match boards.
+// Main: MODEFLAGS, MODE, XM, finishFFA, crownModel, hillModel, flagModel
+// See also: game-state, update, net-mode-state
 /* ================= extra game modes ================= */
 const MODEFLAGS={race:{noCombat:1,noLoot:1,noCars:1},floorlava:{freeBuild:1},buildbattle:{noCombat:1,noLoot:1,freeBuild:1,noCars:1},crown:{},ctf:{},koth:{},training:{freeBuild:1}};
 const MODE=()=>(G&&MODEFLAGS[G.mode])||{};
@@ -2407,7 +2501,9 @@ XM.race={name:'Car Race',laps:3,
   cleanup(){if(G.cpM)for(const g of G.cpM)scene.remove(g);},
   end(p,b){const car=p.raceCar||{};return endFFA(p,b,'Car Race: '+this.laps+' laps.',e=>e.c.raceCar&&e.c.raceCar.finished?'finished':'lap '+Math.min(this.laps,(e.c.raceCar?e.c.raceCar.lap:0)+1),
     me=>[['#'+me.place,'Finish'],[car.finishT?fmt(car.finishT):'—','Race time'],[Math.min(this.laps,car.lap||0)+' / '+this.laps,'Laps done']]);}};
-
+// @module src/js/27-squads.js: Squads: being knocked down (DBNO), reviving teammates, and team wipes.
+// Main: isMate, goDBNO, updateDBNO, doRevive, botRevive
+// See also: combat, bots
 /* ================= squads: knocked down (DBNO) + revives ================= */
 const isMate=c=>G&&G.squad>1&&c!==G.player&&c.team&&c.team===G.player.team;
 function canDBNO(o){return G.squad>1&&o.team&&!o.zombie&&G.chars.some(c=>c!==o&&c.team===o.team&&c.state==='alive');}
@@ -2437,7 +2533,9 @@ function botRevive(c,dt){if(G.squad<2)return null;const ai=c.ai;let best=null,bd
   if(!best)return null;if(ai.target&&ai.target.state==='alive'&&dist(ai.target,c)<300)return null;
   if(bd<40){doRevive(c,best,dt);return[0,0,false];}
   const dx=best.x-c.x,dy=best.y-c.y;return steer(c,dx/bd,dy/bd).concat([true]);}
-
+// @module src/js/28-llamas-vending.js: Loot llamas, vending machines, and the interact (E) action.
+// Main: openLlama, buyVend, interact, spawnLootSpecials
+// See also: pickups, input
 /* ================= loot llamas + vending machines ================= */
 const VEND_ITEMS=['sniper','rocket','minigun','burst','shotgun','hammer','bigshield','medkit'];
 const VEND_COST={0:{mat:'wood',n:40},1:{mat:'wood',n:50},2:{mat:'wood',n:60},3:{mat:'stone',n:80},4:{mat:'metal',n:100}};
@@ -2478,7 +2576,9 @@ function interact(){const p=G.player;if(reviveTarget(p))return;const n=nearInter
 function cleanupLoot(){for(const L of G.llamas||[])scene.remove(L.m);for(const V of G.vends||[])scene.remove(V.m);for(const o of OB.filter(o=>o.vend))removeOb(o);}
 function animateLoot(dt,t){for(const L of G.llamas||[])if(!L.open){L.m.position.y=L.z+Math.abs(Math.sin(t*2+L.x))*3;L.m.rotation.y+=dt*0.4;}
   for(const V of G.vends||[])V.m.userData.item.rotation.y+=dt*1.5;}
-
+// @module src/js/29-update.js: The simulation step: update(dt) moves everything each frame; character physics and collisions; the sky.
+// Main: update, updateChar, collide, respawnSpot, updateSky
+// See also: every gameplay module
 /* ================= physics & update ================= */
 function collide(c){
   const r=12,ci=Math.floor(c.x/T),cj=Math.floor(c.y/T);
@@ -2614,7 +2714,9 @@ function update(dt){
   if(G.toastT>0){G.toastT-=dt;if(G.toastT<=0)$('prompt').hidden=true;}
   if(G.endAt&&G.time>=G.endAt&&!G.ended)endGame();
 }
-
+// @module src/js/30-visuals.js: Making the 3D scene match the simulation each frame: models, projectiles, effects, the camera.
+// Main: syncVisuals, animateWorld, updateCamera
+// See also: models, update
 /* ================= visuals ================= */
 let stormMesh=null,nextRing=null;
 (()=>{stormMesh=new THREE.Mesh(GEO.cylOpen,new THREE.MeshBasicMaterial({color:0x6a3df5,transparent:true,opacity:0.4,side:THREE.DoubleSide,depthWrite:false}));stormMesh.visible=false;scene.add(stormMesh);
@@ -2637,7 +2739,7 @@ function itemMesh(it){const g=new THREE.Group();const inner=weaponModel(it.id===
   if(it.id==='laser'){beam.scale.set(22,1400,22);beam.material.opacity=0.3;const b2=new THREE.Mesh(GEO.cylOpen,basic('#43c6ff',{transparent:true,opacity:0.25,depthWrite:false,side:THREE.DoubleSide,blending:THREE.AdditiveBlending}));b2.scale.set(34,900,34);b2.position.y=-17;g.add(b2);glow.scale.set(70,1,70);g.userData.mythic=b2;}
   g.userData.inner=inner;scene.add(g);return g;}
 function trapMesh(){const g=new THREE.Group();for(let k=0;k<3;k++){const m=new THREE.Mesh(GEO.sphC,mat('#ffd21f'));m.scale.set(14,3,6);m.rotation.y=k*TAU/3;m.position.set(Math.cos(k*TAU/3)*5,1.5,Math.sin(k*TAU/3)*5);g.add(m);}scene.add(g);return g;}
-let attractT=0;const tmpV=new THREE.Vector3();
+const tmpV=new THREE.Vector3();
 function syncVisuals(dt){
   const t=G?G.time:performance.now()/1000;
   if(!G){lobbyFrame(dt,t);animateWorld(dt,t,{x:lobbyChar.x,y:lobbyChar.y});return;}
@@ -2735,7 +2837,9 @@ function updateCamera(dt){
   camera.position.set(cx,cz,cy);camPos.copy(camera.position);
   camera.lookAt(cx+d.x*100,cz+d.z*100,cy+d.y*100);
 }
-
+// @module src/js/31-hud.js: The in-game HUD: health, shield, weapon slots, materials, the minimap.
+// Main: updateHUD, drawMini, makeMiniBG
+// See also: hud-helpers
 /* ================= HUD ================= */
 const slotEls=[];
 (()=>{const box=$('slots');for(let i=0;i<5;i++){const d=document.createElement('div');d.className='slot';d.innerHTML=`<span class="k">${i+1}</span><img alt=""><span class="am"></span><span class="rar"></span>`;box.appendChild(d);slotEls.push(d);}})();
@@ -2806,7 +2910,9 @@ function drawMini(){
   const p=G.player;const px=(p.state==='gone'?p.koX:p.x)*k,py=(p.state==='gone'?p.koY:p.y)*k;m.save();m.translate(px,py);m.rotate(G.yaw);m.fillStyle='#ffcb1f';m.strokeStyle='#1b2235';m.lineWidth=2;
   m.beginPath();m.moveTo(12,0);m.lineTo(-8,-8);m.lineTo(-4,0);m.lineTo(-8,8);m.closePath();m.stroke();m.fill();m.restore();
 }
-
+// @module src/js/32-screens.js: Starting, pausing and ending a match, reading the match options, and going back to menus.
+// Main: readOpts, applyOpts, startGame, setPaused, endGame, toMenu
+// See also: game-state, menus
 /* ================= screens ================= */
 const radioVal=n=>document.querySelector(`input[name=${n}]:checked`).value;
 const cap=s=>s[0].toUpperCase()+s.slice(1);
@@ -2831,7 +2937,7 @@ function showBest(){const b=getBest(),mode=radioVal('mode');let t='';
 $('bots').addEventListener('input',()=>{$('botsOut').textContent=$('bots').value;syncMenu();});
 function startGame(){readOpts();audioInit();if(lobbyChar&&lobbyChar.m)lobbyChar.m.g.visible=false;newGame();showScreen(null);hideLobbyFlair();if(shopPreview){shopPreview=null;rebuildLobby();}$('end').hidden=true;$('pause').hidden=true;$('hud').hidden=false;$('muteBtn').hidden=false;slotSig='';
   if(document.activeElement)document.activeElement.blur();renderFeed();requestLock();}
-function setPaused(v){if(!G||G.ended)return;G.paused=v;$('pause').hidden=!v;if(v){touchRelease();keys.clear();mouseDown=false;if(locked&&document.exitPointerLock)document.exitPointerLock();$('resumeBtn').focus();}
+function setPaused(v){if(!G||G.ended)return;if(G.net&&G.paused!==v)netLog((v?"paused":"resumed")+" with the pause button");G.paused=v;$('pause').hidden=!v;if(v){touchRelease();keys.clear();mouseDown=false;if(locked&&document.exitPointerLock)document.exitPointerLock();$('resumeBtn').focus();}
   else{if(document.activeElement)document.activeElement.blur();requestLock();}}
 function toMenu(target){if(NETH()&&!G.ended)netHostEnd();if(NETC()&&NET.R)NET.R.presence({left:G.net.start.id,inp:null}).catch(()=>{});if(G)cleanupGame();G=null;if(locked&&document.exitPointerLock)document.exitPointerLock();
   ['hud','pause','end','respawn','prompt','cross','lockHint','scope','autoTag','pingChip','netTag','scoreboard'].forEach(id=>$(id).hidden=true);annEl.hidden=true;$('stormVig').style.opacity='0';showScreen(typeof target==='string'?target:'welcome');}
@@ -2858,6 +2964,9 @@ function endGame(){if(NETH())netHostEnd();if(G.net)NET.lastNet=true;else NET.las
 }
 $('lockerBtn').addEventListener('click',()=>{prevScreen=curScreen;showScreen('locker');renderLocker();});$('lockerBtn2').addEventListener('click',()=>$('lockerBtn').click());
 $('lockDone').addEventListener('click',()=>{showScreen(prevScreen&&prevScreen!=='locker'?prevScreen:'welcome');});
+// @module src/js/33-ticket-shop.js: The Ticket Shop screen: today's deal, buying with a "tap again to buy" check, previews.
+// Main: renderShop, openShop, closeShop, shopCard
+// See also: cosmetics, xp-levels
 /* ================= Ticket Shop ================= */
 let shopSel=null,shopSure=null,shopSureT=0;
 function shopCard(e,deal){const it=e.it,own=owns(e.t,it.id),price=shopPrice(e),key=e.t+':'+it.id,can=PROG.tickets>=price;
@@ -2875,8 +2984,10 @@ $('shop').addEventListener('click',ev=>{const b=ev.target.closest('[data-buy]');
 $('shopBtn').addEventListener('click',openShop);$('shopBtn2').addEventListener('click',openShop);$('shopDone').addEventListener('click',closeShop);
 $('playBtn').addEventListener('click',startGame);$('againBtn').addEventListener('click',()=>{if(NET.lastNet&&NET.R)toMenu('mplobby');else startGame();});$('menuBtn').addEventListener('click',()=>toMenu('menu'));$('homeBtn').addEventListener('click',()=>toMenu('welcome'));
 $('resumeBtn').addEventListener('click',()=>setPaused(false));$('quitBtn').addEventListener('click',()=>toMenu('welcome'));
-function setMuted(m){AU.muted=m;if(AU.m)AU.m.gain.value=m?0:0.55*VOL.m;document.querySelectorAll('input[name="sfxOn"]').forEach(r=>r.checked=(r.value==='off')===m);$('muteBtn').textContent='Sound: '+(m?'off':'on');store.set('bbr3d-muted',m);}
 $('muteBtn').addEventListener('click',e=>{setMuted(!AU.muted);e.currentTarget.blur();});
+// @module src/js/34-menus.js: Menus: welcome, play screen, settings pages, About, Help (with live 3D pictures), volume.
+// Main: SCREENS, showScreen, openSettings, setPage, renderProfile, HELP_PAGES, renderHelp
+// See also: screens, lobby-locker
 /* ================= menus: welcome · play · settings · about · help ================= */
 const SCREENS=['welcome','menu','settings','about','help','locker','shop','mplobby'];let curScreen='welcome',prevScreen='welcome',setFrom='welcome';
 function showScreen(id){for(const s of SCREENS)$(s).hidden=s!==id;if(id){curScreen=id;$('muteBtn').hidden=true;}$('lobbyBar').hidden=!['welcome','menu','locker','shop'].includes(id);
@@ -2896,7 +3007,7 @@ $('setNav').addEventListener('click',e=>{const b=e.target.closest('button');if(b
 $('wSettings').addEventListener('click',()=>openSettings('controls','welcome'));
 $('mOptions').addEventListener('click',()=>openSettings('match','menu'));
 $('setDone').addEventListener('click',()=>{readOpts();showScreen(setFrom);});
-$('wAbout').addEventListener('click',()=>{$('aboutVer').textContent='Version 2026.10 · '+Object.keys(MODES).length+' game modes · '+Object.keys(MAPS).length+' maps · '+Object.keys(WEAPONS).length+' weapons and items';showScreen('about');});
+$('wAbout').addEventListener('click',()=>{$('aboutVer').textContent='Version '+BONK_VERSION+' · '+Object.keys(MODES).length+' game modes · '+Object.keys(MAPS).length+' maps · '+Object.keys(WEAPONS).length+' weapons and items';showScreen('about');});
 $('aboutDone').addEventListener('click',()=>showScreen('welcome'));
 // sound + mouse settings
 let VOL=Object.assign({m:1,mu:1},store.get('bonk-vol')||{});let MSENS=+(store.get('bonk-msens')||1);
@@ -2970,7 +3081,7 @@ const HELP_SCENES={
     return{cam:()=>{camera.position.copy(W3(p.x-Math.cos(a)*260-Math.sin(a)*160,p.y-Math.sin(a)*260+Math.cos(a)*160,430));camera.lookAt(W3(ex,ey,40));},
       ann:S=>{const[f1,f2]=proj(ex+Math.cos(a)*60,ey+Math.sin(a)*60,60);const[tx,ty]=S.map(f1,f2);hLabel(S,'🌀 The storm: it hurts! Stay out!',tx,ty-110,tx,ty,'#c79bff');
       const[g1,g2]=proj(p.x,p.y,p.z+40);const[px,py]=S.map(g1,g2);hLabel(S,'✅ You: safe inside the circle',px-60,py+110,px,py,'#5cff7a');}};}),
-  drone:()=>snapScene('training',G=>{const p=G.player,d=G.chars.find(c=>c.post&&c.dType==='still');d.state='down';d.hp=0;d.droneAt=G.time;d.droneSent=false;d.respawnAt=G.time+10;
+  drone:()=>snapScene('training',G=>{const d=G.chars.find(c=>c.post&&c.dType==='still');d.state='down';d.hp=0;d.droneAt=G.time;d.droneSent=false;d.respawnAt=G.time+10;
     for(let i=0;i<400;i++){update(1/60);const D=G.drones[0];if(D&&D.mode==='lift'&&D.t>0.5)break;}(G.vends||[]).forEach(V=>V.m.visible=false);syncVisuals(1/60);const D=G.drones[0];
     return{cam:()=>{if(!D)return;camera.position.copy(W3(D.x+120,D.y+100,D.z-10));camera.lookAt(W3(D.x,D.y,D.z-40));},
       ann:S=>{if(!D)return;const[f1,f2]=proj(D.x,D.y,D.z+10);const[tx,ty]=S.map(f1,f2);hLabel(S,'🚁 Rescue drone',tx-170,ty-60,tx,ty);hLabel(S,'It carries you back into the game!',S.W/2,S.H-40,null,null,'#5cff7a');}};})};
@@ -2988,7 +3099,7 @@ const HELP_PAGES=[
   {t:'🛡️ Safety & chat',shots:[],body:()=>`<ul><li><b>Nobody gets in without the host's OK.</b> Anyone with the code can <i>ask</i> to join. The host sees their name and taps <b>✅ Allow</b> or <b>❌ Kick</b>. During a match, the request pops up at the top of the screen.</li><li>In the room, the host can tap <b>✖</b> next to a player to remove them.</li><li><b>Chat is off</b> unless the host turns it on (in the room, or in Settings → 🌐 Multiplayer).</li><li>When chat is on, press <b>Enter</b> or tap <b>💬</b> to type, or tap a quick message like <b>GG!</b>.</li><li><b>Swear words are hidden</b> in English, Spanish, French, Portuguese, German and Italian. They turn into ★★★. A player name with a swear word in it just shows as <b>Player</b>.</li><li>Only play with people you know, and never share your address, school or passwords in chat.</li></ul>`},
   {t:'🏠 Home server',shots:[],body:()=>`<p>Playing at home with family? A Windows PC can run the game for everyone on the same Wi-Fi. It's faster than claude.ai, and nobody needs an account.</p><ol><li>Put the whole <b>Bonk Royale</b> game folder on the PC (it has <b>Start Bonk Server.bat</b> in it).</li><li>Double-click <b>Start Bonk Server</b>. A window opens with an address like <b>http://192.168.1.20:8080</b>.</li><li>The first time, Windows may ask about the firewall: tick <b>Private networks</b> and click <b>Allow</b>.</li><li>On each iPad, phone or laptop on the same Wi-Fi, type that address into Safari or Chrome. Then use <b>🌐 Multiplayer</b> as usual: one player hosts and the others type the code.</li><li>Keep the server window open while you play. Close it when you're done.</li></ol><ul><li>The lobby says <b>🏠 Home server</b> when it's working.</li><li>Your locker, tickets and settings are saved separately for each address, so the home-server game starts fresh.</li><li>Only devices on your own Wi-Fi can reach the server, not the whole internet.</li></ul>`},
   {t:'👕 Level up & style',shots:[],body:()=>`<ul><li>Every match gives you <b>XP</b>. Level up to unlock outfits, gliders, pickaxes, back bling and gun wraps in the <b>Locker</b>.</li><li>Finish <b>challenges</b> (shown in the lobby) for bonus XP and tickets.</li><li>Earn <b>🎟️ tickets</b> by playing, then spend them in the <b>Ticket Shop</b>. Tap an item to try it on first!</li><li><b>Gun wraps</b> change the colour of every gun you hold, and even your laser beams.</li><li>${TOUCH.on?'Want your buttons somewhere else? Settings → Controls → <b>Customize touch controls</b>.':'Playing on a tablet? Touch controls turn on by themselves.'}</li></ul>`}];
-function renderHelp(){const P=HELP_PAGES[helpIdx];$('helpTabs').innerHTML=HELP_PAGES.map((p,i)=>`<button type="button" class="ltab${i===helpIdx?' on':''}" data-i="${i}">${p.t}</button>`).join('');
+function renderHelp(){const P=HELP_PAGES[helpIdx];htmlSink($('helpTabs')).html=HELP_PAGES.map((p,i)=>`<button type="button" class="ltab${i===helpIdx?' on':''}" data-i="${i}">${p.t}</button>`).join('');
   const shots=P.shots.map(k=>`<div class="hshot">${helpShots&&helpShots[k]?`<img src="${helpShots[k]}" alt="${esc(P.t)} picture">`:helpBusy?'📸 Taking pictures…':'Picture not available'}</div>`).join('');
   $('helpPage').innerHTML=`<div class="hpage">${shots?`<div class="hshots">${shots}</div>`:''}<div style="${shots?'':'grid-column:1/-1'}"><h3>${P.t}</h3>${P.body()}</div></div>`;
   $('helpPrev').disabled=helpIdx===0;$('helpNext').disabled=helpIdx===HELP_PAGES.length-1;}
@@ -2999,6 +3110,9 @@ $('wHelp').addEventListener('click',()=>{helpIdx=0;showScreen('help');renderHelp
 $('helpTabs').addEventListener('click',e=>{const b=e.target.closest('[data-i]');if(b){helpIdx=+b.dataset.i;renderHelp();}});
 $('helpPrev').addEventListener('click',()=>{helpIdx=Math.max(0,helpIdx-1);renderHelp();});$('helpNext').addEventListener('click',()=>{helpIdx=Math.min(HELP_PAGES.length-1,helpIdx+1);renderHelp();});
 $('helpDone').addEventListener('click',()=>showScreen('welcome'));
+// @module src/js/35-net-connection.js: Multiplayer: the connection object MP, room codes, which transport is in use (mpVia), the status text, and the release-track badge.
+// Main: MP, mpCode, mpRoomName, mpVia, MP_HOW, mpStatusText
+// See also: net-transport-*, net-lobby
 /* ================= multiplayer: connection layer =================
    Devices find each other in a named claude.ai room (the room code). Small fast state rides on room
    "presence" (works for everyone admitted); when the browser allows it, a direct WebRTC data channel is
@@ -3018,12 +3132,40 @@ const MP_HOW={claude:'Everyone plays from this same game page on claude.ai, so i
   home:'You are playing through a home server. Everyone must be on the same Wi-Fi and open the address shown in the server window.',
   p2p:'Friends open this same website and type the code. Devices connect straight to the host (a free matchmaking service introduces them), so every device needs internet.'};
 function mpStatusText(lobby){if(MP.avail===null)return'⏳ Checking…';const v=mpVia();
+  if(!MP.avail&&MP.err==='nortc')return'⚪ This browser cannot do online play. Try Safari, Chrome or Edge.';
   if(!MP.avail)return v==='p2p'||MP.err==='peerjs'?'⚪ Online play could not load. Check the internet connection and reload.':lobby?'⚪ Online play needs the game opened from its claude.ai link (signed in), a home server, or the Bonk Royale website.':'⚪ Online play is not available here';
   if(v==='local')return'🧪 Test mode: linking browser tabs on this computer';
   if(!MP.conn)return v==='home'?'🟡 Connecting to the home server…':'🟡 Connecting…';
   return v==='home'?'🏠 Home server: fast play on this Wi-Fi':v==='p2p'?'🌍 Online: devices connect directly':'🟢 Online play is available';}
+// @module src/js/36-net-log.js: The connection log: every join, leave, disconnect, timeout and pause, with the reason; shown and copyable in Settings.
+// Main: NETLOG, netLog, netLogRender, netLogText
+// See also: every net module
+/* ================= multiplayer connection log =================
+   Every join, leave, disconnect, timeout and pause is written here with the reason, so a family member can
+   copy it from Settings → 🌐 Multiplayer → Connection log after something goes wrong. Kept in localStorage
+   (last 300 lines) so it survives a reload. Each line: time, role (H = host, P = player, - = none), message. */
+const NETLOG=(()=>{try{const a=JSON.parse(localStorage.getItem('bonk-netlog')||'[]');return Array.isArray(a)?a.slice(-300):[];}catch(e){return[];}})();
+let netLogSaveT=0;
+function netLog(msg){const d=new Date(),pad=n=>String(n).padStart(2,'0');
+  const line=pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds())+'.'+String(d.getMilliseconds()).padStart(3,'0')+' '+(NET.role==='host'?'H':NET.role==='player'?'P':'-')+' '+msg;
+  NETLOG.push(line);if(NETLOG.length>300)NETLOG.splice(0,NETLOG.length-300);
+  clearTimeout(netLogSaveT);netLogSaveT=setTimeout(()=>{try{localStorage.setItem('bonk-netlog',JSON.stringify(NETLOG));}catch(e){}},400);
+  const el=$('mpLogOut');if(el&&!el.closest('[hidden]'))netLogRender();}
+function netLogRender(){const el=$('mpLogOut');if(!el)return;el.textContent=NETLOG.slice(-80).join('\n')||'Nothing yet. Play a multiplayer game, and anything that goes wrong shows up here.';el.scrollTop=1e6;}
+function netLogText(){return['Bonk Royale 3D connection log','Version: '+(typeof BONK_VERSION!=='undefined'?BONK_VERSION:'?')+' · track '+BONK_TRACK+' · via '+(mpVia()||'none'),'Device: '+navigator.userAgent,'',...NETLOG].join('\n');}
+// the page being hidden or losing focus is the usual cause of mobile trouble, so it is always logged
+document.addEventListener('visibilitychange',()=>{if(NET.R)netLog('page '+(document.hidden?'hidden':'visible again'));});
+addEventListener('pagehide',()=>{if(NET.R)netLog('page closing');});
+(()=>{const copy=$('mpLogCopy'),clr=$('mpLogClear');if(!copy)return;
+  copy.addEventListener('click',async()=>{const t=netLogText();let ok=false;try{await navigator.clipboard.writeText(t);ok=true;}catch(e){}
+    if(!ok){const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();try{ok=document.execCommand('copy');}catch(e){}ta.remove();}
+    copy.textContent=ok?'✅ Copied!':'Select the text and copy it';setTimeout(()=>{copy.textContent='📋 Copy log';},2000);});
+  clr.addEventListener('click',()=>{NETLOG.length=0;try{localStorage.removeItem('bonk-netlog');}catch(e){}netLogRender();});})();
 (async()=>{try{if(!window.claude||!window.claude.use){MP.avail=false;mpRender();return;}const r=await window.claude.use('room');MP.room=r;MP.avail=!!r;
-  if(r)r.onConnection(c=>{MP.conn=c;mpRender();},e=>{MP.err=e.code;MP.avail=false;mpRender();});}catch(e){MP.avail=false;}mpRender();})();
+  if(r)r.onConnection(c=>{if(MP.conn!==c)netLog(c?'claude.ai room service connected':'claude.ai room service connection lost');MP.conn=c;mpRender();},e=>{MP.err=e.code;MP.avail=false;mpRender();});}catch(e){MP.avail=false;}mpRender();})();
+// @module src/js/37-net-settings-tests.js: Settings → Multiplayer: the connection test, the friend test, and the settings panel.
+// Main: mpWaitConn, mpSelfTest, mpFriendTest, mpRender
+// See also: net-connection
 async function mpWaitConn(ms){const t0=performance.now();while(MP.room&&!MP.room.connected()&&performance.now()-t0<ms)await sleep(100);return!!(MP.room&&MP.room.connected());}
 // WebRTC helpers (no TURN: LAN host/mDNS candidates, plus a public STUN for routers that need it)
 const MP_ICE=[{urls:'stun:stun.l.google.com:19302'}];
@@ -3077,7 +3219,7 @@ async function mpFriendTest(code,host){if(!MP.room)return;const F=MP.friend={cod
   catch(e){F.status='Could not join: '+(e&&e.code||e);mpRender();}}
 function mpStopFriend(){const F=MP.friend;if(!F)return;clearInterval(F.timer);if(F.R)F.R.leave().catch(()=>{});MP.friend=null;mpRender();}
 // ---- settings page ----
-function mpRender(){const box=$('mpBox');if(!box)return;const T=MP.test,F=MP.friend;
+function mpRender(){const box=$("mpBox");if(!box)return;netLogRender();const T=MP.test,F=MP.friend;
   const status=mpStatusText(false);
   $('mpStatus').textContent=status+(MP.avail===false?' (open the game from its claude.ai link while signed in, or from a home server).':'');
   $('mpTestOut').innerHTML=T?T.rows.map(r=>`<li>${r.ok?'✅':'⚠️'} ${esc(r.txt)}</li>`).join('')+(T.running?'<li>⏳ Testing…</li>':''):'';
@@ -3089,7 +3231,10 @@ $('mpRun').addEventListener('click',()=>mpSelfTest());
 $('mpHost').addEventListener('click',()=>mpFriendTest(mpCode(),true));
 $('mpJoin').addEventListener('click',()=>{const c=($('mpJoinCode').value||'').toUpperCase().replace(/[^A-Z]/g,'');if(c.length===4)mpFriendTest(c,false);else $('mpJoinCode').focus();});
 $('mpFriendStop').addEventListener('click',mpStopFriend);
-/* ================= multiplayer: lobby (host / join with a room code, teams) ================= */
+// @module src/js/38-net-transport-local.js: Transport for testing: links browser tabs on one computer (?mplocal) with BroadcastChannel.
+// Main: localRoomApi
+// See also: net-connection (docs/MULTIPLAYER.md: transports)
+/* ================= multiplayer transport: test tabs on one computer (?mplocal) ================= */
 // A stand-in for the claude.ai room, linking browser tabs on one computer (testing only: ?mplocal in the address).
 function localRoomApi(){const me='L'+Math.random().toString(36).slice(2,10),rooms={};
   function joinLocal(name){if(rooms[name])return Promise.resolve(rooms[name]);const bc=new BroadcastChannel('bonk-mp-'+name),peers=new Map(),subs=new Set(),tops={};let mine={},alive=true;
@@ -3109,6 +3254,9 @@ function localRoomApi(){const me='L'+Math.random().toString(36).slice(2,10),room
     send({type:'p',presence:mine,hello:1});rooms[name]=R;return Promise.resolve(R);}
   return{join:joinLocal,connected:()=>true,onConnection(f){setTimeout(()=>f(true),0);return()=>{};},emit:()=>Promise.resolve(),on:()=>()=>{},local:true};}
 if(!(window.claude&&window.claude.use)&&/mplocal/.test(location.search)){MP.room=localRoomApi();MP.avail=true;MP.conn=true;setTimeout(mpRender,0);}
+// @module src/js/39-net-transport-home.js: Transport for the home server (bonk-server.ps1): the room interface over a WebSocket; faster send rates.
+// Main: wsRoomApi, NETFAST
+// See also: bonk-server.ps1
 // Transports: every way of linking players offers the same "room" interface the game uses (join, presence, onPeers, emit, on, leave):
 // claude.ai rooms, the ?mplocal tab stand-in above, and this one - the home server (bonk-server.ps1 on a PC on the same Wi-Fi).
 // the home server has no claude.ai message budget, so it sends updates more often
@@ -3119,12 +3267,12 @@ function wsRoomApi(url){let ws=null,me=null,up=false;const rooms={},conn=new Set
   const tell=v=>conn.forEach(f=>{try{f(v);}catch(e){}});
   function connect(){try{ws=new WebSocket(url);}catch(e){setTimeout(connect,2000);return;}
     ws.onmessage=e=>{const s=e.data,k=s[0];let m,R;
-      if(k==='I'){me='H'+s.slice(2);up=true;tell(true);for(const n in rooms){raw('J|'+n);rooms[n]._resend();}}
+      if(k==='I'){me='H'+s.slice(2);up=true;netLog('connected to the home server');tell(true);for(const n in rooms){raw('J|'+n);rooms[n]._resend();}}
       else if(k==='J'){const w=waits[s.slice(2)];if(w){delete waits[s.slice(2)];w();}}
       else if(k==='P'){m=cut(s,2);R=m&&rooms[m[0]];if(R)try{R._p('H'+m[1],JSON.parse(m[2]));}catch(e){}}
       else if(k==='B'){m=cut(s,1);R=m&&rooms[m[0]];if(R)R._b('H'+m[1]);}
       else if(k==='E'){m=cut(s,3);R=m&&rooms[m[0]];if(R)try{R._e('H'+m[1],m[2],JSON.parse(m[3]));}catch(e){}}};
-    ws.onclose=()=>{const was=up;up=false;if(was)tell(false);for(const n in rooms)rooms[n]._clear();setTimeout(connect,1500);};}
+    ws.onclose=()=>{const was=up;up=false;if(was){netLog('lost the home server, trying again');tell(false);}for(const n in rooms)rooms[n]._clear();setTimeout(connect,1500);};}
   function join(name){if(rooms[name])return Promise.resolve(rooms[name]);const peers=new Map(),subs=new Set(),tops={};let mine={};
     const who=(peer,isMe)=>({peer,isMe,sameTab:isMe,kind:'viewer',by:null,guest:false});
     const snap=()=>[{peer:me,presence:mine,isMe:true,sameTab:true,kind:'viewer',by:null,guest:false,updatedAt:Date.now()},...[...peers.values()].map(p=>({peer:p.peer,presence:p.presence,isMe:false,sameTab:false,kind:'viewer',by:null,guest:false,updatedAt:p.t}))];
@@ -3148,12 +3296,19 @@ function wsRoomApi(url){let ws=null,me=null,up=false;const rooms={},conn=new Set
   return{join,connected:()=>up,onConnection(f){conn.add(f);setTimeout(()=>f(up),0);return()=>conn.delete(f);},emit:()=>Promise.resolve(),on:()=>()=>{},home:true};}
 if(!(window.claude&&window.claude.use)&&window.BONK_WS&&!/mplocal/.test(location.search)){MP.room=wsRoomApi((location.protocol==='https:'?'wss://':'ws://')+location.host+'/bonk-ws');MP.avail=true;
   MP.room.onConnection(c=>{MP.conn=c;mpRender();if(typeof renderMpLobby==='function')renderMpLobby();});setTimeout(mpRender,0);}
+// @module src/js/40-net-transport-p2p.js: Transport for the website: direct WebRTC links through PeerJS. The host is the hub; reliable + fast channels; keep-alives; reconnecting to the matchmaking server.
+// Main: peerRoomApi, loadPeerJS, p2pOptions, P2P_PREFIX
+// See also: net-connection
 // Public website: devices link up directly (WebRTC). The first device in a room (the host) claims an id made from the room code and becomes the hub;
 // everyone else connects to it. A free PeerJS matchmaking server only introduces the devices. If a network blocks direct links, a TURN relay carries the data.
 const P2P_PREFIX='bonkroyale3d-v1-';
 function loadScript(src){return new Promise((res,rej)=>{const s=document.createElement('script');s.src=src;s.onload=res;s.onerror=rej;document.head.appendChild(s);});}
 async function loadPeerJS(){if(window.Peer)return;for(const u of['https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js','https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js']){try{await loadScript(u);if(window.Peer)return;}catch(e){}}throw new Error('peerjs');}
-function p2pOptions(){const ice=[{urls:'stun:stun.l.google.com:19302'},{urls:['turn:eu-0.turn.peerjs.com:3478','turn:us-0.turn.peerjs.com:3478'],username:'peerjs',credential:'peerjsp'}];
+// STUN helps devices find a direct path. When no direct path exists (cellular data, strict school/office networks) the
+// built-in relay BONK_RELAY (src/page/config.js) carries the game instead; a relay set in Settings → Multiplayer comes first.
+// (PeerJS's own free relays stopped answering on 2026-10-14.)
+function p2pOptions(){const ice=[{urls:['stun:stun.l.google.com:19302','stun:stun.cloudflare.com:3478','stun:stun.relay.metered.ca:80']}];
+  if(typeof BONK_RELAY!=='undefined'&&BONK_RELAY.urls)ice.push({urls:BONK_RELAY.urls,username:BONK_RELAY.username,credential:BONK_RELAY.credential});
   const t=MPSET.turn;if(t&&t.url)ice.unshift({urls:t.url.trim(),username:(t.user||'').trim(),credential:(t.pass||'').trim()});return{debug:0,config:{iceServers:ice}};}
 function peerRoomApi(){let up=false;const rooms={},conn=new Set();const tell=v=>{up=v;conn.forEach(f=>{try{f(v);}catch(e){}});};
   loadPeerJS().then(()=>tell(true),()=>{MP.err='peerjs';MP.avail=false;tell(false);});
@@ -3170,30 +3325,35 @@ function peerRoomApi(){let up=false;const rooms={},conn=new Set();const tell=v=>
     // ---- hub side ----
     const others=(skip,ch,s)=>{for(const[id,l]of links)if(id!==skip)tx(l[ch]&&l[ch].open?l[ch]:l.r,s);};
     function hubLink(c){const id=c.peer,l=links.get(id)||{r:null,u:null,seen:Date.now()};links.set(id,l);l[c.label==='u'?'u':'r']=c;
-      c.on('data',d=>hubRecv(id,String(d),c.label==='u'));c.on('close',()=>{if(links.get(id)===l&&c.label!=='u')hubDrop(id);});c.on('error',()=>{});
+      c.on('data',d=>hubRecv(id,String(d),c.label==='u'));c.on('close',()=>{if(links.get(id)===l&&c.label!=='u')hubDrop(id,'the player closed it');});c.on('error',()=>{});
       if(c.label!=='u')c.on('open',()=>{tx(c,'P|'+me+'|'+mySeq+'|'+JSON.stringify(mine));for(const p of peers.values())if(p.peer!==id)tx(c,'P|'+p.peer+'|'+p.seq+'|'+JSON.stringify(p.presence));});}
     function hubRecv(id,s,unrel){const l=links.get(id);if(l)l.seen=Date.now();const k=s[0];
       if(k==='P'){const m=cut(s,1);if(!m)return;const seq=+m[0];const old=peers.get(id);if(old&&old.seq>=seq)return;setP(id,seq,m[1]);others(id,unrel?'u':'r','P|'+id+'|'+seq+'|'+m[1]);}
       else if(k==='E'){const m=cut(s,1);if(!m)return;try{hear(m[0],JSON.parse(m[1]),who(id,false));}catch(e){}others(id,'r','E|'+id+'|'+m[0]+'|'+m[1]);}}
-    function hubDrop(id){const l=links.get(id);if(!l)return;links.delete(id);try{l.r&&l.r.close();l.u&&l.u.close();}catch(e){}if(peers.delete(id))notify();others(null,'r','B|'+id);}
+    function hubDrop(id,why){const l=links.get(id);if(!l)return;netLog('player link '+id.slice(-4)+' closed: '+(why||'closed'));links.delete(id);try{l.r&&l.r.close();l.u&&l.u.close();}catch(e){}if(peers.delete(id))notify();others(null,'r','B|'+id);}
     // ---- player side ----
     function clientRecv(s){hubSeen=Date.now();const k=s[0];let m;
       if(k==='P'){m=cut(s,2);if(m&&m[0]!==me)setP(m[0],+m[1],m[2]);}
       else if(k==='B'){const id=s.slice(2);if(peers.delete(id))notify();}
       else if(k==='E'){m=cut(s,2);if(m)try{hear(m[1],JSON.parse(m[2]),who(m[0],false));}catch(e){}}}
-    function asClient(){peer=new Peer(p2pOptions());peer.on('error',e=>{if(e&&e.type==='peer-unavailable'&&done){done();}});
+    function asClient(){peer=new Peer(p2pOptions());peer.on('error',e=>{const t=e&&e.type;if(t==='peer-unavailable'){netLog('no room with that code on the matchmaking server');if(done)done();}else netLog('connection error: '+t);});
       peer.on('open',id=>{me=id;const r=peer.connect(hubId,{label:'r',reliable:true,serialization:'raw'}),u=peer.connect(hubId,{label:'u',reliable:false,serialization:'raw'});toHub={r,u};
         r.on('open',()=>{hubSeen=Date.now();tx(r,'P|'+mySeq+'|'+JSON.stringify(mine));if(done)done();});
-        for(const c of[r,u]){c.on('data',d=>clientRecv(String(d)));c.on('error',()=>{});}r.on('close',()=>{if(!dead&&peers.size){peers.clear();notify();}});});}
-    function start(){peer=new Peer(hubId,p2pOptions());
-      peer.on('open',id=>{me=id;hub=true;R.hubbed=true;peer.on('connection',hubLink);if(done)done();});
-      peer.on('error',e=>{if(e&&e.type==='unavailable-id'&&!hub){try{peer.destroy();}catch(x){}R.hubbed=false;asClient();}});
-      peer.on('disconnected',()=>{if(!dead)setTimeout(()=>{try{if(!dead&&peer.disconnected)peer.reconnect();}catch(e){}},1500);});}
+        for(const c of[r,u]){c.on('data',d=>clientRecv(String(d)));c.on('error',e=>netLog('link to the host failed: '+(e&&(e.type||e.message)||e)));}
+        setTimeout(()=>{if(!dead&&!r.open)netLog('could not reach the host directly after 8 s (a firewall or network may be blocking it)');},8000);r.on('close',()=>{if(!dead){netLog('link to the host closed');if(peers.size){peers.clear();notify();}}});});}
+    // the host keeps its link to the matchmaking server alive; without it new players cannot find the room (a "stale" room code)
+    function start(){peer=new Peer(hubId,p2pOptions());let wired=false;
+      peer.on('open',id=>{me=id;hub=true;R.hubbed=true;if(!wired){wired=true;peer.on('connection',hubLink);}else netLog('room can be found again');if(done)done();});
+      peer.on('error',e=>{const t=e&&e.type;if(t==='unavailable-id'&&!hub){try{peer.destroy();}catch(x){}R.hubbed=false;asClient();return;}if(t!=='peer-unavailable')netLog('connection error: '+t);});
+      peer.on('disconnected',()=>{if(!dead&&hub&&!peer.destroyed)netLog('lost the matchmaking server, new players cannot find the room until it reconnects');});}
+    let lastFix=0;function keepFindable(now){if(!hub||dead||!peer||now-lastFix<4000)return;
+      if(peer.destroyed){lastFix=now;netLog('room link broke, opening it again');start();}
+      else if(peer.disconnected){lastFix=now;try{peer.reconnect();}catch(e){}}}
     function pushP(ch){const s=JSON.stringify(mine);if(hub)others(null,ch,'P|'+me+'|'+mySeq+'|'+s);else if(toHub)tx(toHub[ch]&&toHub[ch].open?toHub[ch]:toHub.r,'P|'+mySeq+'|'+s);}
     // every 0.4 s: re-send the latest presence on the reliable link (fast updates go on the quick link, which may drop some), check who is still there
     timer=setInterval(()=>{if(dead)return;if(relSeq!==mySeq){relSeq=mySeq;pushP('r');}const now=Date.now();
-      if(hub){for(const[id,l]of links){if(now-l.seen>2500)tx(l.r,'H');if(now-l.seen>10000)hubDrop(id);}}
-      else if(toHub){if(now-hubSeen>2500)tx(toHub.r,'H');if(hubSeen&&now-hubSeen>10000&&peers.size){peers.clear();notify();}}},400);
+      if(hub){keepFindable(now);for(const[id,l]of links){if(now-l.seen>2500)tx(l.r,'H');if(now-l.seen>30000)hubDrop(id,'silent for 30 s');}}
+      else if(toHub){tx(toHub.r,'H');if(hubSeen&&now-hubSeen>30000&&peers.size){netLog('host silent for 30 s');peers.clear();notify();}}},400);
     const R={name,hubbed:null,
       presence(patch){for(const k in patch){if(patch[k]===null)delete mine[k];else mine[k]=patch[k];}mine=Object.assign({},mine);mySeq++;pushP('u');notify();return Promise.resolve();},
       peers:snap,onPeers(f){subs.add(f);setTimeout(()=>f({peers:snap(),joined:snap(),left:[],updated:[]}),0);return()=>subs.delete(f);},
@@ -3204,9 +3364,12 @@ function peerRoomApi(){let up=false;const rooms={},conn=new Set();const tell=v=>
     rooms[name]=R;
     return loadPeerJS().then(()=>new Promise(res=>{done=()=>{done=null;res(R);};setTimeout(()=>{if(done)done();},9000);start();}));}
   return{join,connected:()=>up,onConnection(f){conn.add(f);setTimeout(()=>f(up),0);return()=>conn.delete(f);},emit:()=>Promise.resolve(),on:()=>()=>{},p2p:true};}
+if(!(window.claude&&window.claude.use)&&!window.BONK_WS&&!/mplocal/.test(location.search)&&!window.RTCPeerConnection)MP.err='nortc';
 if(!(window.claude&&window.claude.use)&&!window.BONK_WS&&!/mplocal/.test(location.search)&&window.RTCPeerConnection){MP.room=peerRoomApi();MP.avail=true;
   MP.room.onConnection(c=>{MP.conn=c;mpRender();if(typeof renderMpLobby==='function')renderMpLobby();});setTimeout(mpRender,0);}
-
+// @module src/js/41-net-lobby-setup.js: Multiplayer lobby basics: teams, which modes allow multiplayer, the NET room state, and outfits sent over the network.
+// Main: NET, NET_TEAMS, NET_MODES, netTeamKind, myLook, lookFromNet, netMe
+// See also: net-lobby, safety
 const NET_TEAMS=[{id:'r',name:'Red',col:'#e2312b'},{id:'b',name:'Blue',col:'#1f6fd6'},{id:'g',name:'Green',col:'#3aa845'},{id:'y',name:'Yellow',col:'#e0a800'}];
 const NET_MODES=['royale','team','zombie','race','floorlava','crown','ctf','koth','buildbattle','training'];
 const NET_TEAMMODES={host:'Host picks',random:'🎲 Random',self:'Pick your own',ffa:'Everyone vs everyone'};
@@ -3216,6 +3379,9 @@ const NET={R:null,code:'',role:null,lob:null,offPeers:null,offChat:null,startId:
 function myLook(){const L=PROG.locker;return{o:L.outfit,b:L.back,g:L.glider,p:L.pick,w:L.wrap};}
 function lookFromNet(l){l=l||{};const o=OUTFITS.find(x=>x.id===l.o)||OUTFITS[0];return Object.assign({},o,{back:l.b==='outfit'||!l.b?o.back:l.b,glider:l.g||'classic',pick:l.p||'classic',wrap:l.w||'none',emblem:true});}
 function netMe(){return NET.R&&NET.R.peers().find(p=>p.sameTab);}
+// @module src/js/42-safety.js: Kid safety: the swear filter (names and chat, 6 languages), host approval (Allow / Kick), and chat (off unless the host turns it on).
+// Main: clean, cleanName, isSwear, netPlayers, netPending, netAllow, netKick, chatSend, chatHear
+// See also: net-lobby
 /* ================= safety: swear filter (names + chat), host approves who joins, chat (off unless the host turns it on) ================= */
 // word lists for English, Spanish, French, Portuguese, German and Italian (kept encoded so they don't show in the page source)
 const BAD=(()=>{const d=s=>atob(s).split(' ');return{x:new Set(d('YXNzIGFzc2VzIGFyc2UgYXJzZXMgZGljayBkaWNrcyBjb2NrIGNvY2tzIHRpdCB0aXRzIHRpdHR5IHRpdHRpZXMgY3JhcCBwaXNzIHBpc3NlZCBwaXNzaW5nIHByaWNrIHByaWNrcyB0d2F0IHR3YXRzIHdhbmtlciBib2xsb2NrcyBqaXp6IGN1bSBwb3JuIGRpbGRvIGJvbmVyIGhvcm55IHJldGFyZCByZXRhcmRlZCBmYWcgZmFncyBkeWtlIG5pZ2dhIG5pZ2dhcyBjaGluayBzcGljIGtpa2UgdHJhbm55IGhvZSBob2VzIHRob3QgbWlsZiBqYWNrYXNzIGR1bWJhc3Mgc21hcnRhc3MgYmFkYXNzIGRhbW4gZ29kZGFtbiBkYW1taXQgc3RmdSB3dGYgZm1sIHB1dGEgcHV0YXMgcHV0byBwdXRvcyBwdXRpdGEgY3VsbyBjdWxvcyBjb25vIGNvbm9zIGNhYnJvbiBjYWJyb25hIGNhYnJvbmVzIHZlcmdhIHZlcmdhcyBwZW5kZWpvIHBlbmRlamEgcGVuZGVqb3MgbWFyaWNhIG1hcmljb24gbWFyaWNvbmVzIG1hbW9uIG1hbW9uYSB6b3JyYSB6b3JyYXMgcG9sbGEgcG9sbGFzIGNoaW5nYSBjaGluZ2FyIGNoaW5nYWRhIGNoaW5nYWRvIGNoaW5nYXMgY2hpbmd1ZSBqb2RldGUgam9kaWRvIGpvZGlkYSBjYXB1bGxvIGNvam9uZXMgY2FyYWpvIGN1bGVybyBjdWxlcmEgcGFub2NoYSBwaW5jaGUgbWFscGFyaWRvIHBlcnJhIHBlcnJhcyBwdXRlIHB1dGVzIHNhbG9wZSBzYWxvcGVzIHNhbGF1ZCBzYWxhdWRzIGNvbm5hc3NlIGJhdGFyZCBiYXRhcmRzIGNvdWlsbGUgY291aWxsZXMgY2hpZXIgY2hpYW50IGNoaWFudGUgZm91dHJlIG5pcXVlIG5pcXVlciBudG0gcGQgcGVkZSB0YXBldHRlIG5lZ3JlIHBvcnJhIGZvZGEgZm9kYXNlIGZvZGVyIGZvZGlkbyBmb2RpZGEgZnVkaWRvIGJ1Y2V0YSBib2NldGEgY3V6YW8gdmlhZG8gYm9zdGEgcGlyb2NhIGJhYmFjYSB4b3hvdGEgZmRwIHZzZiBwcXAga3JsIHRuYyBhcnNjaCBodXJlIGh1cmVuIHRpdHRlbiBudXR0ZSBuZWdlciBzcGFzdGkgdHJvaWEgdHJvaWUgZmlnYSBzdWNhIGNvcm51dG8=')),s:d('ZnVjayBmdWsgcGh1Y2sgc2hpdCBiaXRjaCBiaWF0Y2ggY3VudCBuaWdnIG5pZ3IgZmFnZyBtb3RoZXJmIGFzc2hvbCBhcnNlaG9sIGRpY2toZWFkIGNvY2tzdWNrIHdob3JlIHNsdXQgYmFzdGFyZCB3YW5rIHB1c3N5IGplcmtvZmYgYmxvd2pvYiBoYW5kam9iIHBvcm5vIG1pZXJkIGdpbGlwb2xsIGhpam9wdXQgaGlqb2RlcHV0IGpvZGVyIG1lcmRlIHB1dGFpbiBlbmN1bCBlbmZvaXIgY29ubmFyZCBuaXF1ZXRhbWVyIGNhcmFsaCBtZXJkYSBwdW5oZXQgYXJyb21iYSBmaWxob2RhcHV0IHNjaGVpcyBhcnNjaGwgd2ljaHMgZmljayBmb3R6ZSBodXJlbnMgc2NobGFtcCBtaXNzZ2VidXJ0IGthY2sgdmVycGlzcyBzY2h3dWNodGVsIHNwYXN0IGRyZWNrc2F1IGNhenogZmFuY3VsIHN0cm9ueiBwdXR0YW4gbWluY2hpIGNvZ2xpb24gcG9yY29kaSBwb3JjYW1hZG9uIGRpb2NhbiBmcm9jaSBtaWdub3R0IHpvY2NvbCBib2NjaGlu')};})();
@@ -3237,20 +3403,21 @@ function netPlayers(){return netAllPlayers().filter(netOk).slice(0,16);}
 function netHostPeer(){const all=netAllPlayers();if(NET.role==='host')return all.find(p=>p.sameTab);
   if(NET.hostPeer)return all.find(p=>p.peer===NET.hostPeer);const h=all.find(p=>!p.sameTab&&p.presence.bonk.role==='host');if(h)NET.hostPeer=h.peer;return h;}
 function netPending(){const L=NET.lob;if(NET.role!=='host'||!L)return[];return netAllPlayers().filter(p=>!p.sameTab&&!(L.ok&&L.ok[p.peer])&&!(L.kick&&L.kick[p.peer]));}
-function netAllow(peer){const L=NET.lob;if(!L)return;if(netPlayers().length>=(L.max||8)){netSay('The room is full');return;}(L.ok=L.ok||{})[peer]=1;sfx('pickup');netHostSyncTeams();netPushLob();netAskRender();}
-function netKick(peer){const L=NET.lob;if(!L)return;if(L.ok)delete L.ok[peer];(L.kick=L.kick||{})[peer]=1;delete L.teams[peer];sfx('drop');netPushLob();netAskRender();}
+const netPeerName=peer=>{const p=netAllPlayers().find(x=>x.peer===peer);return p?cleanName(p.presence.bonk.name)||'Player':'a player';};
+function netAllow(peer){const L=NET.lob;if(!L)return;netLog('allowed '+netPeerName(peer)+' in');if(netPlayers().length>=(L.max||8)){netSay('The room is full');return;}(L.ok=L.ok||{})[peer]=1;sfx('pickup');netHostSyncTeams();netPushLob();netAskRender();}
+function netKick(peer){const L=NET.lob;if(!L)return;netLog('kicked '+netPeerName(peer));if(L.ok)delete L.ok[peer];(L.kick=L.kick||{})[peer]=1;delete L.teams[peer];sfx('drop');netPushLob();netAskRender();}
 const NET_ASKSEEN=new Set();const netSay=t=>G&&!G.ended?toast(t):mpLobMsg(t);
 function netAskRender(){const box=$('mpAsk'),pop=$('askPop');const pend=netPending().slice(0,5);
   for(const p of pend)if(!NET_ASKSEEN.has(p.peer)){NET_ASKSEEN.add(p.peer);sfx('alert');}
   const rows=pend.map(p=>`<div class="askrow"><span>🙋 <b>${esc(cleanName(p.presence.bonk.name)||'Player')}</b> wants to join</span><button type="button" class="brick small" data-allow="${esc(p.peer)}">✅ Allow</button><button type="button" class="brick small" data-kick="${esc(p.peer)}">❌ Kick</button></div>`).join('');
   const inMatch=!!(G&&G.net&&!G.ended);
-  if(box){if(NET.role==='host'){box.hidden=!rows;box.innerHTML=rows;}
-    else if(NET.R&&NET.lob){const me=netMe(),ok=me&&NET.lob.ok&&NET.lob.ok[me.peer];box.hidden=!!ok;box.innerHTML=ok?'':'<p class="askwait">⏳ Waiting for the host to let you in…</p>';}else box.hidden=true;}
-  if(pop){pop.hidden=!(inMatch&&rows);if(inMatch)pop.innerHTML=rows;}}
+  if(box){if(NET.role==='host'){box.hidden=!rows;setHtmlIfChanged(box,rows);}
+    else if(NET.R&&NET.lob){const me=netMe(),ok=me&&NET.lob.ok&&NET.lob.ok[me.peer];box.hidden=!!ok;setHtmlIfChanged(box,ok?'':'<p class="askwait">⏳ Waiting for the host to let you in…</p>');}else box.hidden=true;}
+  if(pop){pop.hidden=!(inMatch&&rows);if(inMatch)setHtmlIfChanged(pop,rows);}}
 function netAskClick(e){const a=e.target.closest('[data-allow]'),k=e.target.closest('[data-kick]');if(a)netAllow(a.dataset.allow);else if(k)netKick(k.dataset.kick);}
 // a player the host said no to leaves the room
 function netCheckKicked(){if(NET.role!=='player'||!NET.lob||!NET.lob.kick)return false;const me=netMe();if(!me||!NET.lob.kick[me.peer])return false;
-  netLeave(true).then(()=>{mpLobMsg('The host did not let you into that room.');renderMpLobby();});return true;}
+  netLog('the host said no (kicked)');netLeave(true).then(()=>{mpLobMsg('The host did not let you into that room.');renderMpLobby();});return true;}
 // ---- chat: only when the host turns it on; every message goes through the swear filter, on the way out and on the way in ----
 const CHAT={log:[],last:0,from:{},open:false};const CHAT_QUICK=['👋 Hi!','GG!','Nice shot!','Help me!','Follow me!','On my way!','👍','😂'];
 const chatOn=()=>!!(NET.R&&NET.lob&&NET.lob.chat);
@@ -3278,22 +3445,27 @@ let chatFeedT=0;function netSafeHUD(){const on=!!(G&&G.net&&!G.ended&&chatOn());
   addEventListener('keydown',e=>{const tg=e.target;if(e.key!=='Enter'||CHAT.open||(tg&&(tg.tagName==='INPUT'||tg.tagName==='TEXTAREA'||tg.tagName==='SELECT')))return;if(G&&G.net&&!G.ended&&chatOn()){e.preventDefault();chatOpen();}});
   $('mpAsk').addEventListener('click',netAskClick);$('askPop').addEventListener('click',netAskClick);
   document.querySelectorAll('#mpChatSeg input').forEach(r=>r.addEventListener('change',()=>{if(NET.role!=='host'||!NET.lob)return;NET.lob.chat=r.value==='on';MPSET.chat=NET.lob.chat;saveMpSet();netPushLob();chatRender();}));})();
+// @module src/js/43-net-lobby.js: The multiplayer lobby: hosting, joining, leaving, team setup, the lobby screen, START, and the host-missing grace period.
+// Main: netHost, netJoin, netLeave, netOnPeers, renderMpLobby, netHostStart, netStartGame, netClientStart, netHostMissing, netHostGone
+// See also: safety, net-sync
+/* ================= multiplayer: lobby (host / join with a room code, teams) ================= */
 function netDefaultLob(){return{mode:NET_MODES.includes(opts.mode)?opts.mode:'royale',map:opts.map,tm:MPSET.tm,max:MPSET.max,late:MPSET.late,nteams:2,teams:{},ok:{},kick:{},chat:!!MPSET.chat,bots:opts.bots,diff:opts.diff,len:opts.len,storm:opts.storm,start:null};}
 async function netHost(){if(!MP.room)return;mpLobMsg('Opening a room…');try{await mpWaitConn(6000);let code,R;for(let t=0;t<4;t++){code=mpCode();R=await MP.room.join(mpRoomName(code));if(R.hubbed!==false)break;await R.leave();}
-    Object.assign(NET,{R,code,role:'host',lob:netDefaultLob()});await R.presence({bonk:{name:cleanName(MP.name)||'Host',look:myLook(),role:'host',v:1},lob:NET.lob});netWatch();renderMpLobby();}
-  catch(e){mpLobMsg('Could not open a room ('+(e&&e.code||e)+'). Try the connection test in Settings → Multiplayer.');}}
+    Object.assign(NET,{R,code,role:'host',lob:netDefaultLob()});netLog('hosting room '+code+' via '+mpVia());await R.presence({bonk:{name:cleanName(MP.name)||'Host',look:myLook(),role:'host',v:1},lob:NET.lob});netWatch();renderMpLobby();}
+  catch(e){netLog('could not open a room: '+(e&&(e.code||e.message)||e));mpLobMsg('Could not open a room ('+(e&&e.code||e)+'). Try the connection test in Settings → Multiplayer.');}}
 async function netJoin(code){if(!MP.room)return;code=(code||'').toUpperCase().replace(/[^A-Z]/g,'');if(code.length!==4){mpLobMsg('Room codes have 4 letters.');return;}
-  mpLobMsg('Looking for room '+code+'…');try{await mpWaitConn(6000);const R=await MP.room.join(mpRoomName(code));Object.assign(NET,{R,code,role:'player',lob:null,hostPeer:null});
+  mpLobMsg('Looking for room '+code+'…');netLog('joining room '+code+' via '+mpVia());try{await mpWaitConn(6000);const R=await MP.room.join(mpRoomName(code));Object.assign(NET,{R,code,role:'player',lob:null,hostPeer:null});
     await R.presence({bonk:{name:cleanName(MP.name)||'Player',look:myLook(),role:'player',wish:null,v:1}});netWatch();
     const t0=performance.now();while(!netHostPeer()&&performance.now()-t0<8000)await sleep(150);
-    if(!netHostPeer()){await netLeave(true);mpLobMsg('No game found with code '+code+'. Check the letters, and make sure the host is still in the room.');return;}renderMpLobby();}
-  catch(e){mpLobMsg('Could not join ('+(e&&e.code||e)+').');}}
-async function netLeave(quiet){if(NET.offPeers)NET.offPeers();if(NET.offChat)NET.offChat();if(NET.R)try{await NET.R.leave();}catch(e){}Object.assign(NET,{R:null,code:'',role:null,lob:null,offPeers:null,offChat:null,startId:null,hostPeer:null});NET_ASKSEEN.clear();CHAT.log=[];chatRender();netAskRender();if(!quiet){mpLobMsg('');renderMpLobby();}}
+    if(!netHostPeer()){netLog('no host found in room '+code);await netLeave(true);mpLobMsg('No game found with code '+code+'. Check the letters, and make sure the host is still in the room.');return;}renderMpLobby();}
+  catch(e){netLog('could not join: '+(e&&(e.code||e.message)||e));mpLobMsg('Could not join ('+(e&&e.code||e)+').');}}
+async function netLeave(quiet){if(NET.R)netLog('left room '+NET.code);NET.hostMissT=0;if(NET.offPeers)NET.offPeers();if(NET.offChat)NET.offChat();if(NET.R)try{await NET.R.leave();}catch(e){}Object.assign(NET,{R:null,code:'',role:null,lob:null,offPeers:null,offChat:null,startId:null,hostPeer:null});NET_ASKSEEN.clear();CHAT.log=[];chatRender();netAskRender();if(!quiet){mpLobMsg('');renderMpLobby();}}
 function netWatch(){if(NET.offPeers)NET.offPeers();if(NET.offChat)NET.offChat();NET.offPeers=NET.R.onPeers(()=>{netOnPeers();});NET.offChat=NET.R.on('cmd',chatHear);}
 function netOnPeers(){const h=netHostPeer();
-  if(NET.role==='player'){if(!h){if(G&&G.net)netHostGone();else if(!$('mplobby').hidden){mpLobMsg('The host left the room.');}renderMpLobby();return;}
+  if(NET.role==='player'){if(!h){if(G&&G.net)netHostMissing();else if(!$('mplobby').hidden&&NET.hostPeer){mpLobMsg('The host left the room.');netLog('host left the room');}renderMpLobby();return;}
+    if(NET.hostMissT){netLog('host is back after '+((performance.now()-NET.hostMissT)/1000).toFixed(1)+' s');NET.hostMissT=0;}
     NET.lob=h.presence.lob||NET.lob;if(netCheckKicked())return;const st=NET.lob&&NET.lob.start,myp=(netMe()||{}).peer;if(st&&st.id!==NET.startId&&st.roster.some(r=>r.peer===myp)){NET.startId=st.id;netClientStart(st);}
-    else if(st&&st.id!==NET.startId&&!G)mpLobMsg('A match is already going. You will jump in if the host allows late joining, or play in the next one.');
+    else if(st&&st.id!==NET.startId&&!G){if(NET.seenSt!==st.id){NET.seenSt=st.id;netLog('match '+st.id+' started without me (not on its player list)');}}if(st&&st.id!==NET.startId&&!G)mpLobMsg('A match is already going. You will jump in if the host allows late joining, or play in the next one.');
     if(NETC()&&h.presence.snap)netClientSnap(h.presence.snap);}
   else if(NET.role==='host'){netHostSyncTeams();if(NETH())netHostCheckJoiners();}
   if(!$('mplobby').hidden)renderMpLobby();if(G&&G.net)netPeersChanged();netAskRender();chatRender();}
@@ -3314,20 +3486,20 @@ function teamOf(peer){const L=NET.lob;if(!L)return null;return L.teams[peer]||nu
 function renderMpLobby(){const inRoom=!!NET.R,L=NET.lob,host=NET.role==='host';$('mpEntry').hidden=inRoom;$('mpRoomBox').hidden=!inRoom;
   $('mpLobStatus').textContent=mpStatusText(true);$('mpHowNote').textContent=MP_HOW[mpVia()]||MP_HOW.claude;
   $('mpHostBtn').disabled=$('mpJoinBtn').disabled=!MP.avail;$('mpName2').value=$('mpName2')===document.activeElement?$('mpName2').value:MP.name;
-  if(!inRoom)return;const ps=netPlayers(),me=netMe();$('mpCodeBig').textContent=NET.code;
-  if(!L){$('mpPlayers').innerHTML='<p class="opt-desc">Waiting for the host…</p>';return;}
+  if(!inRoom)return;const ps=netPlayers();$('mpCodeBig').textContent=NET.code;
+  if(!L){htmlSink($('mpPlayers')).html='<p class="opt-desc">Waiting for the host…</p>';return;}
   const kind=netTeamKind(L.mode),useTeams=kind!=='coop'&&!(kind==='free'&&L.tm==='ffa');
   const chip=p=>{const b=p.presence.bonk,t=teamOf(p.peer),T=NET_TEAMS.find(x=>x.id===t);const o=OUTFITS.find(x=>x.id===(b.look&&b.look.o))||OUTFITS[0];
     return`<button type="button" class="mpchip${p.sameTab?' me':''}" data-peer="${esc(p.peer)}" style="--tc:${T?T.col:'#5b6478'}"><i style="background:${o.top}"></i><b>${esc(cleanName(b.name)||"Player")}</b>${b.role==="host"&&!host?"<em>HOST</em>":""}${p.sameTab?"<em>YOU</em>":""}${host&&!p.sameTab?`<span class="mpkick" data-kick="${esc(p.peer)}" title="Kick">✖</span>`:""}</button>`;};
   if(useTeams){const avail=kind==='rb'?NET_TEAMS.slice(0,2):NET_TEAMS.slice(0,L.nteams);
-    $('mpPlayers').innerHTML=`<div class="mpteams">${avail.map(T=>`<div class="mpteam" style="--tc:${T.col}"><h4>${T.name} team</h4>${ps.filter(p=>teamOf(p.peer)===T.id).map(chip).join('')||'<p class="opt-desc">Nobody yet</p>'}${L.tm==='self'?`<button type="button" class="te-b mppick" data-team="${T.id}">Join ${T.name}</button>`:''}</div>`).join('')}</div>`;}
-  else $('mpPlayers').innerHTML=`<div class="mpteam solo"><h4>${kind==='coop'?'Everyone together vs the '+(L.mode==='zombie'?'zombies':'dummies'):'Everyone for themselves'}</h4>${ps.map(chip).join('')}</div>`;
+    htmlSink($('mpPlayers')).html=`<div class="mpteams">${avail.map(T=>`<div class="mpteam" style="--tc:${T.col}"><h4>${T.name} team</h4>${ps.filter(p=>teamOf(p.peer)===T.id).map(chip).join('')||'<p class="opt-desc">Nobody yet</p>'}${L.tm==='self'?`<button type="button" class="te-b mppick" data-team="${T.id}">Join ${T.name}</button>`:''}</div>`).join('')}</div>`;}
+  else htmlSink($('mpPlayers')).html=`<div class="mpteam solo"><h4>${kind==='coop'?'Everyone together vs the '+(L.mode==='zombie'?'zombies':'dummies'):'Everyone for themselves'}</h4>${ps.map(chip).join('')}</div>`;
   const modeName=m=>{const l=document.querySelector('label[for=mode'+cap(m)+']');return l?l.lastChild.textContent.trim():m;};const mapName=m=>MAPS[m]?MAPS[m].name:m;
   $('mpHostCtl').hidden=!host;$('mpGuestInfo').hidden=host;
   if(host){$('mpMode').value=L.mode;$('mpMap').value=L.map;document.querySelectorAll('#mpTM input').forEach(r=>{r.checked=r.value===L.tm;r.disabled=kind==='coop'||(kind==='rb'&&r.value==='ffa');});
     $('mpNTeams').value=L.nteams;$('mpNTeamsRow').hidden=!(kind==='free'&&L.tm!=='ffa');$('mpShuffle').hidden=!(useTeams&&L.tm==='random');
     $('mpStart').disabled=ps.length<1;$('mpStartNote').textContent=ps.length<2?'You can start alone, but it is more fun with a friend!':ps.length+' players · '+(L.bots)+' bots fill the empty spots';}
-  else $('mpGuestInfo').innerHTML=`<p><b>${esc(modeName(L.mode))}</b> on <b>${esc(mapName(L.map))}</b> · Teams: ${esc(kind==='coop'?'everyone together':kind==='free'&&L.tm==='ffa'?'everyone for themselves':NET_TEAMMODES[L.tm])}</p><p class="opt-desc">⏳ Waiting for the host to press START…</p>`;
+  else htmlSink($('mpGuestInfo')).html=`<p><b>${esc(modeName(L.mode))}</b> on <b>${esc(mapName(L.map))}</b> · Teams: ${esc(kind==='coop'?'everyone together':kind==='free'&&L.tm==='ffa'?'everyone for themselves':NET_TEAMMODES[L.tm])}</p><p class="opt-desc">⏳ Waiting for the host to press START…</p>`;
   $('mpPlayersCount').textContent=ps.length+' / '+(L.max||8)+' players';
   document.querySelectorAll('#mpChatSeg input').forEach(r=>r.checked=r.value===(L.chat?'on':'off'));netAskRender();chatRender();}
 // ---- lobby screen wiring ----
@@ -3359,9 +3531,9 @@ function netHostStart(){if(NET.role!=='host')return;readOpts();const L=NET.lob;O
   const start={id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),mode:L.mode,map:L.map,bots:L.bots,diff:L.diff,len:L.len,storm:L.storm,roster};
   L.start=start;NET.startId=start.id;NET.R.presence({lob:L});netStartGame(start);}
 // set up the match from the roster (the host runs it; Phase 4 lets the other players see and play it)
-function netStartGame(S){S.roster.forEach(r=>r.name=cleanName(r.name)||'Player');Object.assign(opts,{mode:S.mode,map:S.map,bots:Math.max(S.bots,S.roster.length-1),diff:S.diff,len:S.len,storm:S.storm,squad:'solo',rule:opts.rule});
+function netStartGame(S){netLog('match '+S.id+' starting: '+S.mode+' on '+S.map+', '+S.roster.length+' players');S.roster.forEach(r=>r.name=cleanName(r.name)||'Player');Object.assign(opts,{mode:S.mode,map:S.map,bots:Math.max(S.bots,S.roster.length-1),diff:S.diff,len:S.len,storm:S.storm,squad:'solo',rule:opts.rule});
   applyOpts();for(const s of['menu','mplobby'])$(s).hidden=true;startGame();G.net={role:NET.role==='host'?'host':'client',start:S,peers:{}};const me=netMe(),mine=S.roster.find(r=>r.peer===(me&&me.peer));
-  const kind=netTeamKind(S.mode),p=G.player;if(mine){p.name=mine.name;p.peer=mine.peer;}
+  const p=G.player;if(mine){p.name=mine.name;p.peer=mine.peer;}
   if(NET.role==='host'){const bots=G.chars.filter(c=>c!==p&&!c.zombie&&c.ai);let bi=0;
     for(const r of S.roster){if(r.peer===p.peer)continue;let c=bots[bi++];if(c&&c.raceCar)c.raceCar.maxMul=1;if(!c){c=makeChar(r.name,TORSO[bi%TORSO.length],false);const s=freeSpot(p.x,p.y,260,60,G.chars);c.x=s.x;c.y=s.y;c.z=groundAt(s.x,s.y,10);G.chars.push(c);}makeRemote(c,r.peer);c.name=r.name;c.look=lookFromNet(r.look);if(!MODE().noLoot&&!MODE().noCombat){c.slots[1]={id:'laser',r:5};c.cur=1;}
       removeModel(c);buildCharModel(c);if(c.state==='bus')c.jumpAt=99;G.net.peers[r.peer]=c;}
@@ -3378,6 +3550,14 @@ function netAssignTeams(S){const kind=netTeamKind(S.mode),humans=G.chars.filter(
   const S2=Math.max(...sizes);if(S.mode==='royale')G.squad=Math.max(1,S2);let ti=0;for(const k in groups){groups[k].forEach(c=>c.team='sq'+ti);ti++;}
   const bots=G.chars.filter(c=>!c.human);for(const b of bots){if(S2<=1){b.team=null;continue;}let put=false;for(let t=0;t<ti;t++){if(G.chars.filter(c=>c.team==='sq'+t).length<S2){b.team='sq'+t;put=true;break;}}
     if(!put){b.team='sq'+ti;if(G.chars.filter(c=>c.team==='sq'+ti).length>=S2)ti++;}}}
+function netClientStart(S){mpLobMsg('');netStartGame(S);}
+// a short blip (phone screen dimming, wifi hiccup) must not end the match: wait 10 s for the host to come back
+function netHostMissing(){if(NET.hostMissT)return;NET.hostMissT=performance.now();netLog('host disappeared, waiting 10 s for them to come back');
+  setTimeout(()=>{if(NET.hostMissT&&!netHostPeer()){NET.hostMissT=0;netHostGone('the host was gone for 10 s');}},10000);}
+function netHostGone(why){if(!G||!G.net||G.ended)return;netLog('match over: '+(why||'host left'));announce('The host left','The match is over. Back to the lobby…',3);G.net.gone=true;setTimeout(()=>{if(G&&G.net&&G.net.gone)toMenu('mplobby');},3000);}
+// @module src/js/44-net-mode-state.js: Multiplayer: each mode's extra state (flags, crown, hill, lava, race, zombie waves) packed into host updates.
+// Main: XMNET, byCid, netPts
+// See also: modes-extra, net-sync
 /* ================= multiplayer: each mode's own state (flags, crown, hill, lava, race, zombie waves) ================= */
 const byCid=id=>G&&G.net&&G.net.byId?G.net.byId.get(id)||null:null;
 function netPts(){return G.chars.filter(c=>!c.zombie).map(c=>[c.cid,Math.floor(c.pts||0)]);}
@@ -3398,7 +3578,9 @@ const XMNET={
 // big announcements that are the same for everyone get shared; personal ones stay on the host's screen
 const NET_ANN_OK=/^(\d|GO!|Wave \d|The hill moved|Red team scores|Blue team scores|Here comes the lava|Lava in|Supply drop|The crown)/;
 let NET_NOFWD=false;
-function netClientStart(S){mpLobMsg('');netStartGame(S);}
+// @module src/js/45-net-sync.js: Multiplayer live sync: host updates (snapshots) and events, the world cast for joiners, joiner input, interpolation, and the client frame.
+// Main: NETC, NETH, netSnap, netHostTick, netEv, netApplyEv, netClientSnap, netInterp, clientFrame, netClientSendInput
+// See also: net-remote-players, net-lobby (docs/MULTIPLAYER.md)
 /* ================= multiplayer: live sync =================
    The host runs the match. About 20 times a second it shares a compact picture of every character, car, drone,
    the bus and the crate (room presence, max 4 KB); 10 times a second it sends what changed (loot, builds, shots,
@@ -3411,7 +3593,6 @@ const DRM=['in','lift','out','deliver','lower','leave'];
 const ri=v=>Math.round(v||0),r2=v=>Math.round((v||0)*100)/100;
 function lookPack(L){if(!L)return null;return{o:L.id,s:L.skin,h:L.hair,t:L.top,hc:L.hatCol,g:L.glider,p:L.pick,w:L.wrap,b:L.back};}
 function lookUnpack(k){k=k||{};if(k.full){const L=Object.assign({},k);delete L.full;return L;}const o=OUTFITS.find(x=>x.id===k.o)||OUTFITS[0];return Object.assign({},o,{skin:k.s||o.skin,hair:k.h||o.hair,top:k.t||o.top,hatCol:k.hc||o.hatCol,glider:k.g||'classic',pick:k.p||'classic',wrap:k.w||'none',back:k.b||o.back});}
-const hostName=()=>{const h=netHostPeer();return h&&h.presence.bonk?h.presence.bonk.name||'Host':'Host';};
 // ---- host: events out ----
 function netEv(e,cosmetic){const N=G&&G.net;if(!N||N.role!=='host'||!N.evq)return;if(cosmetic&&NET_FIRE!=null)e=['@',NET_FIRE,e];if(cosmetic){if(N.cq.length<90)N.cq.push(e);}else N.evq.push(e);}
 function netNear(x,y){if(!G)return false;for(const c of G.chars)if(c.remote&&Math.abs(c.x-x)<1600&&Math.abs(c.y-y)<1600)return true;return false;}
@@ -3435,7 +3616,7 @@ function netPriv(c){return{sl:c.slots.map(s=>s?[wcode(s.id),s.ammo??-1,s.r??-1]:
   bl:ri(c.bleed),rp:r2(c.revProg),sw:c.swapIt?wcode(c.swapIt.id):-1,as:c.actSeq,el:c.eliminated?1:0,td:ri(c.trDmg),dp:ri((c.trLog||[]).reduce((a,e)=>a+e[1],0)/3),lv:c.lives??null};}
 function netSnap(){const N=G.net;for(const c of G.chars)if(c.cid==null)c.cid=N.cidNext++;const S={t:r2(G.time),c:G.chars.map(netCharPack),car:G.cars.map(c=>c.dead?0:[ri(c.x),ri(c.y),ri(c.z),r2(c.ang),c.driver?c.driver.cid+1:0]),
     dr:G.drones.map(d=>[ri(d.x),ri(d.y),ri(d.z),DRM.indexOf(d.mode)]),bus:G.bus?[ri(G.bus.x),ri(G.bus.y),ri(G.bus.z),r2(G.bus.t)]:0,
-    cr:G.crate?[ri(G.crate.x),ri(G.crate.y),ri(G.crate.z),G.crate.landed?1:0,G.crate.taken?1:0]:0,sc:G.mode==='team'||G.mode==='ctf'?[G.score.red,G.score.blue]:0,nr:G.noRespawn?1:0,es:N.seq};if(XMNET[G.mode])S.xm=Object.assign({m:G.mode},XMNET[G.mode].s());S.id=N.start.id;
+    cr:G.crate?[ri(G.crate.x),ri(G.crate.y),ri(G.crate.z),G.crate.landed?1:0,G.crate.taken?1:0]:0,sc:G.mode==='team'||G.mode==='ctf'?[G.score.red,G.score.blue]:0,nr:G.noRespawn?1:0,es:N.seq};if(XMNET[G.mode])S.xm=Object.assign({m:G.mode},XMNET[G.mode].s());S.id=N.start.id;if(G.paused)S.hp=1;
   const rem=G.chars.filter(c=>c.remote);if(rem.length){S.pv={};const c=rem[N.rr++%rem.length];S.pv[c.peer]=netPriv(c);}
   const pe={};for(const p of netPlayers())if(!p.sameTab&&p.presence.pg)pe[p.peer]=p.presence.pg;if(Object.keys(pe).length)S.pe=pe;if(G.paused)S.hp=1;return S;}
 function netWorldDiff(){const N=G.net,seen=new Set();
@@ -3461,10 +3642,6 @@ function netHostTick(dt){const N=G.net;if(!NET.R||!N.evq)return;netHostReadInput
   N.castT-=dt;if(N.castT<=0){N.castT=1.5;netPeersChanged();netHostCheckJoiners();const ps=netPlayers().filter(p=>!p.sameTab&&G.net.peers[p.peer]);
     if(ps.some(p=>p.presence.ack!==N.cast.id))netSendCast();
     if(ps.some(p=>p.presence.need&&p.presence.need!==N.need[p.peer])){ps.forEach(p=>N.need[p.peer]=p.presence.need);netSendWorld();}}}
-// host: players who left become bots again
-function netPeersChanged(){if(!NETH())return;const here=new Set(netPlayers().filter(p=>p.presence.left!==G.net.start.id).map(p=>p.peer));
-  for(const peer in G.net.peers){const c=G.net.peers[peer];if(c.remote&&!here.has(peer)){c.remote=false;c.human=false;c.isPlayer=false;if(!c.ai)c.ai={think:0,target:null,mode:'wander',gx:null,gy:null,reactT:0,seed:1,lastX:c.x,lastY:c.y,stuckT:0,unstuckT:0,ux:0,uy:0,turn:1,aimErr:0,aimErr2:0,wantMove:false};
-    feed('<b>'+esc(c.name)+'</b> left the game (a bot took over)');delete G.net.peers[peer];}}}
 // host: who won, for each player
 function netHostEnd(){const N=G.net;if(!N||N.ended)return;N.ended=true;const res={};const rem=G.chars.filter(c=>!c.eliminated);
   const winTeam=G.mode==='team'||G.mode==='ctf'?(G.score.red>G.score.blue?'red':G.score.blue>G.score.red?'blue':null):null;
@@ -3521,7 +3698,9 @@ function netApplyEv(e){const k=e[0];
   else if(k==='end')netClientEnd(e[1],e[2]);}
 function netPersonal(t,d){const p=G.player;if(t==='toast')toast(d);else if(t==='ann')announce(d[0],d[1],d[2],d[3]);else if(t==='xp')xpEvent(d[0],d[1]);else if(t==='sfx')sfx(d);
   else if(t==='kb'){p.kx+=d[0];p.ky+=d[1];}else if(t==='elim'){G.elimN++;showElim(d);}}
-function netClientSnap(S){const N=G.net;if(!N.ready||!S||S.t===N.lastSnapT||(S.id&&S.id!==N.start.id))return;N.lastSnapT=S.t;N.hostT=S.t;N.hostRecv=performance.now();G.time=S.t;{const now=N.hostRecv;if(N.lastArr){const d=now-N.lastArr;N.avgI=N.avgI?N.avgI*0.9+d*0.1:d;N.jit=(N.jit||0)*0.9+Math.abs(d-N.avgI)*0.1;N.interpD=clamp((N.avgI*1.3+N.jit*2)/1000,0.05,0.2);}N.lastArr=now;}const me=(netMe()||{}).peer;
+function netClientSnap(S){const N=G.net;if(!N.ready||!S||(S.id&&S.id!==N.start.id))return;
+  // a paused host keeps sending the same time: still a sign of life, and it carries the pause flag
+  if(S.t===N.lastSnapT){N.hostPaused=!!S.hp;N.hostRecv=performance.now();N.hostT=S.t;return;}N.lastSnapT=S.t;N.hostT=S.t;N.hostRecv=performance.now();G.time=S.t;{const now=N.hostRecv;if(N.lastArr){const d=now-N.lastArr;N.avgI=N.avgI?N.avgI*0.9+d*0.1:d;N.jit=(N.jit||0)*0.9+Math.abs(d-N.avgI)*0.1;N.interpD=clamp((N.avgI*1.3+N.jit*2)/1000,0.05,0.2);}N.lastArr=now;}const me=(netMe()||{}).peer;
   const seen=new Set();S.c.forEach(a=>{const cid=a[11];seen.add(cid);let c=N.byId.get(cid);if(!c){if(G.mode!=='zombie')return;c=makeZombie();c.cid=cid;buildCharModel(c);G.chars.push(c);N.byId.set(cid,c);}
     if(c===G.player){netOwnFromSnap(c,a);return;}let b=N.buf.get(cid);if(!b){b=[];N.buf.set(cid,b);}b.push([S.t,a]);if(b.length>8)b.shift();});
   for(let i=G.chars.length-1;i>=0;i--){const c=G.chars[i];if(c!==G.player&&c.zombie&&!seen.has(c.cid)){removeModel(c);G.chars.splice(i,1);N.byId.delete(c.cid);N.buf.delete(c.cid);}}
@@ -3557,7 +3736,7 @@ function netInterp(dt){const N=G.net,rt=G.time-(N.interpD||0.12);
   for(const car of G.cars){const b=car.nb;if(!b||!b.length||car.dead)continue;let A=b[0],B=b[b.length-1];for(let k=0;k<b.length-1;k++)if(b[k][0]<=rt&&b[k+1][0]>=rt){A=b[k];B=b[k+1];break;}
     const span=B[0]-A[0],t=span>0?clamp((rt-A[0])/span,0,1):1,a=A[1],z=B[1];const ox=car.x,oy=car.y;car.x=lerp(a[0],z[0],t);car.y=lerp(a[1],z[1],t);car.z=lerp(a[2],z[2],t);car.ang=netLerpAng(a[3],z[3],t);
     car.speed=Math.hypot(car.x-ox,car.y-oy)/Math.max(dt,1e-3)*Math.sign(Math.cos(car.ang)*(car.x-ox)+Math.sin(car.ang)*(car.y-oy)||1);car.onGround=true;}}
-function netClientProjs(dt){for(let i=G.projs.length-1;i>=0;i--){const p=G.projs[i];let dead=false;
+function netClientProjs(dt){for(let i=G.projs.length-1;i>=0;i--){const p=G.projs[i];let dead;
   if(p.t==='grenade'){p.t0+=dt;p.vz-=700*dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.z+=p.vz*dt;const g=groundAt(p.x,p.y,p.z+5);if(p.z<g){p.z=g;p.vz=Math.abs(p.vz)*0.35;p.vx*=0.6;p.vy*=0.6;}dead=p.t0>=p.fuse;}
   else{p.life-=dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.z+=p.vz*dt;if(p.t==='bubble')p.vz+=40*dt;dead=p.life<=0||!!blocked3D(p.x,p.y,p.z);}
   if(dead){removeModel(p);G.projs.splice(i,1);}}}
@@ -3576,11 +3755,9 @@ function clientFrame(dt){const N=G.net;if(!N.ready||N.hostT==null)return;
   G.time=Math.min(N.hostT+(performance.now()-N.hostRecv)/1000,N.hostT+0.6);G.shake=Math.max(0,G.shake-dt*30);G.crossHit=Math.max(0,G.crossHit-dt);
   if(G.storm)updateStorm();const p=G.player;if(!G.paused)updateChar(p,dt);
   netInterp(dt);netClientProjs(dt);for(const q of G.pieces)if(q.grow<1){q.grow=Math.min(1,q.grow+dt*6);q.mesh.scale.y=0.05+0.95*q.grow;}
-  if(G.crate&&!G.crate.taken&&!G.crate.landed&&G.crate.mesh){}
   if(G.toastT>0){G.toastT-=dt;if(G.toastT<=0)$('prompt').hidden=true;}netClientSendInput(dt);netPingTick();}
 function netClientEnd(res,fin){if(!NETC()||G.ended)return;if(fin)G.final=fin.map(([id,pl,s])=>({c:byCid(id),place:pl,s})).filter(e=>e.c);const me=(netMe()||{}).peer,r=res[me]||{},p=G.player;p.kos=r.k??p.kos;p.deaths=r.d??p.deaths;if(r.pl)p.place=r.pl;G.win=!!r.w;G.draw=!!r.dr;
   if(G.win&&p.state==='alive'){announce('#1 VICTORY BONK!','You won the match!',4,'victory');sfx('victory');}G.endAt=G.time;setTimeout(()=>{if(G&&!G.ended)endGame();},G.win?2500:400);}
-function netHostGone(){if(!G||!G.net||G.ended)return;announce('The host left','The match is over. Back to the lobby…',3);G.net.gone=true;setTimeout(()=>{if(G&&G.net&&G.net.gone)toMenu('mplobby');},3000);}
 // touch buttons on a player's device: send the action to the host (and do the movement-only part here)
 function netTouch(a,down){const p=G.player,N=G.net,send=k=>{N.acts.push([++N.aseq,k]);if(N.acts.length>12)N.acts.shift();};
   if(a==='jump'){if(down){send(' ');if(p.state==='sky'||(p.state==='alive'&&!p.vehicle))playerSpace();}return true;}
@@ -3600,6 +3777,9 @@ function netCheckWin(){const hum=G.chars.filter(c=>c.human);if(G.endAt)return;
   if(done||(hum.length&&hum.every(c=>c.eliminated))){const pWin=done&&(rem.includes(G.player)||(!!G.player.team&&rem.every(c=>c.team===G.player.team)));
     if(pWin){G.win=true;G.player.place=1;G.endAt=G.time+5;startVictory();announce('#1 VICTORY BONK!','Your team is the last one standing!',4.6,'victory');sfx('victory');}
     else G.endAt=G.time+(done?4:3);}}
+// @module src/js/46-net-extras.js: Multiplayer extras: settings (MPSET), spectating, scoreboard, ping, late join, players leaving or coming back (grace period, own character back).
+// Main: MPSET, specFollow, renderScoreboard, updateNetHUD, netLateJoin, netReclaim, netPeersChanged, netBotTakeover
+// See also: net-sync, net-lobby
 /* ================= multiplayer extras: spectate, scoreboard, ping, late join ================= */
 const MPSET=Object.assign({tm:'host',max:8,late:true,ping:true,chat:false},store.get('bonk-mpset')||{});
 function saveMpSet(){store.set('bonk-mpset',MPSET);}
@@ -3628,17 +3808,25 @@ addEventListener('keyup',e=>{if(e.key==='Tab'){SB_OPEN=false;renderScoreboard();
 // ---- small multiplayer HUD: ping chip, host-paused banner, spectating line ----
 function updateNetHUD(){netSafeHUD();const pc=$('pingChip'),nt=$('netTag');if(!G||!G.net||G.ended){pc.hidden=true;nt.hidden=true;return;}
   const show=MPSET.ping&&G.net.role==='client';pc.hidden=!show;if(show){const ms=G.net.rtt;setT(pc,'📶 '+(ms==null?'…':ms+' ms'));pc.style.color=pingCol(ms);}
-  let msg='';if(G.net.role==='client'&&G.net.hostPaused)msg='⏸ The host paused the game';else{const s=specFollow();if(s)msg='👀 Watching '+s.name+' · '+(TOUCH.on?'tap JUMP':'press Space or click')+' to switch';}
+  let msg='';const stale=G.net.role==='client'&&G.net.hostRecv&&performance.now()-G.net.hostRecv>1500;
+  if(G.net.role==='client'&&NET.hostMissT)msg='📶 Lost the host… reconnecting';else if(stale)msg='📶 Waiting for the host…';else if(G.net.role==='client'&&G.net.hostPaused)msg='⏸ The host paused the game';else{const s=specFollow();if(s)msg='👀 Watching '+s.name+' · '+(TOUCH.on?'tap JUMP':'press Space or click')+' to switch';}
   nt.hidden=!msg;if(msg)setT(nt,msg);if(SB_OPEN)renderScoreboard();}
 // ---- late join: a friend joining the room mid-match takes over a bot ----
-function netLateJoin(p){if(!NETH()||G.ended||!NET.lob||NET.lob.late===false||G.noRespawn)return false;const S=G.net.start;if(Object.keys(G.net.peers).length+1>=(NET.lob.max||8))return false;
+function netLateJoin(p){netLog('late joiner '+cleanName(p.presence.bonk&&p.presence.bonk.name)+' asks to take over a bot');if(!NETH()||G.ended||!NET.lob||NET.lob.late===false||G.noRespawn)return false;const S=G.net.start;if(Object.keys(G.net.peers).length+1>=(NET.lob.max||8))return false;
   const pool=G.chars.filter(c=>!c.human&&!c.zombie&&!c.eliminated&&c.ai);if(!pool.length)return false;const c=pool.find(c=>c.state==='alive')||pool[0];
   const b=p.presence.bonk,kind=netTeamKind(S.mode);makeRemote(c,p.peer);c.name=cleanName(b.name)||'Player';c.look=lookFromNet(b.look);if(!MODE().noLoot&&!MODE().noCombat){c.slots[1]={id:'laser',r:5};c.cur=1;}
   if(kind==='coop')c.team='hero';removeModel(c);buildCharModel(c);if(c.state==='bus')c.jumpAt=99;G.net.peers[p.peer]=c;
   S.roster.push({peer:p.peer,name:c.name,look:b.look||null,team:c.team,host:false,late:1});NET.lob.start=S;NET.R.presence({lob:NET.lob}).catch(()=>{});
   netEv(['rc',c.cid,c.name,lookPack(c.look),p.peer,c.team||null]);feed('<b>'+esc(c.name)+'</b> joined the match!');sfx('alert');return true;}
+// host: a player who dropped out and came back (same connection, or re-joined with the same name) gets their own character back
+function netReclaim(p){const away=G.net.away||{},nm=cleanName(p.presence.bonk.name)||'Player';
+  let c=away[p.peer];if(!c)c=Object.values(away).find(x=>x.awayName===nm);
+  if(!c||!G.chars.includes(c)||c.eliminated||c.human)return false;for(const k in away)if(away[k]===c)delete away[k];
+  makeRemote(c,p.peer);G.net.peers[p.peer]=c;const S=G.net.start;
+  if(!S.roster.some(r=>r.peer===p.peer)){S.roster.push({peer:p.peer,name:c.name,look:p.presence.bonk.look||null,team:c.team,host:false,late:1});NET.lob.start=S;NET.R.presence({lob:NET.lob}).catch(()=>{});}
+  netEv(['rc',c.cid,c.name,lookPack(c.look),p.peer,c.team||null]);netLog(c.name+' came back and got their character back');feed('<b>'+esc(c.name)+'</b> is back!');return true;}
 function netHostCheckJoiners(){if(!NETH()||G.ended)return;for(const p of netPlayers()){if(p.sameTab||G.net.peers[p.peer]||!p.presence.bonk)continue;
-  if(p.presence.left===G.net.start.id)continue;if(!G.net.lateTried)G.net.lateTried={};if(G.net.lateTried[p.peer])continue;G.net.lateTried[p.peer]=1;netLateJoin(p);}}
+  if(p.presence.left===G.net.start.id)continue;if(netReclaim(p))continue;if(!G.net.lateTried)G.net.lateTried={};if(G.net.lateTried[p.peer])continue;G.net.lateTried[p.peer]=1;netLateJoin(p);}}
 // Settings → Multiplayer choices
 (()=>{const set=(name,val)=>document.querySelectorAll('input[name="'+name+'"]').forEach(r=>r.checked=r.value===String(val));
   set('mpsTm',MPSET.tm);set('mpsMax',MPSET.max);set('mpsLate',MPSET.late?'on':'off');set('mpsPing',MPSET.ping?'on':'off');set('mpsChat',MPSET.chat?'on':'off');
@@ -3646,10 +3834,25 @@ function netHostCheckJoiners(){if(!NETH()||G.ended)return;for(const p of netPlay
     if(NET.role==='host'&&NET.lob&&!G){NET.lob.tm=MPSET.tm;NET.lob.max=MPSET.max;NET.lob.late=MPSET.late;netHostSyncTeams();netPushLob();}}));
   on('mpsTm',v=>MPSET.tm=v);on('mpsMax',v=>MPSET.max=+v);on('mpsLate',v=>MPSET.late=v==='on');on('mpsPing',v=>MPSET.ping=v==='on');on('mpsChat',v=>{MPSET.chat=v==='on';if(NET.role==='host'&&NET.lob){NET.lob.chat=MPSET.chat;netPushLob();}});
   const t=MPSET.turn||{};[['mpsTurnUrl','url'],['mpsTurnUser','user'],['mpsTurnPass','pass']].forEach(([id,k])=>{$(id).value=t[k]||'';$(id).addEventListener('change',e=>{MPSET.turn=Object.assign({},MPSET.turn,{[k]:e.target.value.trim().slice(0,200)});saveMpSet();});});})();
-
+// host: a player who leaves on purpose is replaced by a bot at once; one who just vanishes (phone asleep, wifi blip) gets 10 s to come back
+function netPeersChanged(){if(!NETH())return;const ps=netPlayers(),sid=G.net.start.id;
+  const here=new Set(ps.filter(p=>p.presence.left!==sid).map(p=>p.peer)),left=new Set(ps.filter(p=>p.presence.left===sid).map(p=>p.peer));
+  for(const peer in G.net.peers){const c=G.net.peers[peer];if(!c.remote)continue;
+    if(here.has(peer)){if(c.awayT){netLog(c.name+' is back after '+((performance.now()-c.awayT)/1000).toFixed(1)+' s');c.awayT=0;}continue;}
+    if(left.has(peer)){netBotTakeover(c,peer,'left the match');continue;}
+    if(!c.awayT){c.awayT=performance.now();netLog(c.name+' disappeared, waiting 10 s for them to come back');
+      setTimeout(()=>{if(!G||!G.net||G.net.peers[peer]!==c||!c.awayT)return;
+        if(netPlayers().some(p=>p.peer===peer&&p.presence.left!==sid)){netLog(c.name+' is back');c.awayT=0;}else netBotTakeover(c,peer,'was gone for 10 s');},10000);}}}
+// host: players who left become bots again
+function netBotTakeover(c,peer,why){c.remote=false;c.human=false;c.isPlayer=false;c.awayT=0;(G.net.away=G.net.away||{})[peer]=c;c.awayName=c.name;
+  if(!c.ai)c.ai={think:0,target:null,mode:'wander',gx:null,gy:null,reactT:0,seed:1,lastX:c.x,lastY:c.y,stuckT:0,unstuckT:0,ux:0,uy:0,turn:1,aimErr:0,aimErr2:0,wantMove:false};
+  netLog(c.name+' '+why+', a bot took over');feed('<b>'+esc(c.name)+'</b> left the game (a bot took over)');delete G.net.peers[peer];}
+// @module src/js/47-boot.js: Start-up and the frame loop: frame(t) runs every frame (simulate, send, draw); boot() sets everything up.
+// Main: frame, boot
+// See also: every module (docs/ARCHITECTURE.md: the frame loop)
 /* ================= boot ================= */
 let last=performance.now();
-function frame(t){const dt=Math.min(0.033,(t-last)/1000);last=t;
+function frame(t){const dt=Math.min(0.033,(t-last)/1000);last=t;if(innerWidth!==W||innerHeight!==H)viewportChanged();
   if(G&&!G.ended&&NETC())clientFrame(dt);else if(G&&!G.paused&&!G.ended&&!TOUCH.portrait)update(dt);if(G&&!G.ended&&NETH())netHostTick(dt);updateTouchUI();MUS.want=musicPick();
   syncVisuals(dt);renderer.render(scene,camera);if(G&&!G.ended)updateHUD();
   requestAnimationFrame(frame);}
