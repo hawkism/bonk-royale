@@ -399,7 +399,7 @@ body.tediting .tb.ghost{opacity:.3}body.tediting #lobbyBar{display:none!importan
           <input type="radio" name="mode" id="modeCtf" value="ctf"><label for="modeCtf"><i>🚩</i>Capture the Flag</label>
           <input type="radio" name="mode" id="modeKoth" value="koth"><label for="modeKoth"><i>⛰️</i>King of the Hill</label>
           <input type="radio" name="mode" id="modeBuildbattle" value="buildbattle"><label for="modeBuildbattle"><i>🏗️</i>Build Battle</label>
-          <input type="radio" name="mode" id="modeTraining" value="training"><label for="modeTraining"><i>🎯</i>Training Room</label>
+          <input type="radio" name="mode" id="modeTraining" value="training"><label for="modeTraining"><i>🎯</i>Training Room</label><input type="radio" name="mode" id="modeShow" value="show"><label for="modeShow"><i>🎤</i>Mr. Bonk's Show</label>
         </div><p class="opt-desc" id="modeDesc"></p></div>
       <div class="opt"><div class="opt-label">Map</div>
         <div class="seg maps">
@@ -429,7 +429,7 @@ body.tediting .tb.ghost{opacity:.3}body.tediting #lobbyBar{display:none!importan
           <div class="mpbig"><h3>➡️ Join a game</h3><p class="opt-desc">Type the 4-letter code from the host's screen.</p><div class="btns"><input type="text" id="mpJoinCode2" class="mpinput code big" maxlength="4" placeholder="CODE" autocomplete="off"><button class="brick" id="mpJoinBtn" type="button">Join</button></div></div>
         </div>
         <p class="opt-desc" id="mpLobMsg"></p>
-        <p class="opt-desc" id="mpHowNote">Everyone plays from this same game page on claude.ai, so it must be shared with each player. To host, a player needs “can edit” access. Games go through the internet, so every device needs to be online.</p>
+        <p class="opt-desc" id="mpHowNote">Friends open this same website (or its app on the home screen) and type the code. Every device needs to be online.</p>
         <div class="btns"><button class="brick small" id="mpBack" type="button">🏠 Back</button></div>
       </div>
       <div id="mpRoomBox" hidden>
@@ -517,7 +517,7 @@ body.tediting .tb.ghost{opacity:.3}body.tediting #lobbyBar{display:none!importan
               <input type="radio" name="gfx" id="gfxAuto" value="auto" checked><label for="gfxAuto">Auto</label>
               <input type="radio" name="gfx" id="gfxLow" value="low"><label for="gfxLow">Fast (low)</label>
               <input type="radio" name="gfx" id="gfxHigh" value="high"><label for="gfxHigh">Pretty (high)</label>
-            </div><p class="opt-desc">Use Fast on phones and tablets if the game feels slow.</p><button class="brick small" id="fsBtn" type="button" hidden>⛶ Full screen</button></div>
+            </div><p class="opt-desc">Use Fast on phones and tablets if the game feels slow. Auto also turns the graphics down by itself if a match keeps running slowly.</p><p class="opt-desc" id="gfxNote" hidden>🐢 Auto has turned the graphics down on this device. Pick a Graphics choice to reset it.</p><button class="brick small" id="fsBtn" type="button" hidden>⛶ Full screen</button></div>
           <div class="opt"><div class="opt-label">Health bars over heads</div>
             <div class="seg">
               <input type="radio" name="hbars" id="hbarsOn" value="on" checked><label for="hbarsOn">❤️ Always show</label>
@@ -569,7 +569,7 @@ body.tediting .tb.ghost{opacity:.3}body.tediting #lobbyBar{display:none!importan
           <div class="opt"><div class="opt-label">Friends can jump into a match that already started</div><div class="seg"><input type="radio" name="mpsLate" id="mpsLateY" value="on"><label for="mpsLateY">Yes (they take over a bot)</label><input type="radio" name="mpsLate" id="mpsLateN" value="off"><label for="mpsLateN">No, wait for the next match</label></div></div>
           <div class="opt"><div class="opt-label">💬 Chat in rooms I host</div><div class="seg"><input type="radio" name="mpsChat" id="mpsChatN" value="off"><label for="mpsChatN">Off</label><input type="radio" name="mpsChat" id="mpsChatY" value="on"><label for="mpsChatY">On</label></div><p class="opt-desc">Off unless you turn it on. Swear words in English, Spanish, French, Portuguese, German and Italian are always hidden, in chat and in player names.</p></div>
           <div class="opt"><div class="opt-label">Ping meter</div><div class="seg"><input type="radio" name="mpsPing" id="mpsPingY" value="on"><label for="mpsPingY">📶 Show</label><input type="radio" name="mpsPing" id="mpsPingN" value="off"><label for="mpsPingN">Hide</label></div><p class="opt-desc">Ping is how long a message takes to go to the host and back. Under 100 ms is green, under 200 ms yellow. The scoreboard (hold Tab, or tap 🏆) shows everyone's ping.</p></div>
-          <div class="opt"><div class="opt-label">🏠 Home server (extra fast on the same Wi-Fi)</div><p class="opt-desc">A grown-up can run the game from a Windows PC at home. Then everyone on your Wi-Fi plays through that PC: faster, and no claude.ai account needed. On the PC, double-click <b>Start Bonk Server</b> in the game's folder, then type the address it shows (like <b>http://192.168.1.20:8080</b>) into Safari or Chrome on each device. See Help → 🏠 Home server.</p></div>
+          <div class="opt"><div class="opt-label">🏠 Home server (extra fast on the same Wi-Fi)</div><p class="opt-desc">A grown-up can run the game from a Windows PC at home. Then everyone on your Wi-Fi plays through that PC: faster, and no account needed. On the PC, double-click <b>Start Bonk Server</b> in the game's folder, then type the address it shows (like <b>http://192.168.1.20:8080</b>) into Safari or Chrome on each device. See Help → 🏠 Home server.</p></div>
           <div class="opt"><div class="opt-label">🛰️ Relay server (for grown-ups, website only)</div><p class="opt-desc">On the Bonk Royale website, devices connect directly. That works at home and on most Wi-Fi. Phones on cellular data, and some school or office networks, block direct links. Then a relay carries the game instead. One is built in, so you don't need to do anything. Only fill this in to use your own relay (TURN) server instead.</p><div class="te-row"><input type="text" id="mpsTurnUrl" class="mpinput" placeholder="turn:relay.example.com:3478" autocomplete="off"></div><div class="te-row"><input type="text" id="mpsTurnUser" class="mpinput" placeholder="Username" autocomplete="off"><input id="mpsTurnPass" class="mpinput" type="password" placeholder="Password" autocomplete="new-password"></div></div>
           <div class="opt"><div class="opt-label">📋 Connection log</div><p class="opt-desc">If a game freezes, says the host paused, or sends you back to the lobby, the reason is written here. Tap <b>Copy log</b> and paste it to Claude or a grown-up.</p><pre id="mpLogOut" class="mplog"></pre><div class="btns"><button class="brick small" id="mpLogCopy" type="button">📋 Copy log</button><button class="brick small" id="mpLogClear" type="button">🧹 Clear</button></div></div>
           <div class="opt"><div class="opt-label">Connection test</div><p class="opt-desc">Checks whether this device can play with friends.</p><div class="btns"><button class="brick small" id="mpRun" type="button">🔌 Run connection test</button></div><ul class="mpout" id="mpTestOut"></ul></div>
@@ -640,7 +640,7 @@ body.tediting .tb.ghost{opacity:.3}body.tediting #lobbyBar{display:none!importan
 // Release track of this copy: "stable" (main), "beta" or "alpha" (newest features). Set when a copy is published.
 const BONK_TRACK="stable";
 // Version: 0.1 is the first numbered release; every push to GitHub after that adds 0.1. "-dev" = not released yet.
-const BONK_VERSION="0.1";
+const BONK_VERSION="0.2.1";
 // Relay (TURN) for the website's direct links, from the owner's Metered.ca account (free plan, no card on file).
 // Only used when two devices cannot link directly (cellular data, strict school/office networks). These details are
 // public inside the website; the worst case of misuse is running out of the free monthly allowance, never a bill.
@@ -669,7 +669,12 @@ const angDiff=(a,b)=>{let d=(b-a)%TAU;if(d>Math.PI)d-=TAU;if(d<-Math.PI)d+=TAU;r
 function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
 function rr(g,x,y,w,h,r){g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath();}
 const fmt=s=>{s=Math.max(0,Math.ceil(s));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');};
-const store={get(k){try{return JSON.parse(localStorage.getItem(k));}catch(e){return null;}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}};
+// F14: progress is saved separately for Beta and Alpha (all three websites share one browser storage); settings stay shared.
+// Stable keeps the plain names (0.1 saves keep working). The first time Beta or Alpha reads its own copy, it starts from the shared save.
+const STORE_TRACKED=['bonk-prog','bbr3d-best'];
+const storeKey=k=>STORE_TRACKED.includes(k)&&typeof BONK_TRACK!=='undefined'&&BONK_TRACK!=='stable'?k+'@'+BONK_TRACK:k;
+const store={get(k){try{const tk=storeKey(k);let v=localStorage.getItem(tk);if(v===null&&tk!==k&&(v=localStorage.getItem(k))!==null)localStorage.setItem(tk,v);return JSON.parse(v);}catch(e){return null;}},
+  set(k,v){try{localStorage.setItem(storeKey(k),JSON.stringify(v));}catch(e){}}};
 const shadeHex=(hex,f)=>{const n=parseInt(hex.slice(1),16);let r=(n>>16)&255,g=(n>>8)&255,b=n&255;if(f>1){r+=(255-r)*(f-1);g+=(255-g)*(f-1);b+=(255-b)*(f-1);}else{r*=f;g*=f;b*=f;}
   return '#'+[r,g,b].map(v=>Math.round(clamp(v,0,255)).toString(16).padStart(2,'0')).join('');};
 const esc=s=>s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
@@ -844,7 +849,9 @@ for(const id in WEAPONS){const c=document.createElement('canvas');c.width=144;c.
 // Main: MAPS, MAP, MAP_ID, genMap, tileAt, isBad (a map spot to avoid; the swear check is isSwear), groundAt
 // See also: three-setup (builds the 3D world), update
 /* ================= maps ================= */
-const T=80,N=30,WORLD=T*N,CH=46,STEP=16;
+// The island is N×N tiles of T units. Maps are DESIGNED on a 30×30 grid (2400 units); K scales those designs
+// (lakes, rivers, building spots) up to the real size. Buildings keep their size, so a bigger N means more space.
+const T=80,N=56,WORLD=T*N,K=N/30,CH=46,STEP=16;
 const MAPS={
   meadow:{name:'Green Meadow',desc:'Green fields, a pond that slows you down, and five little forts.',seed:20261013,tiles:['#45b04f','#e6c27a','#3d9be9','#d9d6cc'],side:'#2f8a3a',sky:['#5fb4ef','#cfeefc'],outside:'#3d9be9',tree:'tree',rock:'rock',
     wet:(x,y)=>{const ex=(x-1720)/300,ey=(y-640)/210;return ex*ex+ey*ey<1;},b:[[3,3,4,3,'#e2312b'],[20,18,4,4,'#1f6fd6'],[5,21,3,4,'#ffcb1f'],[10,9,3,3,'#f4f1e8'],[24,24,3,3,'#ff7b1c']]},
@@ -864,7 +871,7 @@ const MAPS={
   ice:{name:'Frozen Peaks',desc:'Snowy pines, snowmen and a giant frozen lake. Ice is SLIPPERY: you slide around and it is hard to stop!',seed:2112,tiles:['#eef4fa','#c9d6e3','#7fb6d9','#dfe9f2','#ff6a1a','#a8dcf5'],side:'#b9cad9',sky:['#86c6f0','#eaf6ff'],outside:'#cfe9f7',tree:'pine',rock:'snowman',amb:'snow',
     zone:(x,y)=>{const ex=(x-1250)/480,ey=(y-1150)/360;return(ex*ex+ey*ey<1||Math.hypot(x-500,y-500)<150||Math.hypot(x-1900,y-1900)<160||Math.hypot(x-1900,y-500)<120)?5:0;},b:[[2,13,3,3,'#bfe3f7'],[13,2,3,3,'#ffffff'],[3,21,3,3,'#9fd3f0'],[23,12,3,3,'#d9f0ff'],[10,22,4,3,'#7fc8ef']]},
   pirate:{name:'Pirate Cove',desc:'A sandy island with palm trees, treasure piles, a shipwreck and a shallow lagoon. Arrr!',seed:1717,tiles:['#f0d9a0','#b07a45','#4fc3e8','#c9a57a'],side:'#e0c48a',sky:['#3fb6f2','#d6f4ff'],outside:'#2fa7dc',tree:'palm',rock:'treasure',
-    wet:(x,y)=>{const ex=(x-1250)/420,ey=(y-1250)/330;return ex*ex+ey*ey<1||x>WORLD-180||y>WORLD-180;},b:[[3,3,4,3,'#8b5a2b'],[20,4,3,3,'#a0522d'],[4,20,3,3,'#8b5a2b'],[19,19,5,3,'#6b4423',1],[11,4,3,3,'#a0522d']]}
+    wet:(x,y)=>{const ex=(x-1250)/420,ey=(y-1250)/330;return ex*ex+ey*ey<1||x>2220||y>2220;},b:[[3,3,4,3,'#8b5a2b'],[20,4,3,3,'#a0522d'],[4,20,3,3,'#8b5a2b'],[19,19,5,3,'#6b4423',1],[11,4,3,3,'#a0522d']]}
 };
 let MAP=MAPS.meadow,MAP_ID='';
 const POI_NAMES={meadow:['Chicken Coop','Bonk Town','Sunny Fort','Pond Point','Snack Shack'],desert:['Sandy Temple','Cactus Corner','Dusty Diner','Tumble Town','Mesa Market'],
@@ -872,11 +879,23 @@ const POI_NAMES={meadow:['Chicken Coop','Bonk Town','Sunny Fort','Pond Point','S
   cave:['Gem Mine','Echo Hall','Bat Cave','Crystal Keep','Drip Den'],lava:['Ember Fort','Hot Rocks','Magma Mill','Smoke Stack','Lava Lookout'],
   oil:['Pump Town','Grease Garage','Tar Barn','Flame Factory','Oily Outpost'],ice:['Frosty Fort','Igloo Inn','Snowball Shack','Chilly Chalet','Penguin Point'],
   pirate:['Parrot Hut','Barrel Bay','Coconut Hut','Shipwreck Cove','Skull Shack']};
+// extra buildings for the big island: how many, and their names on each map
+const EXTRA_BUILDINGS=Math.round(5*(K*K-1));
+const EXTRA_NAMES={meadow:['Hay Barn','Picnic Place','Windmill Way','Daisy Den','Mushroom Manor','Berry Barn','Butterfly Bay','Clover Cottage','Puddle Place','Tractor Town','Apple Acres','Sheep Shed'],
+  desert:['Dune Den','Scorpion Stop','Camel Camp','Oasis Inn','Sandstorm Shack','Rattlesnake Ranch','Canyon Cafe','Sunbaked Shed','Mirage Market','Tumbleweed Tavern','Dust Bowl','Cactus Cove'],
+  candy:['Cupcake Castle','Jellybean Junction','Marshmallow Manor','Cookie Corner','Sprinkle Shop','Bubblegum Barn','Licorice Lane','Toffee Tent','Gummy Garden','Cocoa Cabin','Candy Cane Keep','Sherbet Shed'],
+  space:['Rocket Garage','Alien Inn','Orbit Office','Satellite Shack','Nebula Nook','Asteroid Arcade','Gravity Gym','Lunar Lodge','Galaxy Garage','Meteor Mart','Cosmo Cabin','Starship Shed'],
+  cave:['Stalactite Stop','Glow Grotto','Pebble Pub','Mole Manor','Lantern Lodge','Geode Garage','Boulder Barn','Tunnel Town','Shadow Shack','Rocky Rest','Crystal Cabin','Dripstone Den'],
+  lava:['Fireball Fort','Cinder Shack','Volcano Villa','Ash Arcade','Scorch Shed','Blaze Barn','Obsidian Outpost','Hot Spring Hut','Sizzle Station','Flame Forge','Charcoal Cabin','Lava Lounge'],
+  oil:['Drill Depot','Pipe Palace','Gasket Garage','Barrel Barn','Rig Rest','Sludge Shed','Wrench Works','Valve Villa','Diesel Diner','Crude Cabin','Gear Garage','Pump Palace'],
+  ice:['Frost Fort','Icicle Inn','Polar Palace','Mitten Mart','Blizzard Barn','Sled Shed','Snowflake Shop','Hot Cocoa Hut','Walrus Way','Glacier Garage','Yeti Yurt','Ice Rink'],
+  pirate:['Treasure Tower','Anchor Inn','Cannon Cove','Pirate Pub','Lookout Lodge','Sail Shed','Jolly Roger Hut','Map Maker','Plank Place','Crab Cabin','Gold Galleon','Mermaid Manor']};
 const TILE=new Uint8Array(N*N);
 const OB=[],GRID=[],PADS=[],CHEST_SPOTS=[],BUILDINGS=[],BRICK_SPOTS=[];
 for(let i=0;i<N*N;i++)GRID.push([]);
 const tileCol=k=>MAP.tiles[k]||['','','#3d9be9','','#ff6a1a','#a8dcf5'][k];
-const tileKind=(x,y)=>MAP.zone?MAP.zone(x,y):MAP.wet(x,y)?2:0;
+// wet/zone are written in design units (see K), so the real position is scaled back before asking them
+const tileKind=(x,y)=>{x/=K;y/=K;return MAP.zone?MAP.zone(x,y):MAP.wet(x,y)?2:0;};
 function tileAt(x,y){const i=Math.floor(x/T),j=Math.floor(y/T);if(i<0||j<0||i>=N||j>=N)return 0;return TILE[i+j*N];}
 const inWater=(x,y)=>tileAt(x,y)===2;
 const isBad=(x,y)=>{const k=tileAt(x,y);return k===2||k===4;};
@@ -903,9 +922,10 @@ function genMap(id){
   MAP=MAPS[id]||MAPS.meadow;MAP_ID=MAPS[id]?id:'meadow';
   OB.length=0;PADS.length=0;CHEST_SPOTS.length=0;BUILDINGS.length=0;BRICK_SPOTS.length=0;for(const c of GRID)c.length=0;
   const R=mulberry32(MAP.seed);
-  for(let j=0;j<N;j++)for(let i=0;i<N;i++){const cx=(i+.5)*T,cy=(j+.5)*T;let k=tileKind(cx,cy);if(i===15||j===15)k=1;TILE[i+j*N]=k;}
+  for(let j=0;j<N;j++)for(let i=0;i<N;i++){const cx=(i+.5)*T,cy=(j+.5)*T;let k=tileKind(cx,cy);if(i===N>>1||j===N>>1)k=1;TILE[i+j*N]=k;} // the two roads cross in the middle
   const S=40;
-  for(const[bi,bj,bw,bh,col,big]of MAP.b){
+  // one building: walls with doorways, chests inside, and (small ones) stairs up to a walkable roof
+  const placeBuilding=(bi,bj,bw,bh,col,big,name)=>{
     const H0=big?100:72;
     for(let j=bj;j<bj+bh;j++)for(let i=bi;i<bi+bw;i++)TILE[i+j*N]=3;
     const x0=bi*T,y0=bj*T,W2=bw*T,H2=bh*T,nx=W2/S,ny=H2/S;BUILDINGS.push({x:x0,y:y0,w:W2,h:H2,col});
@@ -916,21 +936,30 @@ function genMap(id){
     CHEST_SPOTS.push({x:x0+S+24+R()*(W2/2-S-30),y:y0+S+24+R()*(H2-2*S-48)});
     CHEST_SPOTS.push({x:x0+W2/2+R()*(W2/2-S-30),y:y0+S+24+R()*(H2-2*S-48)});
     if(big)for(let e=0;e<2;e++)CHEST_SPOTS.push({x:x0+S+30+R()*(W2-2*S-60),y:y0+S+30+R()*(H2-2*S-60)});
-    {const b=BUILDINGS[BUILDINGS.length-1];b.name=(POI_NAMES[MAP_ID]||[])[BUILDINGS.length-1]||'';b.roofs=[];
+    {const b=BUILDINGS[BUILDINGS.length-1];b.name=name||'';b.roofs=[];
       if(!big){const RH=72;const st={t:'ramp',x:x0+40,y:y0+40,w:80,d:40,z0:0,h:RH+6,dir:2,stairs:true};addOb(st);b.stairs=st;
         const R6=(x,y,w,d)=>{if(w>0&&d>0){const o={t:'box',x,y,w,d,z0:RH,h:6,roof:true};addOb(o);b.roofs.push(o);}};
         R6(x0,y0,W2,40);R6(x0,y0+40,40,40);R6(x0+120,y0+40,W2-120,40);R6(x0,y0+80,W2,H2-80);
         for(let q=CHEST_SPOTS.length-2;q<CHEST_SPOTS.length;q++){const c=CHEST_SPOTS[q];if(c.x<x0+140&&c.y<y0+100)c.y=y0+120+R()*Math.max(10,H2-180);}}}
-  }
+  };
+  // the designed buildings, spread out to the island's size (same size, more space between them)
+  MAP.b.forEach(([bi0,bj0,bw,bh,col,big],n)=>placeBuilding(Math.round(bi0*K),Math.round(bj0*K),bw,bh,col,big,(POI_NAMES[MAP_ID]||[])[n]));
+  // extra buildings in the open spaces of the big island. The map's seed decides where, so every player in a match
+  // gets the same ones. Each needs open ground (no water, lava, road or building) with a 2-tile gap all round.
+  const cols=MAP.b.map(b=>b[4]),names=EXTRA_NAMES[MAP_ID]||EXTRA_NAMES.meadow;let made=0;
+  for(let a=0;a<4000&&made<EXTRA_BUILDINGS;a++){const bw=3+Math.floor(R()*2),bh=3+Math.floor(R()*2),bi=2+Math.floor(R()*(N-bw-4)),bj=2+Math.floor(R()*(N-bh-4));
+    let ok=true;for(let j=bj-2;j<bj+bh+2&&ok;j++)for(let i=bi-2;i<bi+bw+2;i++)if(TILE[i+j*N]!==0){ok=false;break;}
+    if(ok){placeBuilding(bi,bj,bw,bh,cols[made%cols.length],false,names[made%names.length]);made++;}}
   const free=(x,y,r)=>{if(x<r+40||y<r+40||x>WORLD-r-40||y>WORLD-r-40)return false;if(tileAt(x,y)!==0)return false;if(inBuilding(x,y,50))return false;
     for(const o of OB)if(o.t==='cyl'&&Math.hypot(o.x-x,o.y-y)<o.r+r+44)return false;
     for(const p of PADS)if(Math.hypot(p.x-x,p.y-y)<r+60)return false;
     for(const p of CHEST_SPOTS)if(Math.hypot(p.x-x,p.y-y)<r+50)return false;return true;};
   const free2=(x,y,r)=>{if(x<100||y<100||x>WORLD-100||y>WORLD-100)return false;if(pointBlocked(x,y,r))return false;for(const p of PADS)if(Math.hypot(p.x-x,p.y-y)<500)return false;return true;};
-  for(let a=0,n=0;a<900&&n<58;a++){const x=R()*WORLD,y=R()*WORLD;if(free(x,y,18)){addOb({t:'cyl',x,y,r:MAP.tree==='antenna'?14:16,z0:0,h:220,kind:'tree',v:Math.floor(R()*3)});n++;}}
-  for(let a=0,n=0;a<900&&n<24;a++){const x=R()*WORLD,y=R()*WORLD,r=18+R()*10;if(free(x,y,r)){addOb({t:'cyl',x,y,r,z0:0,h:Math.round(r*1.35),kind:'rock',v:R()});n++;}}
-  for(let a=0,n=0;a<900&&n<7;a++){const x=R()*WORLD,y=R()*WORLD;if(!isBad(x,y)&&!inBuilding(x,y,60)&&free2(x,y,40)){PADS.push({x,y});n++;}}
-  for(let a=0,n=0;a<900&&n<10;a++){const x=R()*WORLD,y=R()*WORLD;if(free(x,y,20)){CHEST_SPOTS.push({x,y});n++;}}
+  const more=n=>Math.round(n*K*K); // a bigger island gets proportionally more trees, rocks, pads and chests
+  for(let a=0,n=0;a<3000&&n<more(58);a++){const x=R()*WORLD,y=R()*WORLD;if(free(x,y,18)){addOb({t:'cyl',x,y,r:MAP.tree==='antenna'?14:16,z0:0,h:220,kind:'tree',v:Math.floor(R()*3)});n++;}}
+  for(let a=0,n=0;a<3000&&n<more(24);a++){const x=R()*WORLD,y=R()*WORLD,r=18+R()*10;if(free(x,y,r)){addOb({t:'cyl',x,y,r,z0:0,h:Math.round(r*1.35),kind:'rock',v:R()});n++;}}
+  for(let a=0,n=0;a<3000&&n<more(7);a++){const x=R()*WORLD,y=R()*WORLD;if(!isBad(x,y)&&!inBuilding(x,y,60)&&free2(x,y,40)){PADS.push({x,y});n++;}}
+  for(let a=0,n=0;a<3000&&n<more(10);a++){const x=R()*WORLD,y=R()*WORLD;if(free(x,y,20)){CHEST_SPOTS.push({x,y});n++;}}
 }
 // @module src/js/07-three-setup.js: three.js renderer, scene, camera, lights and shared geometry/material caches; building the 3D world; re-measuring the screen (iOS fixes).
 // Main: renderer, scene, camera, resize, viewportChanged, GEO, mat, mesh, buildWorld
@@ -941,7 +970,8 @@ const renderer=new THREE.WebGLRenderer({canvas:cv,antialias:true});
 renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.5));
 renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
 const scene=new THREE.Scene();
-const camera=new THREE.PerspectiveCamera(70,1,1,3400);
+// far plane reaches past the island to the faraway scenery around it (see 08-sky)
+const camera=new THREE.PerspectiveCamera(70,1,1,WORLD*2.4);
 let W=0,H=0;
 function resize(){W=innerWidth;H=innerHeight;renderer.setSize(W,H,false);camera.aspect=W/H;camera.updateProjectionMatrix();}
 // iOS home-screen apps can open sideways while still reporting the upright size, and never send a resize event.
@@ -1010,7 +1040,8 @@ function propRock(o){const x=o.x,y=o.y,r=o.r,h=o.h,v=o.v;
 }
 function groundTextures(){
   // smooth natural ground: blended tile colours plus grass, pebbles, ripples and cracks
-  const px=64,S2=N*px,a=document.createElement('canvas');a.width=a.height=S2;const ga=a.getContext('2d');
+  const px=Math.max(32,Math.floor(2700/N)),S2=N*px, // keep the ground texture about 2700 px wide, whatever the island size (older iPads)
+  a=document.createElement('canvas');a.width=a.height=S2;const ga=a.getContext('2d');
   for(let j=0;j<N;j++)for(let i=0;i<N;i++){ga.fillStyle=tileCol(TILE[i+j*N]);ga.fillRect(i*px,j*px,px,px);}
   const c=document.createElement('canvas');c.width=c.height=S2;const g=c.getContext('2d');g.fillStyle=tileCol(0);g.fillRect(0,0,S2,S2);
   g.filter='blur(10px)';g.drawImage(a,0,0);g.filter='none';
@@ -1066,7 +1097,7 @@ function buildWorld(){
   for(let i=0;i<sg.attributes.position.count;i++){const y=sg.attributes.position.getY(i)/3000,c=hor.clone().lerp(top,clamp(y*1.6,0,1));cols.push(c.r,c.g,c.b);}
   sg.setAttribute('color',new THREE.Float32BufferAttribute(cols,3));
   skyMesh=new THREE.Mesh(sg,new THREE.MeshBasicMaterial({vertexColors:true,side:THREE.BackSide,fog:false,depthWrite:false}));world.add(skyMesh);
-  scene.fog=MAP.dark?new THREE.Fog(0x000000,140,760):new THREE.Fog(MAP.sky[1],900,2900);
+  scene.fog=MAP.dark?new THREE.Fog(0x000000,140,760):new THREE.Fog(MAP.sky[1],900*K,2900*K);
   // stars / planet
   starPts=null;if(MAP.stars){const sp=[];for(let i=0;i<700;i++){const a=Math.random()*TAU,b=Math.random()*0.9+0.05;sp.push(Math.cos(a)*Math.cos(b)*2800,Math.sin(b)*2800,Math.sin(a)*Math.cos(b)*2800);}
     const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(sp,3));starPts=new THREE.Points(g,new THREE.PointsMaterial({color:0xffffff,size:3,sizeAttenuation:false,fog:false}));world.add(starPts);
@@ -1075,6 +1106,7 @@ function buildWorld(){
   ambPts=null;if(MAP.amb){const n=MAP.amb==='snow'?900:MAP.amb==='embers'?400:250,p=new Float32Array(n*3);for(let i=0;i<n;i++){p[i*3]=rand(-700,700);p[i*3+1]=rand(0,500);p[i*3+2]=rand(-700,700);}
     const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(p,3));
     ambPts=new THREE.Points(g,new THREE.PointsMaterial({color:MAP.amb==='snow'?0xffffff:MAP.amb==='embers'?0xff9a3c:0xcfc0ff,size:MAP.amb==='snow'?4:3,transparent:true,opacity:0.85}));world.add(ambPts);}
+  buildSkyDecor(); // sun, clouds and faraway scenery (08-sky)
   // lights
   if(MAP.dark){hemi.intensity=0.12;sun.intensity=0;ambient.intensity=0.08;playerLight.intensity=1.7;crysLights.forEach(l=>l.intensity=1.4);}
   else{hemi.intensity=0.98;sun.intensity=0.88;ambient.intensity=0;playerLight.intensity=0;crysLights.forEach(l=>l.intensity=0);
@@ -1133,7 +1165,76 @@ function drawTag(c){const cv2=c.tagCanvas,g=cv2.getContext('2d');g.clearRect(0,0
   if(HBARS||c.hp<c.maxHp){const f=Math.max(0,c.hp/c.maxHp);g.fillStyle='rgba(27,34,53,.85)';rr(g,bx-3,38,bw+6,24,6);g.fill();g.fillStyle=f>.6?'#4cd05a':f>.3?'#ffcb1f':'#ff4d4d';rr(g,bx,41,Math.max(4,bw*f),18,4);g.fill();
     g.font='900 16px Nunito, sans-serif';g.lineWidth=4;g.strokeText(String(Math.ceil(c.hp)),128,56);g.fillStyle='#fff';g.fillText(String(Math.ceil(c.hp)),128,56);}
   c.tagTex.needsUpdate=true;}
-// @module src/js/08-cosmetics.js: Locker items (outfits, gliders, pickaxes, back bling, gun wraps), the Ticket Shop catalogue, and building a person from an outfit.
+// @module src/js/08-sky.js: The sky: the sun, drifting clouds, and faraway scenery around the island (hills, mesas, peaks, volcanoes, islands), different for each map.
+// Main: SKY_LOOK, buildSkyDecor, updateSkyDecor, skyTexture
+// See also: three-setup (buildWorld calls it), visuals (animateWorld calls updateSkyDecor)
+/* ================= sky: the sun, drifting clouds, and faraway scenery around the island =================
+   buildSkyDecor() runs at the end of buildWorld() and adds everything to `world` (so it is cleared with the map);
+   updateSkyDecor(dt) runs every frame from animateWorld(). Each map has its own look in SKY_LOOK.
+   The scenery is far outside the island, so it uses fog:false materials with the "haze" mixed into the colour,
+   and the sky dome is drawn first (renderOrder) so things beyond its radius still show. */
+const SKY_LOOK={
+  meadow:{land:'hills',cols:['#5aa860','#4b9a55','#7cc47a','#6aa0c8'],cloud:'#ffffff',n:22,sun:'#fff3c0'},
+  desert:{land:'mesas',cols:['#c56a3a','#b5562e','#d98a50','#e0a066'],cloud:'#ffe6cc',n:8,sun:'#ffd27a'},
+  candy:{land:'hills',cols:['#ff9ad5','#9be7c4','#fff08a','#c9a7ff'],cloud:'#ffd1ec',n:24,sun:'#fff6b0'},
+  space:{planet:true},
+  lava:{land:'volcanoes',cols:['#3a2a28','#4a3330','#2e2220'],cloud:'#3a2a2a',n:18,smoke:true,sun:'#ff8a40'},
+  oil:{land:'hills',cols:['#3e3631','#4a403a','#2f2925'],cloud:'#4a3a30',n:18,smoke:true,sun:'#ff9a50'},
+  ice:{land:'peaks',cols:['#e8f2fb','#cfe2f2','#b7d0e6'],cloud:'#ffffff',n:16,sun:'#ffffff'},
+  pirate:{land:'islands',cols:['#4fae5a','#3e9a4c','#e9d39a'],cloud:'#ffffff',n:20,sun:'#fff3c0'},
+};
+let skyClouds=[],skySun=null;
+// soft round blob textures, drawn once
+const SKY_TEX={};
+function skyTexture(kind){if(SKY_TEX[kind])return SKY_TEX[kind];const c=document.createElement('canvas');c.width=c.height=128;const g=c.getContext('2d');
+  if(kind==='sun'){const r=g.createRadialGradient(64,64,0,64,64,64);r.addColorStop(0,'rgba(255,255,255,1)');r.addColorStop(0.18,'rgba(255,255,255,0.95)');r.addColorStop(0.35,'rgba(255,255,255,0.35)');r.addColorStop(1,'rgba(255,255,255,0)');g.fillStyle=r;g.fillRect(0,0,128,128);}
+  else{const R=mulberry32(77);for(let i=0;i<9;i++){const x=24+R()*80,y=48+R()*30-Math.abs(x-64)*0.25,s=18+R()*22,r=g.createRadialGradient(x,y,0,x,y,s);
+    r.addColorStop(0,'rgba(255,255,255,0.95)');r.addColorStop(0.6,'rgba(255,255,255,0.7)');r.addColorStop(1,'rgba(255,255,255,0)');g.fillStyle=r;g.fillRect(0,0,128,128);}}
+  return SKY_TEX[kind]=new THREE.CanvasTexture(c);}
+// far colours: mixed toward the horizon colour, the more the further away
+const hazed=(col,f)=>new THREE.Color(col).lerp(new THREE.Color(MAP.sky[1]),f);
+const farMat=(col,f,o)=>new THREE.MeshBasicMaterial(Object.assign({color:hazed(col,f),fog:false},o||{}));
+
+function buildSkyDecor(){
+  skyClouds=[];skySun=null;if(skyMesh)skyMesh.renderOrder=-2;if(starPts)starPts.renderOrder=-1;
+  const L=SKY_LOOK[MAP_ID];if(!L||MAP.dark)return;
+  const R=mulberry32(MAP.seed+99),C=WORLD/2,add=m=>{world.add(m);return m;};
+  // ---- faraway scenery: two rings around the island (near ring less hazy than the far one) ----
+  // (snow caps are a bit wider than their peak, so the two surfaces don't flicker)
+  if(L.land)for(const[dist,count,haze,hMul]of[[WORLD*0.95,28,0.35,1],[WORLD*1.45,34,0.55,1.6]]){
+    for(let i=0;i<count;i++){const a=(i+R()*0.6)/count*TAU,d=dist+(R()-0.5)*WORLD*0.18,x=C+Math.cos(a)*d,y=C+Math.sin(a)*d,col=L.cols[Math.floor(R()*L.cols.length)];
+      const w=(260+R()*420)*K,h=(180+R()*320)*K*hMul,base=MAP.outside?-28:-2;
+      if(L.land==='hills'){const m=add(new THREE.Mesh(GEO.hemi,farMat(col,haze)));m.scale.set(w,h*0.8,w*0.8);m.position.set(x,base,y);}
+      else if(L.land==='peaks'){const m=add(new THREE.Mesh(GEO.cone,farMat(shadeHex(col,0.85),haze)));m.scale.set(w,h*1.5,w);m.position.set(x,base,y);
+        const cap=add(new THREE.Mesh(GEO.cone,farMat('#ffffff',haze*0.7)));cap.scale.set(w*0.47,h*0.66,w*0.47);cap.position.set(x,base+h*0.86,y);}
+      else if(L.land==='mesas'){const m=add(new THREE.Mesh(GEO.cyl,farMat(col,haze)));m.scale.set(w,h*0.7,w*0.8);m.position.set(x,base,y);
+        const top=add(new THREE.Mesh(GEO.cyl,farMat(shadeHex(col,1.15),haze)));top.scale.set(w*1.02,h*0.08,w*0.82);top.position.set(x,base+h*0.7,y);}
+      else if(L.land==='volcanoes'){const m=add(new THREE.Mesh(GEO.cone,farMat(col,haze)));m.scale.set(w*1.2,h*1.3,w*1.2);m.position.set(x,base,y);
+        if(R()<0.45){const glow=add(new THREE.Mesh(GEO.sphC,new THREE.MeshBasicMaterial({color:'#ff6a1a',fog:false})));glow.scale.set(w*0.22,w*0.12,w*0.22);glow.position.set(x,base+h*1.2,y);}}
+      else if(L.land==='islands'){if(R()<0.4)continue;const m=add(new THREE.Mesh(GEO.hemi,farMat(col,haze)));m.scale.set(w*0.8,h*0.45,w*0.8);m.position.set(x,base,y);
+        const sand=add(new THREE.Mesh(GEO.disc,farMat(L.cols[2],haze)));sand.scale.set(w*1.15,1,w*1.15);sand.position.set(x,base+1,y);}}}
+  // ---- clouds: soft sprites drifting slowly across the sky ----
+  for(let i=0;i<(L.n||0);i++){const sm=new THREE.SpriteMaterial({map:skyTexture('cloud'),color:L.cloud,transparent:true,depthWrite:false,fog:false,opacity:L.smoke?0.75:0.92});
+    const s=new THREE.Sprite(sm),sc=(500+R()*700)*K;s.scale.set(sc,sc*0.45,1);
+    s.position.set(C+(R()-0.5)*WORLD*2.6,(L.smoke?700:950)+R()*500,C+(R()-0.5)*WORLD*2.6);s.userData.v=(10+R()*18)*(L.smoke?0.6:1);add(s);skyClouds.push(s);}
+  // ---- the sun: a glow far away in the direction the sunlight comes from ----
+  if(L.sun){const sm=new THREE.SpriteMaterial({map:skyTexture('sun'),color:L.sun,transparent:true,depthWrite:false,fog:false,blending:THREE.AdditiveBlending});
+    skySun=new THREE.Sprite(sm);skySun.scale.set(camera.far*0.3,camera.far*0.3,1);add(skySun);}
+  // ---- space: a big ringed planet next to the Earth ----
+  if(L.planet&&starPts){const p=new THREE.Mesh(GEO.sphC,new THREE.MeshBasicMaterial({color:0xe0a35a,fog:false}));p.scale.set(380,380,380);p.position.set(1500,700,1300);
+    // a wide flat ring (sizes are in the planet's own units: the planet is a 0.5-radius sphere scaled up)
+    const ring=new THREE.Mesh(new THREE.RingGeometry(0.7,1.1,48).rotateX(-Math.PI/2),new THREE.MeshBasicMaterial({color:0xf3d9a4,side:THREE.DoubleSide,fog:false,transparent:true,opacity:0.85}));
+    ring.rotation.set(0.45,0,0.25);p.add(ring);starPts.add(p);}
+}
+// the direction sunlight comes from (matches sun.position = focus + (300,700,200) in animateWorld)
+const SUN_DIR=new THREE.Vector3(300,700,200).normalize();
+function updateSkyDecor(dt){
+  // far beyond the faraway scenery (but inside the camera's far plane), so hills and mountains pass in front of it
+  if(skySun)skySun.position.copy(camera.position).addScaledVector(SUN_DIR,camera.far*0.9);
+  const C=WORLD/2,span=WORLD*1.3;
+  for(const s of skyClouds){s.position.x+=s.userData.v*dt;if(s.position.x>C+span)s.position.x=C-span;}
+}
+// @module src/js/09-cosmetics.js: Locker items (outfits, gliders, pickaxes, back bling, gun wraps), the Ticket Shop catalogue, and building a person from an outfit.
 // Main: OUTFITS, GLIDERS, PICKS, BACKS, WRAPS, SHOP, makeLook, buildPerson, gliderModel
 // See also: models, lobby-locker, ticket-shop
 /* ================= people: outfits, back bling, gliders, pickaxes ================= */
@@ -1158,7 +1259,6 @@ const BACKS=[{id:'none',name:'No back bling',lvl:1},{id:'backpack',name:'Adventu
 OUTFITS.push(
   {id:'tophat',name:'Top Hat Tim',lvl:1,shop:200,rar:1,top:'#2b2f3a',top2:'#ffffff',pants:'#2b2f3a',shoe:'#1b1b1b',glove:'#ffffff',hair:'#5a3a1e',hairStyle:'short',hat:'tophat',hatCol:'#1b1b1b',back:'none',skin:'#f1c27d'},
   {id:'cat',name:'Cool Cat',lvl:1,shop:250,rar:2,top:'#ff8fc8',top2:'#ffffff',pants:'#7a4fd6',shoe:'#ffffff',glove:'#ff8fc8',hair:'#ff8fc8',hairStyle:'short',hat:'cat',hatCol:'#ff8fc8',back:'guitar',skin:'#ffdbac'},
-  {id:'wizard',name:'Wizard Wiz',lvl:1,shop:350,rar:3,top:'#5b3cc4',top2:'#ffcb1f',pants:'#3d2a8a',shoe:'#2b2f3a',glove:null,hair:'#f4f6fa',hairStyle:'long',hat:'wizard',hatCol:'#5b3cc4',back:'cape',capeCol:'#3d2a8a',skin:'#f1c27d'},
   {id:'robo',name:'Robo Bonker',lvl:1,shop:400,rar:3,top:'#b8c4d4',top2:'#43c6ff',pants:'#7d8796',shoe:'#43c6ff',glove:'#43c6ff',hair:'#1b1b1b',hairStyle:'bald',hat:'robot',hatCol:'#b8c4d4',back:'drone',skin:'#b8c4d4'},
   {id:'hero',name:'Super Bonk',lvl:1,shop:500,rar:4,top:'#1f6fd6',top2:'#ffcb1f',pants:'#e2312b',shoe:'#e2312b',glove:'#e2312b',hair:'#1b1b1b',hairStyle:'spiky',hat:'mask',hatCol:'#e2312b',back:'cape',capeCol:'#e2312b',skin:'#e0ac69'},
   {id:'banana',name:'Banana Buddy',lvl:1,shop:600,rar:4,top:'#ffe14d',top2:'#fff7b0',pants:'#ffe14d',shoe:'#6b4a1e',glove:'#ffe14d',hair:'#1b1b1b',hairStyle:'bald',hat:'banana',hatCol:'#ffe14d',back:'none',skin:'#ffe14d'});
@@ -1226,7 +1326,6 @@ function buildPerson(c,body,add){
     else{add(body,'sphC','#e2312b',0,48.5,0,3,4.4,6);add(body,'cone','#ff8a00',0,43.5,9,3,6,3).rotation.x=Math.PI/2;}}
   else if(H==='tophat'){add(body,'cylC',HC,0,45.6,0,20,1.6,20);add(body,'cylC',HC,0,51.5,0,12,11,12);add(body,'cylC','#e2312b',0,47.6,0,12.4,2.4,12.4);}
   else if(H==='cat'){add(body,'hemi',HC,0,41.6,-0.8,15.4,13,15.4);for(const s of[-1,1]){const e=add(body,'cone',HC,s*4.6,46,0,5,7,3.4);e.rotation.z=-s*0.35;const e2=add(body,'cone','#ffffff',s*4.5,46.4,1.2,2.6,4.4,1);e2.rotation.z=-s*0.35;}}
-  else if(H==='wizard'){add(body,'cylC',HC,0,45.2,0,24,1.4,24);const w=add(body,'cone',HC,0,46,-1,13,20,13);w.rotation.x=-0.18;for(const[x,y,z]of[[-3,51,4.2],[2.5,55,2.6],[0,59,0.8]])add(body,'sphC','#ffcb1f',x,y,z,2,2,1);}
   else if(H==='robot'){add(body,'boxC',HC,0,40,0,15.6,15.4,15);add(body,'boxC','#1b2235',0,40.6,7.3,12,5,1);add(body,'boxC','#43c6ff',-3,40.6,7.9,3.2,2,0.6);add(body,'boxC','#43c6ff',3,40.6,7.9,3.2,2,0.6);
     add(body,'cylC','#7d8796',0,49.5,0,1,5,1);add(body,'sphC','#ff3b3b',0,52.6,0,3,3,3);for(const s of[-1,1])add(body,'cylC','#7d8796',s*8,40,0,3,4,3).rotation.z=Math.PI/2;}
   else if(H==='mask'){add(body,'cylC',HC,0,40.6,0.4,14.8,4.2,14.8);for(const s of[-1,1]){add(body,'sphC','#ffffff',s*2.7,40.6,7.5,3.2,2.6,1);add(body,'sphC','#1b1b1b',s*2.7,40.5,7.9,1.4,1.4,0.6);}add(body,'boxC',HC,2.5,40,-8.4,2,1.2,7).rotation.x=0.7;}
@@ -1256,11 +1355,13 @@ function pickModel(id){const P=PICKS.find(x=>x.id===id)||PICKS[0],[a,b]=P.c;cons
   B(a,0,0,12,2.8,2.8,28);if(id==='candy'){for(let k=0;k<5;k++)B(b,0,0,3+k*5.5,3,3,1.6);}
   if(id==='golden'){B(b,0,0,27,16,12,10);}else if(id==='lolly'){const s=new THREE.Mesh(GEO.cylC,mat(b));s.scale.set(16,3,16);s.rotation.x=Math.PI/2;s.position.set(0,6,27);g.add(s);}
   else{B(b,0,4,25,3.2,10,5).rotation.x=-0.35;B(b,0,-4,25,3.2,10,5).rotation.x=0.35;B(shadeHex(b,0.8),0,0,25,4,4,6);}return g;}
-// @module src/js/09-xp-levels.js: Saved progress (PROG): XP, levels, tickets, owned items, daily challenges.
+// @module src/js/10-xp-levels.js: Saved progress (PROG): XP, levels, tickets, owned items, daily challenges.
 // Main: PROG, saveProg, xpEvent, finishXP, CHAL_DEFS
 // See also: screens (end of match), ticket-shop
 /* ================= XP, levels and challenges ================= */
 let PROG=store.get('bonk-prog')||{xp:0,wins:0,chal:null,locker:{outfit:'recruit',back:'outfit',glider:'classic',pick:'classic'}};if(PROG.tickets==null)PROG.tickets=200;PROG.owned=PROG.owned||[];PROG.locker.wrap=PROG.locker.wrap||'none';let shopPreview=null;
+// the Wizard Wiz outfit was removed (2026-10-15): give back its 350 tickets once, and switch anyone wearing it to the default
+if(PROG.owned.includes('outfit:wizard')){PROG.owned=PROG.owned.filter(k=>k!=='outfit:wizard');PROG.tickets+=350;if(PROG.locker.outfit==='wizard'){PROG.locker.outfit='recruit';PROG.locker.back='outfit';}store.set('bonk-prog',PROG);}
 const LVL_XP=600,levelOf=xp=>1+Math.floor(xp/LVL_XP);
 const CHAL_DEFS=[{id:'kos',text:'Knock out 8 enemies',n:8},{id:'chests',text:'Open 6 chests',n:6},{id:'build',text:'Build 30 pieces',n:30},{id:'drive',text:'Drive 4,000 units in a car',n:4000},
   {id:'heal',text:'Use 4 healing or shield items',n:4},{id:'llama',text:'Open a Loot Llama',n:1},{id:'vend',text:'Buy from a vending machine',n:1},{id:'win',text:'Win any match',n:1},
@@ -1278,7 +1379,7 @@ function finishXP(p){const before=PROG.xp,lvl0=levelOf(before);let xp=100+p.kos*
   PROG.xp+=xp;const lvl1=levelOf(PROG.xp);const tk=30+p.kos*10+(G.win?150:p.place&&p.place<=3?50:0)+(G.tkBonus||0)+(lvl1-lvl0)*100;PROG.tickets+=tk;ensureChal();saveProg();
   const unl=[];for(let L=lvl0+1;L<=lvl1;L++)for(const list of[OUTFITS,GLIDERS,PICKS,BACKS])for(const it of unlockedAt(list,L))unl.push(it.name);
   return{xp,tk,lvl0,lvl1,unl};}
-// @module src/js/10-lobby-locker.js: The 3D character on the welcome screen and the Locker screen.
+// @module src/js/11-lobby-locker.js: The 3D character on the welcome screen and the Locker screen.
 // Main: rebuildLobby, lobbyFrame, renderLobbyBar, LOCK_TABS, renderLocker
 // See also: models, cosmetics, menus
 /* ================= lobby + locker ================= */
@@ -1307,7 +1408,7 @@ function renderLocker(){const L=levelOf(PROG.xp);$('lockTabs').innerHTML=LOCK_TA
     return`<button type="button" class="litem${cur===it.id?' on':''}${locked?' locked':''}" data-id="${it.id}" ${locked?'disabled':''} style="--rc:${rc}"><b>${esc(it.name)}</b><span>${locked?(it.shop?'🎟️ In the Ticket Shop':it.wins?'Win a match to unlock':'Unlocks at level '+it.lvl):cur===it.id?'Equipped':'Tap to equip'}</span></button>`;}).join('');}
 document.addEventListener('click',e=>{const tb=e.target.closest('#lockTabs .ltab');if(tb){lockTab=tb.dataset.tab;renderLocker();return;}
   const li=e.target.closest('#lockGrid .litem');if(li&&!li.disabled){PROG.locker[lockTab]=li.dataset.id;saveProg();renderLocker();rebuildLobby();sfx('pickup');}});
-// @module src/js/11-models.js: 3D models: characters (from their outfit), held weapons, rescue drones, the battle bus.
+// @module src/js/12-models.js: 3D models: characters (from their outfit), held weapons, rescue drones, the battle bus.
 // Main: buildCharModel, setHeld, removeModel, droneModel, busModel
 // See also: cosmetics, visuals
 /* ================= 3D models: characters, drones, the battle bus =================
@@ -1359,8 +1460,8 @@ function busModel(){const g=new THREE.Group();const env=new THREE.Mesh(GEO.sphC,
   g.add(mesh('boxC','#e2312b',-10,-70,0,110,30,46));g.add(mesh('boxC','#bfe8ff',-10,-66,24,90,12,1));g.add(mesh('boxC','#bfe8ff',-10,-66,-24,90,12,1));
   g.add(mesh('boxC','#e2312b',-150,30,0,40,60,6));g.add(mesh('boxC','#e2312b',-150,0,0,40,6,90));
   const prop=new THREE.Group();prop.position.set(-160,-70,0);const pb=mesh('boxC','#2b2f3a',0,0,0,2,50,6);prop.add(pb);g.add(prop);g.userData.prop=prop;scene.add(g);return g;}
-// @module src/js/12-game-state.js: Match options and the match itself: modes, rules, teams, creating characters, and newGame() which builds G.
-// Main: MODES, RULES, opts, G, newGame, makeChar, makeZombie, freeSpot, isEnemy
+// @module src/js/13-game-state.js: Match options and the match itself: modes, rules, teams, creating characters, and newGame() which builds G.
+// Main: MODES, RULES, opts, G, newGame, makeChar, makeZombie, freeSpot, openFace, isEnemy
 // See also: update, screens, modes-extra
 /* ================= game state ================= */
 const DIFFS={easy:{aimErr:0.12,react:0.75,dmgMul:0.55,speed:148,cdMul:1.7,vision:420,zSpeed:76,zDmg:6},medium:{aimErr:0.06,react:0.42,dmgMul:0.8,speed:166,cdMul:1.25,vision:480,zSpeed:90,zDmg:9},hard:{aimErr:0.025,react:0.22,dmgMul:1,speed:180,cdMul:1.0,vision:540,zSpeed:104,zDmg:12}};
@@ -1381,9 +1482,9 @@ const RULES={kills:{name:'Most KOs',sub:'When time runs out, whoever has the mos
 const BOT_NAMES=['Rex','Zara','Pickle','Turbo','Noodle','Blaze','Ziggy','Muffin','Rocket','Biscuit','Pixel','Waffles','Taco','Sprout','Comet'];
 const TORSO=['#1f6fd6','#3aa845','#ff7b1c','#8e44d6','#14a3a3','#ff5fa2','#f4f1e8','#2b2f3a','#9bd400','#c0392b','#f1c40f','#5dade2','#7f8c8d','#e67e22','#16a085'];
 const RED_T=['#ff7b1c','#c0392b','#ff5f5f','#d35400','#ff8f6b','#b03a2e','#e74c3c','#f39c12'],BLUE_T=['#1f6fd6','#14a3a3','#5dade2','#2f4fd6','#3a8ee6','#1b4f8a','#48c9b0','#2e86c1'];
-const BASES={red:{x:420,y:1980},blue:{x:1980,y:420}};
+const BASES={red:{x:420*K,y:1980*K},blue:{x:1980*K,y:420*K}}; // team bases in opposite corners (design units × K)
 const LEGS=['#2b2f3a','#1f4fa3','#6b4a2b','#3d3d3d','#7a1f1f','#2e7d32'];
-const SR=[1750,1000,620,340,160,30],SHR=[[.15,.30],[.40,.52],[.60,.70],[.76,.88],[.90,1.0]],SDPS=[3,5,7,10,14,18];
+const SR=[1750,1000,620,340,160,30].map(r=>r*K),SHR=[[.15,.30],[.40,.52],[.60,.70],[.76,.88],[.90,1.0]],SDPS=[3,5,7,10,14,18];
 const opts={len:3,bots:8,diff:'easy',map:'meadow',mode:'royale',storm:'on',rule:'kills',squad:'solo'};
 let G=null;
 const isEnemy=(a,b)=>a!==b&&!(a.team&&a.team===b.team);
@@ -1400,6 +1501,12 @@ function makeStorm(){const C=[{x:WORLD/2,y:WORLD/2}];
     for(let a=0;a<80;a++){const ang=Math.random()*TAU,d=Math.random()*(SR[i-1]-SR[i])*0.75,tx=p.x+Math.cos(ang)*d,ty=p.y+Math.sin(ang)*d;if(tx>m&&ty>m&&tx<WORLD-m&&ty<WORLD-m&&!isBad(tx,ty)){x=tx;y=ty;break;}}
     C.push({x,y});}
   return{C,x:C[0].x,y:C[0].y,r:SR[0],stage:0,shrinking:false,nextT:0,nextIdx:1,shrinkIdx:-1};}
+// F8: a starting direction with open space in front: the preferred way if it's clear for 220 units, else the clearest of 8 directions
+function openFace(c,pref){let best=pref,bestL=-1;
+  for(let k=0;k<8;k++){const a=pref+(k&1?1:-1)*Math.ceil(k/2)*Math.PI/4,dx=Math.cos(a),dy=Math.sin(a);let L=0;
+    for(let d=25;d<=220;d+=15){const x=c.x+dx*d,y=c.y+dy*d;if(x<20||y<20||x>WORLD-20||y>WORLD-20||blocked3D(x,y,(c.z||groundAt(c.x,c.y,10))+30))break;L=d;}
+    if(L>=220)return a;if(L>bestL){bestL=L;best=a;}}
+  return best;}
 function freeSpot(cx,cy,R,minD,others){
   for(let a=0;a<300;a++){const ang=Math.random()*TAU,r=Math.sqrt(Math.random())*R,x=clamp(cx+Math.cos(ang)*r,60,WORLD-60),y=clamp(cy+Math.sin(ang)*r,60,WORLD-60);
     if(pointBlocked(x,y,22)||isBad(x,y)||inBuilding(x,y,-38)&&false)continue;let ok=true;if(others)for(const o of others)if(Math.hypot(o.x-x,o.y-y)<minD){ok=false;break;}if(ok)return{x,y};}
@@ -1435,13 +1542,14 @@ function newGame(){
   else{for(let k=0;k<opts.bots;k++)G.chars.push(makeChar(names[k],TORSO[k%TORSO.length],false));const placed=[];for(const c of G.chars){const s=freeSpot(WORLD/2,WORLD/2,WORLD*0.42,280,placed);c.x=s.x;c.y=s.y;c.z=groundAt(s.x,s.y,10);placed.push(c);}}
   for(const c of G.chars)buildCharModel(c);
   if(MODE().noLoot)G.chests=[];else{
-  for(let k=0;k<36;k++){const s=freeSpot(WORLD/2,WORLD/2,WORLD*0.5,60,G.items);G.items.push(makeItem(pick(FLOOR_LOOT),s.x,s.y));}
-  for(let k=0;k<7;k++){const s=freeSpot(WORLD/2,WORLD/2,WORLD*0.5,60,G.items);G.items.push(makeItem('heart',s.x,s.y));}
-  for(let k=0;k<12;k++){const s=freeSpot(WORLD/2,WORLD/2,WORLD*0.5,60,G.items);G.items.push(makeItem('bricks',s.x,s.y));}}
+  for(let k=0;k<Math.round(36*K);k++){const s=freeSpot(WORLD/2,WORLD/2,WORLD*0.5,60,G.items);G.items.push(makeItem(pick(FLOOR_LOOT),s.x,s.y));}
+  for(let k=0;k<Math.round(7*K);k++){const s=freeSpot(WORLD/2,WORLD/2,WORLD*0.5,60,G.items);G.items.push(makeItem('heart',s.x,s.y));}
+  for(let k=0;k<Math.round(12*K);k++){const s=freeSpot(WORLD/2,WORLD/2,WORLD*0.5,60,G.items);G.items.push(makeItem('bricks',s.x,s.y));}}
   if(!MODE().noCars)spawnCars();
   if(mode==='zombie'){for(let k=0;k<4;k++){const a=k*TAU/4;G.items.push(makeItem(['bat','pistol','sword','chicken'][k],p.x+Math.cos(a)*70,p.y+Math.sin(a)*70));}}
   spawnLootSpecials();
   for(const ch of G.chests){const g=new THREE.Group();g.add(mesh('box','#a0632e',0,0,0,30,16,22));const lid=mesh('box','#ffc21a',0,16,0,32,6,24);g.add(lid);g.position.copy(W3(ch.x,ch.y,groundAt(ch.x,ch.y,4)));scene.add(g);ch.mesh=g;ch.lid=lid;}
+  if(!bus)for(const c of G.chars)c.face=openFace(c,c.face||Math.atan2(WORLD/2-c.y,WORLD/2-c.x)); // F8: after the cars, chests and vending machines are placed
   if(bus){const a=Math.random()*TAU,L=WORLD*0.85,cx=WORLD/2+rand(-250,250),cy=WORLD/2+rand(-250,250);
     G.bus={x0:cx-Math.cos(a)*L,y0:cy-Math.sin(a)*L,x1:cx+Math.cos(a)*L,y1:cy+Math.sin(a)*L,t:0,dur:13,z:950,ang:a,x:0,y:0,m:busModel()};
     for(const c of G.chars){c.state='bus';c.jumpAt=c.isPlayer||isMate(c)?99:rand(1.2,11.5);const s=freeSpot(WORLD/2,WORLD/2,WORLD*0.45,0,null);c.landX=s.x;c.landY=s.y;}
@@ -1454,7 +1562,7 @@ function newGame(){
 function cleanupGame(){engineStop();cleanupLoot();if(XM[G.mode]&&XM[G.mode].cleanup)XM[G.mode].cleanup();for(const car of (G.cars||[]))scene.remove(car.m);for(const c of G.chars)removeModel(c);for(const a of[G.items,G.chests,G.projs,G.traps,G.texts,G.beams])for(const o of a)removeModel(o);
   for(const d of G.drones)scene.remove(d.m);for(const p of G.pieces)scene.remove(p.mesh);if(G.bus)scene.remove(G.bus.m);if(G.crate&&G.crate.mesh)scene.remove(G.crate.mesh);
   if(stormMesh){stormMesh.visible=false;nextRing.visible=false;}}
-// @module src/js/13-hud-helpers.js: On-screen messages: big announcements, floating text, the kill feed, toasts, eliminations, emotes, victory dance.
+// @module src/js/14-hud-helpers.js: On-screen messages: big announcements, floating text, the kill feed, toasts, eliminations, emotes, victory dance.
 // Main: announce, addText, feed, toast, showElim, startEmote, startVictory
 // See also: hud, combat
 /* ================= HUD helpers ================= */
@@ -1489,7 +1597,7 @@ let parts=[];const CONF=['#e2312b','#ffcb1f','#1f6fd6','#3aa845','#ff4fa3','#43f
 const toRGB=h=>{let c=colCache.get(h);if(!c){c=new THREE.Color(h);colCache.set(h,c);}return c;};
 function burst(x,y,z,n,type,col,spd=160){if(NETH()&&n>=3&&netNear(x,y))netEv(['b',ri(x),ri(y),ri(z),Math.min(n,40),type,col||0,spd],1);for(let i=0;i<n;i++){const a=Math.random()*TAU,s=rand(0.3,1)*spd;
   parts.push({x,y,z,vx:Math.cos(a)*s,vy:Math.sin(a)*s,vz:rand(60,260)*(type==='puff'?0.25:1),life:rand(0.5,1.1),type,col:col||pick(CONF)});}if(parts.length>PMAX+PUMAX)parts.splice(0,parts.length-PMAX-PUMAX);}
-// @module src/js/14-combat.js: Shooting, melee, lasers and damage. In multiplayer only the host applies damage, and it rewinds targets by the shooter's lag ("favour the shooter").
+// @module src/js/15-combat.js: Shooting, melee, lasers and damage. In multiplayer only the host applies damage, and it rewinds targets by the shooter's lag ("favour the shooter").
 // Main: fire, fireInner, shoot, laserShot, meleeHit, damage, damageInner, useItem
 // See also: weapons, net-sync, bots
 /* ================= combat ================= */
@@ -1609,7 +1717,8 @@ function knockOut(o,src,wid){
   if(!o.zombie){if(!src||src===o)feed(nameTag(o)+' '+({storm:'got caught by the storm',lava:'fell in the lava',fire:'got toasted by the fire'}[wid]||'got bonked'));
     else feed((src.zombie?'<b>A zombie</b>':nameTag(src))+' '+VERB[wid]+' '+(o.isPlayer?'<b style="color:#ffcb1f">you</b>':nameTag(o)));}
   for(let i=1;i<5;i++){const s=o.slots[i];if(s&&s.id!=='laser'){const a=Math.random()*TAU;G.items.push(makeItem(s.id,clamp(o.x+Math.cos(a)*30,30,WORLD-30),clamp(o.y+Math.sin(a)*30,30,WORLD-30),s.ammo,1.2,getR(s)));}}
-  o.slots=[{id:'fists'},null,null,null,null];o.cur=0;
+  // F2: the Mythic Laser Blaster comes back at the drop-off anyway, so it stays in its slot while the drone carries you (nobody can fire until landed)
+  {const ls=o.slots.find(s=>s&&s.id==='laser')||null;o.slots=[{id:'fists'},null,ls,null,null];o.cur=ls?2:0;}
   burst(o.x,o.y,o.z+40,16,'star','#ffcb1f',120);burst(o.x,o.y,o.z+20,8,'puff','#ffffff',60);addText(o.x,o.y,o.z+70,o.zombie?'POOF!':'KO!','#ffcb1f',22);sfx('ko',o);
   o.droneAt=G.time+0.45;o.droneSent=false;
   if(XM[G.mode]){if(XM[G.mode].ko)XM[G.mode].ko(o,src);else o.respawnAt=G.time+8;}
@@ -1631,7 +1740,7 @@ function checkWin(){if(G.net){if(NETH())netCheckWin();return;}
 }
 function ranking(){const R=RULES[G.rule||'kills'],list=G.chars.filter(c=>!c.zombie).map(c=>({c,s:R.score(c)}));list.sort((a,b)=>b.s[0]-a.s[0]||b.s[1]-a.s[1]);
   list.forEach(e=>{e.place=1+list.filter(o=>o.s[0]>e.s[0]||(o.s[0]===e.s[0]&&o.s[1]>e.s[1])).length;});return list;}
-// @module src/js/15-building.js: Building walls, ramps, floors and roofs, editing walls, and damaging pieces.
+// @module src/js/16-building.js: Building walls, ramps, floors and roofs, editing walls, and damaging pieces.
 // Main: setBuildMode, build, placePiece, editWall, damagePiece
 // See also: input, touch-controls
 /* ================= building ================= */
@@ -1697,13 +1806,13 @@ function applyWallEdit(best){for(const o of best.parts)removeOb(o);const B=best.
   scene.add(m);best.mesh=m;}
 function damagePiece(p,amt){if(!p||p.dead||NETC())return;p.hp-=amt;p.mesh.position.y+=(Math.random()-.5)*1.5;if(p.hp<=0){p.dead=true;for(const o of p.parts)removeOb(o);scene.remove(p.mesh);G.pieces.splice(G.pieces.indexOf(p),1);
   burst(p.cx,p.cy,p.ob.z0+30,26,'confetti','#a0632e',200);sfx('crack',{x:p.cx,y:p.cy});}}
-// @module src/js/16-drones.js: Friendly rescue drones that carry bonked players away and drop them back in.
+// @module src/js/17-drones.js: Friendly rescue drones that carry bonked players away and drop them back in.
 // Main: pickupDrone, deliverDrone, updateDrones
 // See also: update, squads
 /* ================= drones ================= */
 function pickupDrone(c){const a=Math.random()*TAU;G.drones.push({mode:'in',x:c.x+Math.cos(a)*650,y:c.y+Math.sin(a)*650,z:c.z+260,c,t:0,ox:Math.cos(a),oy:Math.sin(a),m:droneModel()});sfx('drone',c);}
 function deliverDrone(c,x,y){const a=Math.random()*TAU;c.state='delivering';const gz=groundAt(x,y,400);const d={mode:'deliver',x:x+Math.cos(a)*650,y:y+Math.sin(a)*650,z:gz+300,tx:x,ty:y,gz,c,t:0,ox:Math.cos(a),oy:Math.sin(a),m:droneModel()};
-  c.x=d.x;c.y=d.y;c.z=d.z-60;G.drones.push(d);sfx('drone',{x,y});}
+  c.x=d.x;c.y=d.y;c.z=d.z-60;c.face=Math.atan2(-d.oy,-d.ox);G.drones.push(d);sfx('drone',{x,y});}
 function updateDrones(dt){
   for(let i=G.drones.length-1;i>=0;i--){const d=G.drones[i],c=d.c;
     switch(d.mode){
@@ -1717,7 +1826,7 @@ function updateDrones(dt){
     if(d.dead){scene.remove(d.m);G.drones.splice(i,1);}
   }
 }
-// @module src/js/17-storm-supply-zombies.js: The battle royale storm, supply drops, and zombie waves.
+// @module src/js/18-storm-supply-zombies.js: The battle royale storm, supply drops, and zombie waves.
 // Main: updateStorm, safeCircle, dropSupply, startWave, spawnZombie, updateZombies
 // See also: update, modes-extra
 /* ================= storm, supply, zombies ================= */
@@ -1752,7 +1861,7 @@ function updateZombies(dt){const Z=G.z;
       for(const p of G.chars.filter(c=>c.human||c===G.player)){if(p.state==='alive'){p.hp=Math.min(100,p.hp+25);addText(p.x,p.y,p.z+50,'+25','#5cff7a',16);}(p.mats||G.mats).wood+=20;}}}
   for(let i=G.chars.length-1;i>=0;i--){const c=G.chars[i];if(c.zombie&&c.state==='gone'){removeModel(c);G.chars.splice(i,1);}}
   Z.groanT-=dt;if(Z.groanT<=0){Z.groanT=rand(1.5,3.5);const zs=G.chars.filter(c=>c.zombie&&c.state==='alive');if(zs.length)sfx('groan',pick(zs));}}
-// @module src/js/18-pickups.js: Picking up and swapping weapons and items.
+// @module src/js/19-pickups.js: Picking up and swapping weapons and items.
 // Main: tryPickup, playerSwap, giveUltra
 // See also: weapons, input
 /* ================= pickups ================= */
@@ -1774,7 +1883,7 @@ function giveUltra(c){let idx=-1;for(let i=1;i<5;i++)if(!c.slots[i]){idx=i;break
   if(idx<0){idx=c.cur>0?c.cur:4;const old=c.slots[idx];G.items.push(makeItem(old.id,c.x+15,c.y+15,old.ammo,2,getR(old)));}
   c.slots[idx]={id:'ultra',ammo:8,r:4};c.cur=idx;G.crate.taken=true;scene.remove(G.crate.mesh);burst(c.x,c.y,c.z+30,60,'confetti',null,220);sfx('alert');
   announce(c.isPlayer?'You got the ULTRA RIFLE!':c.name+' grabbed the ULTRA RIFLE!',c.isPlayer?'8 super shots. Make them count!':(c.team&&c.team===G.player.team?'Nice, a teammate has it!':'Watch out!'),3);}
-// @module src/js/19-net-remote-players.js: Multiplayer, on the host: characters controlled by other players. asRemote runs code "as" a remote player so effects go to the right screen.
+// @module src/js/20-net-remote-players.js: Multiplayer, on the host: characters controlled by other players. asRemote runs code "as" a remote player so effects go to the right screen.
 // Main: NET_CTX, makeRemote, asRemote, netTell, remoteStep, applyKin, clickDown
 // See also: net-sync, input
 /* ================= multiplayer: remote players on the host =================
@@ -1798,7 +1907,7 @@ function asRemote(c,fn){const lp=G.player,sv={mats:G.mats,matSel:G.matSel,buildM
 // a click / tap of the fire button: place a piece in build mode, otherwise start firing
 function clickDown(){if(G&&G.net&&G.player.eliminated){specNext();return;}if(netLocalKey('clk')){G.net.inT=0;if(G.buildMode)buildHeld=true;else mouseDown=true;return;}if(G.buildMode){build(G.buildMode);buildHeld=true;G.bT=0.28;}else mouseDown=true;}
 function netRemoteAction(a){if(typeof a==='string'&&a.startsWith('bm:')){G.buildMode=a.slice(3)||null;return;}if(a==='clk'){if(G.buildMode){build(G.buildMode);buildHeld=true;G.bT=0.28;}else if(NET_CTX)NET_CTX.tapFire=true;return;}
-  if(a==='wd+'||a==='wd-'){G.buildMode=null;cycleWeapon(a==='wd+'?1:-1);return;}keyAction(a);}
+  if(a==='wd+'||a==='wd-'){G.buildMode=null;cycleWeapon(a==='wd+'?1:-1);return;}if(a===' '&&G.player.state==='bus')netLog(G.player.name+' jumped off the bus');keyAction(a);}
 // the client's report of where it moved itself
 function applyKin(c,K){c.x=K.x;c.y=K.y;c.z=K.z;c.vx=K.vx||0;c.vy=K.vy||0;c.vz=K.vz||0;c.face=K.f;c.onGround=!!K.og;c.crouch=!!K.cr;c.slideT=K.sl||0;c.moving=!!K.mv;if(K.w!=null)c.walk=K.w;c.pitch=c.rin.pitch;}
 // one frame of a remote player on the host
@@ -1815,11 +1924,11 @@ function remoteStep(c,dt){c.swapIt=null;
     playerInput(c,dt);c.tapFire=false;if(keys.has('e')){const rt=reviveTarget(c);if(rt)doRevive(c,rt,dt);}updateBurst(c,dt);
     if(c.emote){c.emote.t+=dt;if(!c.emote.loop&&c.emote.t>6)c.emote=null;}
     if(c.frozen>0)c.frozen-=dt;if(c.bubbled>0)c.bubbled-=dt;if(c.stun>0){c.stun-=dt;c.spin+=dt*14;}
-    if(K&&K.st==='alive'&&!(c.frozen>0)&&!(c.bubbled>0))applyKin(c,K);
+    if(K&&K.st==='alive'&&!(c.frozen>0)&&!(c.bubbled>0)&&!(c.tpUntil>G.time))applyKin(c,K);
     if(Math.abs(c.kx)+Math.abs(c.ky)>2){netTell(c,'kb',[Math.round(c.kx),Math.round(c.ky)]);c.kx=c.ky=0;}
     charTail(c,dt);});}
 function netLocalKey(k){return !!(G&&G.net&&G.net.role==="client"&&netClientKey(k));}
-// @module src/js/20-autopilot.js: Autopilot: the game plays for you, on foot and in cars (O key or the robot button).
+// @module src/js/21-autopilot.js: Autopilot: the game plays for you, on foot and in cars (O key or the robot button).
 // Main: setAutopilot, autoCam, carAuto
 // See also: bots, cars
 /* ================= autopilot: the game plays for you (on foot and in cars) ================= */
@@ -1839,7 +1948,7 @@ function carAuto(car,dt){const A=car.auto||(car.auto={gx:null,gy:null,t:0,stuck:
   if(Math.abs(car.speed)<35){A.stuck+=dt;if(A.stuck>1.2){A.stuck=0;A.rev=0.9;A.rs=-Math.sign(da||1);A.gx=null;}}else A.stuck=0;
   const ahead=pointBlocked(car.x+Math.cos(car.ang)*55,car.y+Math.sin(car.ang)*55,22)||hurtAt(car.x+Math.cos(car.ang)*55,car.y+Math.sin(car.ang)*55);
   return{thr:ahead?0.3:Math.abs(da)>1.4?0.55:1,str:ahead?(str>=0?1:-1):str};}
-// @module src/js/21-input.js: Keyboard and mouse: held keys, one-off key actions (shared by touch buttons and remote players), pointer lock, pause keys.
+// @module src/js/22-input.js: Keyboard and mouse: held keys, one-off key actions (shared by touch buttons and remote players), pointer lock, pause keys.
 // Main: keys, keyAction, cycleWeapon, requestLock, jumpFromBus
 // See also: touch-controls, aiming
 /* ================= input ================= */
@@ -1872,7 +1981,10 @@ function keyAction(k){const p=G.player;if(k==='o'){if(!NET_CTX)setAutopilot(!G.a
   else if(k==='f'){if(p.vehicle)exitCar(p);else{const car=nearestCar(p);if(car&&p.state==='alive')enterCar(p,car);}}
 }
 addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));
-addEventListener('blur',()=>{keys.clear();mouseDown=false;aimDown=false;if(G&&!G.ended&&!G.paused){if(G.net)netLog('window lost focus (game keeps running)');else setPaused(true);}});
+// Losing focus (clicking another part of the screen, an app grabbing focus) only lets go of held keys; the game keeps going.
+// It pauses only when the page is really hidden (another app or tab), and in multiplayer never by itself.
+addEventListener('blur',()=>{keys.clear();mouseDown=false;aimDown=false;if(G&&!G.ended&&!G.paused&&G.net)netLog('window lost focus (game keeps running)');});
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&G&&!G.ended&&!G.paused&&!G.net)setPaused(true);});
 function cycleWeapon(dir){const p=G.player;for(let n=1;n<=5;n++){const i=((p.cur+n*dir)%5+5)%5;if(p.slots[i]){p.cur=i;break;}}}
 function requestLock(){if(TOUCH.on)return;try{const r=cv.requestPointerLock&&cv.requestPointerLock();if(r&&r.catch)r.catch(()=>{});}catch(e){}}
 cv.addEventListener('mousedown',e=>{if(!G||G.ended||G.paused)return;if(!locked)requestLock();if(e.button===0)clickDown();if(e.button===2)aimDown=true;});
@@ -1880,14 +1992,16 @@ addEventListener('mouseup',e=>{if(e.button===0){mouseDown=false;buildHeld=false;
 cv.addEventListener('contextmenu',e=>e.preventDefault());
 const LZ=[[2,35],[4,18],[8,9]];let laserZ=1;
 addEventListener('wheel',e=>{if(G&&!G.ended&&!G.paused){const s=G.player.slots[G.player.cur];if(aimDown&&s&&s.id==='laser'){const n=clamp(laserZ+(e.deltaY<0?1:-1),0,2);if(n!==laserZ){laserZ=n;sfx('pickup');}return;}G.buildMode=null;if(NETC())netClientWheel(e.deltaY>0?1:-1);cycleWeapon(e.deltaY>0?1:-1);}},{passive:true});
-document.addEventListener('pointerlockchange',()=>{locked=document.pointerLockElement===cv;if(locked)hadLock=true;else{mouseDown=false;aimDown=false;if(G&&!G.ended&&!G.paused&&hadLock){if(G.net)netLog('mouse released (game keeps running)');else setPaused(true);}}});
+document.addEventListener('pointerlockchange',()=>{locked=document.pointerLockElement===cv;if(locked)hadLock=true;else{mouseDown=false;aimDown=false;if(G&&!G.ended&&!G.paused&&hadLock&&G.net)netLog('mouse released (game keeps running)');}}); // no pause: "Click to aim" shows instead
 addEventListener('mousemove',e=>{if(!G||G.ended||G.paused)return;lastMouseMove=performance.now();if(!locked&&e.target!==cv)return;const s=(locked?0.0022:0.004)*(camera.fov/70)*MSENS;G.yaw+=e.movementX*s;G.pitch=clamp(G.pitch-e.movementY*s,-1.25,1.0);});
 function playerSpace(){const p=G.player;if(p.vehicle){sfx('honk');return;}
   if(p.state==='bus'){jumpFromBus(p);return;}
   if(p.state==='sky'){if(!p.glide){p.glide=true;sfx('glide');}return;}
-  if(p.state==='alive'&&p.onGround&&p.stun<=0){p.vz=MAP.lowG?380:360;p.onGround=false;sfx('jump',p);}}
+  if(p.state==='alive'&&p.onGround&&p.stun<=0){p.vz=MAP.lowG?380:360;p.onGround=false;p.dj=false;sfx('jump',p);}
+  // double jump: one more, slightly smaller jump in the air (resets when you land)
+  else if(p.state==='alive'&&!p.onGround&&!p.dj&&p.stun<=0&&!p.glide){p.dj=true;p.vz=MAP.lowG?330:300;sfx('jump',p);burst(p.x,p.y,p.z,8,'puff','#ffffff',70);}}
 function jumpFromBus(c){if(c.isPlayer)for(const m of G.chars)if(isMate(m)&&m.state==='bus')m.jumpAt=G.bus.t+0.3+Math.random()*0.6;c.state='sky';c.x=G.bus.x;c.y=G.bus.y;c.z=G.bus.z-80;c.vz=0;c.glide=false;if(c.isPlayer){sfx('glide');G.pitch=-0.5;}}
-// @module src/js/22-touch-controls.js: Phone and tablet controls: floating joystick, look-drag, buttons (TACT), saved layouts, and the layout editor. Buttons stay inside the safe area (notch, home bar).
+// @module src/js/23-touch-controls.js: Phone and tablet controls: floating joystick, look-drag, buttons (TACT), saved layouts, and the layout editor. Buttons stay inside the safe area (notch, home bar).
 // Main: TOUCH, TACT, TSAVE, TL, layoutTouch, renderTButtons, setTouch, isCoarse, openTEdit
 // See also: input, aiming
 /* ================= touch controls (phones + tablets) =================
@@ -2069,11 +2183,22 @@ function tEditShow(){const L=TL(),tab=TOUCH.tab;
 let GFX=store.get('bonk-gfx')||'auto';
 function applyGfx(){const lvl=GFX==='auto'?(TOUCH.on?'low':'high'):GFX;const pr=lvl==='low'?1:Math.min(window.devicePixelRatio||1,1.5);
   if(renderer.getPixelRatio()!==pr){renderer.setPixelRatio(pr);resize();}const ms=lvl==='low'?1024:2048;
-  if(sun.shadow.mapSize.x!==ms){sun.shadow.mapSize.set(ms,ms);if(sun.shadow.map){sun.shadow.map.dispose();sun.shadow.map=null;}}}
+  if(sun.shadow.mapSize.x!==ms){sun.shadow.mapSize.set(ms,ms);if(sun.shadow.map){sun.shadow.map.dispose();sun.shadow.map=null;}}gfxDropApply();}
 document.querySelectorAll('input[name="touchPref"]').forEach(r=>{r.checked=r.value===TOUCH.pref;r.addEventListener('change',()=>{TOUCH.pref=r.value;store.set('bonk-touch-pref',r.value);setTouch(r.value==='on'||(r.value==='auto'&&isCoarse()));syncTouchDesc();});});
-document.querySelectorAll('input[name="gfx"]').forEach(r=>{r.checked=r.value===GFX;r.addEventListener('change',()=>{GFX=r.value;store.set('bonk-gfx',r.value);applyGfx();});});
-// @module src/js/23-aiming.js: Camera position, aim point, and turning player input into movement each frame.
-// Main: camPos, aimPoint, playerInput
+document.querySelectorAll('input[name="gfx"]').forEach(r=>{r.checked=r.value===GFX;r.addEventListener('change',()=>{GFX=r.value;store.set('bonk-gfx',r.value);GFX_DROP=0;store.set('bonk-gfx-drop',0);applyGfx();});});
+// F9: on Auto, a match that keeps running slowly (under 26 frames a second for 6 s) turns the graphics down by itself:
+// first the shadows go, then the picture gets a little softer. Remembered on this device; picking any Graphics choice resets it.
+let GFX_DROP=+store.get('bonk-gfx-drop')||0;const GFXW={t:0,n:0,last:0,slow:0,warm:0};
+function gfxDropApply(){const d=GFX==='auto'?GFX_DROP:0,on=d<1;if(sun.castShadow!==on)sun.castShadow=on;
+  if(d>=2&&renderer.getPixelRatio()>0.75){renderer.setPixelRatio(0.75);resize();}
+  const n=document.getElementById('gfxNote');if(n)n.hidden=!d;}
+function autoGfxTick(){const now=performance.now(),ft=now-GFXW.last;GFXW.last=now;
+  if(GFX!=='auto'||GFX_DROP>=2||!G||G.ended||G.paused||document.hidden||ft>250){GFXW.t=GFXW.n=GFXW.slow=GFXW.warm=0;return;}
+  GFXW.warm+=ft;if(GFXW.warm<4000)return;GFXW.t+=ft;GFXW.n++;if(GFXW.t<2000)return;
+  const fps=GFXW.n*1000/GFXW.t;GFXW.t=GFXW.n=0;GFXW.slow=fps<26?GFXW.slow+1:0;if(GFXW.slow<3)return;
+  GFXW.slow=0;GFXW.warm=0;GFX_DROP++;store.set('bonk-gfx-drop',GFX_DROP);applyGfx();toast('🐢 Graphics turned down to keep the game smooth (Settings → Video)');}
+// @module src/js/24-aiming.js: Camera position, aim point, and turning player input into movement each frame.
+// Main: camPos, aimPoint, playerInput, autoAimOnLand
 // See also: input, touch-controls, update
 /* ================= aiming ================= */
 const camPos=new THREE.Vector3();
@@ -2104,7 +2229,18 @@ function playerInput(c,dt){if(G.victory)return[0,0,false];
   else if(!NETC()){c.useT=0;c.fullWarn=0;}
   return[ix,iy,(keys.has('shift')||(tStick&&TOUCH.sprint))&&f>0&&!c.useT];
 }
-// @module src/js/24-bots.js: Bot brains: picking targets and weapons, moving, aiming, getting unstuck; zombie behaviour.
+// F1/F7: after a drone drop-off, or on leaving the bus, the aim turns to the way the character is facing.
+// It watches your own state each frame (host and joiners alike); the drop-off direction is the way the drone flew you in.
+let aimSt=null,aimPx=0,aimPy=0,aimDx=0,aimDy=0;
+function autoAimOnLand(dt){const p=G.player,s=p.state;
+  if(s==='delivering'){const dx=p.x-aimPx,dy=p.y-aimPy;if(dx*dx+dy*dy>1){aimDx=dx;aimDy=dy;G.yaw+=angDiff(G.yaw,Math.atan2(dy,dx))*Math.min(1,dt*4);}}
+  if(s!==aimSt){
+    if(s==='delivering')aimDx=aimDy=0;
+    if(s==='alive'&&(aimSt==='delivering'||aimSt==='carried'||aimSt==='gone')&&(aimDx||aimDy)){G.yaw=Math.atan2(aimDy,aimDx);G.pitch=-0.05;p.face=G.yaw;}
+    if(s==='sky'&&aimSt==='bus'&&G.bus){G.yaw=G.bus.ang;p.face=G.yaw;}
+    aimSt=s;}
+  aimPx=p.x;aimPy=p.y;}
+// @module src/js/25-bots.js: Bot brains: picking targets and weapons, moving, aiming, getting unstuck; zombie behaviour.
 // Main: decide, steer, botAim, botUpdate, zombieUpdate
 // See also: update, combat
 /* ================= bots ================= */
@@ -2166,7 +2302,7 @@ function zombieUpdate(c,dt){const ai=c.ai;ai.think-=dt;if(c.frozen>0||c.bubbled>
   if(d<30&&Math.abs(t.z-c.z)<40){ai.wantMove=false;if(c.cd<=0){c.cd=0.9;c.swingT=0.25;addText(t.x,t.y,t.z+56,'CHOMP!','#b6ff3b',15);sfx('chomp',c);damage(t,G.diff.zDmg,c,'zombie',dx/d*120,dy/d*120);}return[0,0];}
   if(ai.breakP&&!ai.breakP.dead&&Math.hypot(ai.breakP.cx-c.x,ai.breakP.cy-c.y)<70&&c.cd<=0){c.cd=0.9;c.swingT=0.25;damagePiece(ai.breakP,25);sfx('chomp',c);}
   let mx=dx/d,my=dy/d;if(ai.unstuckT>0){ai.unstuckT-=dt;mx=ai.ux;my=ai.uy;}[mx,my]=steer(c,mx,my);ai.wantMove=!!(mx||my);return[mx,my];}
-// @module src/js/25-cars.js: Cars: models, driving physics, collisions, getting in and out, engine sound.
+// @module src/js/26-cars.js: Cars: models, driving physics, collisions, getting in and out, engine sound.
 // Main: spawnCars, updateCars, enterCar, exitCar, damageCar
 // See also: update, autopilot
 /* ================= cars ================= */
@@ -2253,7 +2389,7 @@ function engineStart(){if(!AU.c||eng)return;try{const c=AU.c,o=c.createOscillato
 function engineStop(){if(!eng)return;try{const t=AU.c.currentTime;eng.g.gain.setTargetAtTime(0.0001,t,0.08);eng.o.stop(t+0.4);eng.o2.stop(t+0.4);}catch(e){}eng=null;}
 function engineUpdate(){if(!eng)return;const car=G&&G.player.vehicle;if(!car||G.ended){engineStop();return;}const s=Math.abs(car.speed);
   eng.o.frequency.value=50+s*0.22;eng.o2.frequency.value=75+s*0.33;eng.g.gain.value=(AU.muted||G.paused)?0.0001:0.035+s/430*0.05;}
-// @module src/js/26-modes-extra.js: The extra game modes: Car Race, Floor is Lava, Capture the Crown, Capture the Flag, King of the Hill, Build Battle, Training Room; mode rules (MODEFLAGS) and end-of-match boards.
+// @module src/js/27-modes-extra.js: The extra game modes: Car Race, Floor is Lava, Capture the Crown, Capture the Flag, King of the Hill, Build Battle, Training Room; mode rules (MODEFLAGS) and end-of-match boards.
 // Main: MODEFLAGS, MODE, XM, finishFFA, crownModel, hillModel, flagModel
 // See also: game-state, update, net-mode-state
 /* ================= extra game modes ================= */
@@ -2342,8 +2478,8 @@ XM.buildbattle={name:'Build Battle',
 XM.training={name:'Training Room',
   init(){const p=G.player;G.len=1e9;G.trDmg=0;G.trLog=[];Object.assign(G.mats,{wood:999,stone:999,metal:999});
     const s=freeSpot(WORLD/2,WORLD/2,500,0,null);p.x=s.x;p.y=s.y;p.z=groundAt(s.x,s.y,10);
-    // pick the direction with the most open space for the target range
-    let bestA=0,bestN=-1;for(let k=0;k<8;k++){const a=k*TAU/8;let n=0;for(let r=120;r<=520;r+=50)if(!pointBlocked(p.x+Math.cos(a)*r,p.y+Math.sin(a)*r,30))n++;if(n>bestN){bestN=n;bestA=a;}}
+    // pick the direction with the most open space for the target range (from right in front of you: F8)
+    let bestA=0,bestN=-1;for(let k=0;k<8;k++){const a=k*TAU/8;let n=0;for(let r=30;r<=520;r+=50)if(!pointBlocked(p.x+Math.cos(a)*r,p.y+Math.sin(a)*r,30))n++;if(n>bestN){bestN=n;bestA=a;}}
     G.trA=bestA;p.face=bestA;G.yaw=bestA;G.pitch=-0.05;
     while(G.chars.length>9){const c=G.chars.pop();removeModel(c);}
     const dum=G.chars.filter(c=>!c.isPlayer),fx=Math.cos(bestA),fy=Math.sin(bestA);
@@ -2457,7 +2593,7 @@ XM.race={name:'Car Race',laps:3,
     const okPt=(x,y)=>!(x<120||y<120||x>WORLD-120||y>WORLD-120||pointBlocked(x,y,55)||isBad(x,y)||inBuilding(x,y,70));
     const nav=navBuild(),raw=[];
     for(let k=0;k<8;k++){const a=k*TAU/8+0.2;let best=null;
-      for(const r of[800,700,900,600,980,520]){for(const off of[0,0.12,-0.12,0.24,-0.24]){const x=WORLD/2+Math.cos(a+off)*r,y=WORLD/2+Math.sin(a+off)*r;if(okPt(x,y)){best={x,y};break;}}if(best)break;}
+      for(const r of[800,700,900,600,980,520].map(r=>r*K)){for(const off of[0,0.12,-0.12,0.24,-0.24]){const x=WORLD/2+Math.cos(a+off)*r,y=WORLD/2+Math.sin(a+off)*r;if(okPt(x,y)){best={x,y};break;}}if(best)break;}
       if(best)raw.push(best);}
     const cps=[];for(const c of raw){if(!cps.length||navPath(nav,cps[cps.length-1],c))cps.push(c);}
     const path=[];cps.forEach((c,i)=>{const nx=cps[(i+1)%cps.length];c.wpStart=path.length;const seg=navPath(nav,c,nx)||[{x:nx.x,y:nx.y}];seg[seg.length-1].gate=true;for(const q of seg)path.push(q);});G.racePath=path;
@@ -2509,7 +2645,184 @@ XM.race={name:'Car Race',laps:3,
   cleanup(){if(G.cpM)for(const g of G.cpM)scene.remove(g);},
   end(p,b){const car=p.raceCar||{};return endFFA(p,b,'Car Race: '+this.laps+' laps.',e=>e.c.raceCar&&e.c.raceCar.finished?'finished':'lap '+Math.min(this.laps,(e.c.raceCar?e.c.raceCar.lap:0)+1),
     me=>[['#'+me.place,'Finish'],[car.finishT?fmt(car.finishT):'—','Race time'],[Math.min(this.laps,car.lap||0)+' / '+this.laps,'Laps done']]);}};
-// @module src/js/27-squads.js: Squads: being knocked down (DBNO), reviving teammates, and team wipes.
+// @module src/js/28-show.js: Mr. Bonk's Challenge Show: four challenge rounds (circle, red light green light, hide and seek, buttons), points, and a ticket prize. Includes its bots, 3D props and multiplayer sync.
+// Main: SHOW_ROUNDS, SHOW_NET, showTp, showArena
+// See also: modes-extra (XM, MODEFLAGS), net-mode-state (XMNET.show), net-sync (tp/vz messages)
+/* ================= Mr. Bonk's Challenge Show: four challenge rounds, most points wins =================
+   A game show in four rounds, hosted by the (made-up) Mr. Bonk: Last to Leave the Circle, Red Light Green Light,
+   Hide and Seek, and the Button Challenge. Rounds give points (c.pts); the most points after round 4 wins,
+   and the winner gets a big ticket prize. No fighting (noCombat).
+   Each round: 'intro' (everyone is placed and held still while Mr. Bonk explains), 'play', then 'done' (results).
+   The host runs everything (XM.show.update); joiners get the state through SHOW_NET (see net-mode-state)
+   and a private 'tp' message when the host moves them. */
+MODEFLAGS.show={noCombat:1,noLoot:1,noCars:1};
+MODES.show={desc:"Mr. Bonk's Challenge Show! Four rounds: Last to Leave the Circle, Red Light Green Light, Hide and Seek, and the Button Challenge. Win rounds for points. The most points wins the big ticket prize!"};
+const SHOW_ROUNDS=[
+  {id:'circle',name:'Last to Leave the Circle',rules:'Stay inside the glowing circle. It keeps shrinking. Step out and you are out!',time:70},
+  {id:'light',name:'Red Light, Green Light',rules:'Run to the finish on GREEN. Freeze on RED, or you go back to the start!',time:80},
+  {id:'hide',name:'Hide and Seek',rules:'Hide! The seekers count to 15, then hunt. If a seeker touches you, you are out. Stay hidden to win!',time:85},
+  {id:'buttons',name:'The Button Challenge',rules:'One button wins the round. The others are silly traps. Find the winner first!',time:60}];
+const SHOW_PRIZE=300,SHOW_HIDE_COUNT=15,SHOW_AREA=900;
+const showers=()=>G.chars.filter(c=>!c.zombie);
+const showRound=()=>SHOW_ROUNDS[G.show.i]||SHOW_ROUNDS[0];
+// move a character; a joiner's own device controls where they are, so it is told too (and the host ignores its old position briefly)
+function showTp(c,x,y){c.x=x;c.y=y;c.z=groundAt(x,y,400);c.vx=c.vy=c.vz=0;c.onGround=true;
+  if(c.remote){c.tpUntil=G.time+0.8;netTell(c,'tp',[ri(c.x),ri(c.y),ri(c.z)]);}}
+// the arena: an open spot near the middle (few walls, no water or lava), so the circle and the track have room
+function showArena(){let best=null,bs=-1;
+  for(let a=0;a<160;a++){const x=WORLD/2+(Math.random()-0.5)*WORLD*0.5,y=WORLD/2+(Math.random()-0.5)*WORLD*0.5;let s=0;
+    for(let k=0;k<32;k++){const ang=k/32*TAU*3,r=60+k*15,px=x+Math.cos(ang)*r,py=y+Math.sin(ang)*r;if(!pointBlocked(px,py,14)&&!isBad(px,py))s++;}
+    s-=Math.hypot(x-WORLD/2,y-WORLD/2)/400;if(s>bs){bs=s;best={x,y};}}
+  return best;}
+// a ring of spots around (x,y), one per character
+function showRing(list,x,y,r0,r1){list.forEach((c,i)=>{const a=i/list.length*TAU,r=r0+Math.random()*(r1-r0),s=freeSpot(x+Math.cos(a)*r,y+Math.sin(a)*r,60,0,null);showTp(c,s.x,s.y);});}
+function showSay(big,sub,dur){announce('🎤 '+big,sub,dur||3.5);sfx('alert');}
+
+XM.show={name:"Mr. Bonk's Challenge Show",
+  init(){G.show={i:0,ph:'intro',t:0,cx:WORLD/2,cy:WORLD/2,r:0,lt:'r',out:new Set(),seek:new Set(),hold:new Set(),order:[],buttons:[],m:{},holdCids:[],outCids:[],seekCids:[]};
+    for(const c of G.chars)c.pts=0;
+    if(NETC())return; // joiners get everything from the host
+    const a=showArena();G.show.cx=a.x;G.show.cy=a.y;
+    showSay("Mr. Bonk's Challenge Show!",'Four challenges. Win rounds for points. The most points wins '+SHOW_PRIZE+' tickets!',4);
+    this.setup(0,4);},
+  // put everyone in place for round i and explain it
+  setup(i,delay){const S=G.show,R=SHOW_ROUNDS[i],all=showers();S.i=i;S.ph='intro';S.t=G.time+(delay||0)+6;S.out.clear();S.seek.clear();S.order=[];S.hold=new Set(all);S.done=new Set();
+    for(const c of all){c.showTags=0;if(c.ai){c.ai.sh=null;c.ai.shT=0;}}
+    if(R.id==='circle'){S.r=440;showRing(all,S.cx,S.cy,60,300);}
+    else if(R.id==='light'){S.sy=S.cy-460;S.fy=S.cy+460;S.lt='r';all.forEach((c,k)=>showTp(c,S.cx+(k-(all.length-1)/2)*30,S.sy));}
+    else if(R.id==='hide'){const n=1+Math.floor(all.length/7),pool=all.slice().sort(()=>Math.random()-0.5);for(let k=0;k<n;k++)S.seek.add(pool[k]);showRing(all,S.cx,S.cy,40,140);}
+    else if(R.id==='buttons'){S.buttons=[];const prize=Math.floor(Math.random()*12),traps=['boing','back','spin'];
+      for(let k=0;k<12;k++){const s=freeSpot(S.cx,S.cy,SHOW_AREA*0.85,140,S.buttons);S.buttons.push({x:s.x,y:s.y,z:groundAt(s.x,s.y,10),prize:k===prize,trap:traps[k%3],pressed:false});}
+      showRing(all,S.cx,S.cy,30,90);}
+    setTimeout(()=>{if(G&&G.show===S&&!G.ended)showSay(`Round ${i+1}: ${R.name}`,R.rules,5);},(delay||0)*1000);},
+  update(dt){const S=G.show;if(!S||G.endAt)return;const R=showRound(),all=showers();
+    if(S.ph==='intro'){if(G.time<S.t)return;S.ph='play';S.start=G.time;S.t=G.time+R.time;S.hold.clear();
+      if(R.id==='hide'){S.hideUntil=G.time+SHOW_HIDE_COUNT;for(const c of S.seek)S.hold.add(c);
+        for(const c of S.seek)tellOrAnnounce(c,'🙈 You are the seeker!','Count to '+SHOW_HIDE_COUNT+'… then find everyone!',3);}
+      if(R.id==='light')this.light('g');
+      sfx('alert');return;}
+    if(S.ph==='done'){if(G.time<S.t)return;if(S.i+1<SHOW_ROUNDS.length)this.setup(S.i+1,0);else this.finish();return;}
+    const left=S.t-G.time;
+    if(R.id==='circle'){S.r=lerp(440,12,clamp((G.time-S.start)/62,0,1)); // shrinks almost to nothing: last one in wins
+      for(const c of all){if(S.out.has(c)||c.state!=='alive')continue;if(Math.hypot(c.x-S.cx,c.y-S.cy)>S.r){S.out.add(c);S.order.push(c);
+        feed(nameTag(c)+' stepped out of the circle!');tellOrAnnounce(c,'You are out!','Watch the rest from the side.',2.5);
+        const a=Math.atan2(c.y-S.cy,c.x-S.cx),s=freeSpot(S.cx+Math.cos(a)*600,S.cy+Math.sin(a)*600,120,0,null);showTp(c,s.x,s.y);}}
+      const inside=all.filter(c=>!S.out.has(c));
+      // when the circle gets small, players too close together bump each other (someone always ends up outside)
+      if(S.r<160)for(let a=0;a<inside.length;a++)for(let b2=a+1;b2<inside.length;b2++){const A=inside[a],B=inside[b2],dx=B.x-A.x,dy=B.y-A.y,d=Math.hypot(dx,dy)||0.01;
+        if(d<30){const f=(30-d)*0.5,nx=dx/d,ny=dy/d;for(const[c,s]of[[A,-1],[B,1]]){if(c.remote)netTell(c,'kb',[nx*s*f*4,ny*s*f*4]);else{c.x+=nx*s*f;c.y+=ny*s*f;}}}}
+      if(inside.length<=1||left<=0)this.endRound(inside);}
+    else if(R.id==='light'){S.ltT=(S.ltT||0)-dt;
+      if(S.ltT<=0){if(S.lt==='g')this.light('y');else if(S.lt==='y')this.light('r');else this.light('g');}
+      for(const c of all){if(S.done.has(c)||c.state!=='alive')continue;
+        if(c.y>=S.fy){S.done.add(c);S.order.push(c);feed(nameTag(c)+' crossed the finish line!');sfx('pickup');
+          if(c.isPlayer||c.remote)tellOrAnnounce(c,'🏁 You made it!','Finished #'+S.order.length+'!',2);continue;}
+        if(S.lt==='r'&&G.time>S.graceUntil){const p0=S.redPos.get(c);if(p0&&Math.hypot(c.x-p0.x,c.y-p0.y)>10){
+          feed(nameTag(c)+' moved on red!');tellOrAnnounce(c,'🔴 You moved!','Back to the start line!',2);showTp(c,c.x,S.sy);S.redPos.set(c,{x:c.x,y:c.y});}}}
+      if(S.order.length>=Math.min(3,all.length)||S.done.size===all.length||left<=0)this.endRound(null);}
+    else if(R.id==='hide'){
+      if(S.hideUntil&&G.time>=S.hideUntil){S.hideUntil=0;S.hold.clear();showSay('Ready or not!','Here come the seekers!',2.2);}
+      for(const c of all){if(Math.hypot(c.x-S.cx,c.y-S.cy)>SHOW_AREA){const a=Math.atan2(c.y-S.cy,c.x-S.cx),s=freeSpot(S.cx+Math.cos(a)*(SHOW_AREA-120),S.cy+Math.sin(a)*(SHOW_AREA-120),80,0,null);
+        showTp(c,s.x,s.y);if(c.isPlayer||c.remote)tellOrAnnounce(c,'Too far!','Stay inside the hiding area.',1.6);}}
+      if(!S.hideUntil)for(const s of S.seek)for(const c of all){if(S.seek.has(c)||S.out.has(c)||c.state!=='alive')continue;
+        if(Math.hypot(c.x-s.x,c.y-s.y)<34&&Math.abs(c.z-s.z)<45){S.out.add(c);s.showTags=(s.showTags||0)+1;feed(nameTag(c)+' was found by '+nameTag(s)+'!');sfx('pop',c);
+          tellOrAnnounce(c,'👀 Found you!','You are out. Wait in the middle and watch!',2.4);showTp(c,S.cx,S.cy);S.hold.add(c);}}
+      const hiders=all.filter(c=>!S.seek.has(c)&&!S.out.has(c));if(!hiders.length||left<=0)this.endRound(hiders);}
+    else if(R.id==='buttons'){
+      for(const c of all){if(c.state!=='alive')continue;for(const b of S.buttons){if(b.pressed||Math.hypot(c.x-b.x,c.y-b.y)>30||Math.abs(c.z-b.z)>45)continue;b.pressed=true;
+        if(b.prize){S.order=[c];feed(nameTag(c)+' found the winning button!');this.endRound(null);return;}
+        if(b.trap==='boing'){if(c.remote)netTell(c,'vz',900);else{c.vz=900;c.onGround=false;}tellOrAnnounce(c,'BOING!','A trap! Try another button.',1.6);}
+        else if(b.trap==='back'){showTp(c,S.cx,S.cy);tellOrAnnounce(c,'Sticky goo!','It slid you back to the middle!',1.6);}
+        else{burst(b.x,b.y,b.z+20,30,'confetti',null,200);tellOrAnnounce(c,'Confetti!','Nothing here… try another!',1.6);}
+        sfx('pop',c);}}
+      if(left<=0)this.endRound(null);}},
+  light(l){const S=G.show;S.lt=l;
+    if(l==='g'){S.ltT=2.2+Math.random()*2.6;announce('🟢 GREEN LIGHT!','Run!',1.2);sfx('pickup');}
+    else if(l==='y'){S.ltT=0.7;}
+    else{S.ltT=1.8+Math.random()*1.6;S.graceUntil=G.time+0.4;S.redPos=new Map(showers().map(c=>[c,{x:c.x,y:c.y}]));announce('🔴 RED LIGHT!','Freeze!',1.2);sfx('alert');}},
+  // points for the round, then a short results moment
+  endRound(winners){const S=G.show,R=showRound(),give=(c,n)=>{if(c&&n)c.pts+=n;};let msg='';
+    if(R.id==='circle'){for(const c of winners)give(c,10);const rest=S.order.slice().reverse();give(rest[0],6);give(rest[1],3);
+      msg=winners.length===1?nameTag(winners[0])+' is the last one in the circle!':winners.length+' players lasted the whole time!';}
+    else if(R.id==='light'){[10,6,3].forEach((n,k)=>give(S.order[k],n));msg=S.order.length?nameTag(S.order[0])+' crossed first!':'Nobody made it in time!';}
+    else if(R.id==='hide'){for(const c of winners)give(c,10);for(const c of showers())give(c,3*(c.showTags||0));
+      msg=winners.length?winners.length+' hider'+(winners.length>1?'s':'')+' never got found!':'The seekers found everyone!';}
+    else if(R.id==='buttons'){give(S.order[0],15);msg=S.order.length?nameTag(S.order[0])+' pressed the winning button!':'Nobody found the winning button!';}
+    S.ph='done';S.t=G.time+5;S.hold=new Set(showers());S.seek.clear();
+    showSay('Round '+(S.i+1)+' over!',msg.replace(/<[^>]+>/g,''),4);},
+  finish(){const list=ffaPlaces(c=>c.pts);finishFFA(list,"Mr. Bonk's Challenge Show");},
+  hold(c){const S=G.show;if(!S)return false;return NETC()?S.holdCids.includes(c.cid):S.hold.has(c);},
+  // bots: a simple plan for each challenge
+  botTick(c,dt){const S=G.show;if(!S)return null;const R=showRound(),ai=c.ai;if(S.ph!=='play'||this.hold(c))return[0,0,false];
+    const go=(x,y,sp)=>{const dx=x-c.x,dy=y-c.y,l=Math.hypot(dx,dy);if(l<14)return[0,0,false];const s=steer(c,dx/l,dy/l);return[s[0],s[1],!!sp];};
+    ai.shT=(ai.shT||0)-dt;if(ai.skill==null)ai.skill=0.5+Math.random()*0.5;
+    if(R.id==='circle'){if(S.out.has(c))return[0,0,false];
+      if(ai.shT<=0||!ai.sh||Math.hypot(ai.sh.x-S.cx,ai.sh.y-S.cy)>S.r*0.8){ai.shT=1.2+Math.random()*2;const slip=S.r<220&&Math.random()>ai.skill*(S.r<90?0.55:0.85),a=Math.random()*TAU,r=slip?S.r*1.1:Math.random()*S.r*0.6;ai.sh={x:S.cx+Math.cos(a)*r,y:S.cy+Math.sin(a)*r};}
+      return go(ai.sh.x,ai.sh.y,false);}
+    if(R.id==='light'){if(S.done.has(c))return[0,0,false];ai.lane=ai.lane??c.x;
+      if(S.lt==='r'){ai.stopT=(ai.stopT??(0.12+Math.random()*0.45*(1.4-ai.skill)))-dt;if(ai.stopT<=0)return[0,0,false];}else ai.stopT=null;
+      return go(ai.lane,S.fy+30,S.lt==='g');}
+    if(R.id==='hide'){
+      if(S.out.has(c))return[0,0,false];
+      if(S.seek.has(c)){let best=null,bd=260;for(const o of showers()){if(S.seek.has(o)||S.out.has(o)||o.state!=='alive')continue;const d=dist(c,o);if(d<bd&&los(c,o)){bd=d;best=o;}}
+        if(best)return go(best.x,best.y,ai.skill>0.8); // only the best seekers sprint
+        if(!ai.sh||ai.shT<=0||Math.hypot(c.x-ai.sh.x,c.y-ai.sh.y)<30){ai.shT=6;ai.sh=this.hideSpot();}return go(ai.sh.x,ai.sh.y,false);}
+      const near=[...S.seek].find(s=>dist(s,c)<300&&!S.hideUntil&&los(s,c));
+      if(near){const dx=c.x-near.x,dy=c.y-near.y,l=Math.hypot(dx,dy)||1;ai.sh=null;return go(c.x+dx/l*200,c.y+dy/l*200,true);}
+      if(!ai.sh)ai.sh=this.hideSpot();c.crouch=Math.hypot(c.x-ai.sh.x,c.y-ai.sh.y)<20;return go(ai.sh.x,ai.sh.y,true);}
+    if(R.id==='buttons'){let best=null,bd=1e9;for(const b of S.buttons){if(b.pressed)continue;const d=Math.hypot(b.x-c.x,b.y-c.y)*(0.7+Math.random()*0.02+(ai.skill<0.7?Math.random():0));if(d<bd){bd=d;best=b;}}
+      return best?go(best.x,best.y,true):[0,0,false];}
+    return null;},
+  // a hiding place inside the area: inside a building, or behind a tree (seen from the middle)
+  hideSpot(){const S=G.show,c0={x:S.cx,y:S.cy};
+    for(let a=0;a<30;a++){if(Math.random()<0.5&&BUILDINGS.length){const b=BUILDINGS[Math.floor(Math.random()*BUILDINGS.length)],x=b.x+b.w/2+(Math.random()-0.5)*b.w*0.4,y=b.y+b.h/2+(Math.random()-0.5)*b.h*0.4;
+        if(Math.hypot(x-c0.x,y-c0.y)<SHOW_AREA*0.85&&!pointBlocked(x,y,14))return{x,y};}
+      const o=OB[Math.floor(Math.random()*OB.length)];if(o&&o.kind==='tree'&&Math.hypot(o.x-c0.x,o.y-c0.y)<SHOW_AREA*0.85){const a2=Math.atan2(o.y-c0.y,o.x-c0.x),x=o.x+Math.cos(a2)*(o.r+20),y=o.y+Math.sin(a2)*(o.r+20);if(!pointBlocked(x,y,12))return{x,y};}}
+    return freeSpot(c0.x,c0.y,SHOW_AREA*0.7,0,null);},
+  spawn(){const S=G.show;return freeSpot(S.cx,S.cy,120,0,null);},
+  ko(o){o.respawnAt=G.time+3;},
+  hud(c1,c2,c3,p){const S=G.show,R=showRound();setC(c1,'chip final');setH(c1,`🎤 Round ${S.i+1}/4: ${esc(R.name)}`);
+    let s;const t=Math.max(0,Math.ceil(S.t-G.time));
+    if(S.ph==='intro')s='Get ready… '+t;else if(S.ph==='done')s='Results!';
+    else if(R.id==='circle')s=(NETC()?S.outCids.includes(p.cid):S.out.has(p))?'You are out':'Stay in! '+t+'s';
+    else if(R.id==='light')s=(S.lt==='g'?'🟢 GO!':S.lt==='y'?'🟡 Careful…':'🔴 FREEZE!')+' '+t+'s';
+    else if(R.id==='hide'){const sk=NETC()?S.seekCids.includes(p.cid):S.seek.has(p),out=NETC()?S.outCids.includes(p.cid):S.out.has(p);s=(sk?'👀 You are a seeker':out?'Found! Watching':'🙈 Stay hidden')+' '+t+'s';}
+    else s='Find the winning button! '+t+'s';
+    setC(c2,S.ph==='play'&&R.id==='light'&&S.lt==='r'?'chip storm':'chip');setH(c2,s);
+    const list=ffaPlaces(c=>c.pts);setC(c3,'chip');setH(c3,'You: '+(p.pts||0)+' · Leader: '+esc(list[0].c.isPlayer?'You':list[0].c.name)+' '+list[0].s);},
+  // 3D props: the glowing circle, the start and finish lines with a traffic light, the hiding-area ring, the buttons
+  visual(dt,t){const S=G.show;if(!S)return;const R=showRound();let M=S.m;
+    // F17: clearProps() starts a fresh S.m, so keep using that one (before, a new circle was made and lost every frame)
+    const want=R.id+':'+S.i+':'+(S.buttons.length);if(M.key!==want){this.clearProps();M=S.m;M.key=want;
+      if(R.id==='circle'||R.id==='hide'){M.ring=hillModel();M.ring.position.set(S.cx,groundAt(S.cx,S.cy,10),S.cy);
+        // F17: a bright, solid edge on the ground so the circle is easy to see (it shrinks with the circle)
+        if(R.id==='circle'){const e=new THREE.Mesh(new THREE.RingGeometry(0.455,0.5,128).rotateX(-Math.PI/2),basic('#ff3fa0',{side:THREE.DoubleSide}));e.position.y=4;M.ring.add(e);}}
+      if(R.id==='light'){for(const y of[S.sy,S.fy]){const l=new THREE.Mesh(GEO.box,basic(y===S.fy?'#ffffff':'#ffcb1f'));l.scale.set(700,2,14);l.position.set(S.cx,groundAt(S.cx,y,10)+1,y);scene.add(l);(M.lines=M.lines||[]).push(l);}
+        const g=new THREE.Group(),pole=new THREE.Mesh(GEO.cyl,mat('#2b2f3a'));pole.scale.set(10,180,10);g.add(pole);const box=new THREE.Mesh(GEO.boxC,mat('#1b2235'));box.scale.set(40,110,30);box.position.y=220;g.add(box);
+        M.lamps={};[['r',250],['y',220],['g',190]].forEach(([k,h])=>{const b=new THREE.Mesh(GEO.sphC,new THREE.MeshBasicMaterial({color:'#333'}));b.scale.set(26,26,26);b.position.set(0,h,-16);g.add(b);M.lamps[k]=b;});
+        g.position.set(S.cx+390,groundAt(S.cx+390,S.fy,10),S.fy+30);scene.add(g);M.light=g;}
+      if(R.id==='buttons'){M.btns=S.buttons.map(b=>{const g=new THREE.Group(),ped=new THREE.Mesh(GEO.cyl,mat('#f4f1e8'));ped.scale.set(36,22,36);g.add(ped);
+        const top=new THREE.Mesh(GEO.hemi,new THREE.MeshLambertMaterial({color:'#e2312b',emissive:'#e2312b',emissiveIntensity:0.3}));top.scale.set(30,26,30);top.position.y=22;g.add(top);g.userData.top=top;
+        g.position.set(b.x,b.z,b.y);scene.add(g);return g;});}}
+    if(M.ring){const r=R.id==='hide'?SHOW_AREA:S.r;M.ring.scale.set(r*2,1,r*2);M.ring.userData.disc.visible=R.id==='circle';}
+    if(M.lamps)for(const k in M.lamps)M.lamps[k].material.color.set(S.lt===k?{r:'#ff2a2a',y:'#ffcb1f',g:'#2aff5a'}[k]:'#333');
+    if(M.btns)M.btns.forEach((g,k)=>{const b=S.buttons[k];if(!b)return;g.userData.top.material.color.set(b.pressed?(b.prize?'#ffcb1f':'#7d8796'):'#e2312b');g.userData.top.position.y=b.pressed?16:22+Math.sin(t*4+k)*1.5;});},
+  clearProps(){const M=G.show.m;for(const o of[M.ring,M.light,...(M.lines||[]),...(M.btns||[])])if(o)scene.remove(o);G.show.m={};},
+  mini(m,k){const S=G.show;if(!S)return;const R=showRound();m.strokeStyle='#ffcb1f';m.lineWidth=2;
+    if(R.id==='circle'||R.id==='hide'){m.beginPath();m.arc(S.cx*k,S.cy*k,(R.id==='hide'?SHOW_AREA:S.r)*k,0,TAU);m.stroke();}
+    if(R.id==='light'){m.beginPath();m.moveTo((S.cx-350)*k,S.fy*k);m.lineTo((S.cx+350)*k,S.fy*k);m.stroke();}
+    if(R.id==='buttons')for(const b of S.buttons)if(!b.pressed){m.fillStyle='#e2312b';m.beginPath();m.arc(b.x*k,b.y*k,4,0,TAU);m.fill();}},
+  cleanup(){if(G.show)this.clearProps();},
+  end(p,b){if(G.win)G.tkBonus=(G.tkBonus||0)+SHOW_PRIZE; // the big prize (counted when the end screen adds up tickets)
+    return endFFA(p,b,"Mr. Bonk's Challenge Show: the most points after four challenges wins.",e=>e.s+' pts',
+      me=>[[me.s,'Show points'],['#'+me.place,'Finish'],[G.win?'+'+SHOW_PRIZE:'0','🎤 Prize tickets']]);}};
+// multiplayer: the show state for joiners (who never run update) — see XMNET in net-mode-state
+const SHOW_NET={
+  s:()=>{const S=G.show,ids=set=>[...set].map(c=>c.cid);return{i:S.i,ph:S.ph,tl:r2(S.t-G.time),cx:ri(S.cx),cy:ri(S.cy),r:ri(S.r),lt:S.lt,sy:ri(S.sy||0),fy:ri(S.fy||0),
+    b:S.buttons.map(b=>[ri(b.x),ri(b.y),ri(b.z),b.pressed?(b.prize?2:1):0]),h:ids(S.hold),o:ids(S.out),sk:ids(S.seek),p:netPts()};},
+  a:s=>{const S=G.show;if(!S)return;Object.assign(S,{i:s.i,ph:s.ph,t:G.time+s.tl,cx:s.cx,cy:s.cy,r:s.r,lt:s.lt,sy:s.sy,fy:s.fy,holdCids:s.h,outCids:s.o,seekCids:s.sk});
+    S.buttons=s.b.map(a=>({x:a[0],y:a[1],z:a[2],pressed:a[3]>0,prize:a[3]===2}));netPtsApply(s.p);}};
+// @module src/js/29-squads.js: Squads: being knocked down (DBNO), reviving teammates, and team wipes.
 // Main: isMate, goDBNO, updateDBNO, doRevive, botRevive
 // See also: combat, bots
 /* ================= squads: knocked down (DBNO) + revives ================= */
@@ -2541,7 +2854,7 @@ function botRevive(c,dt){if(G.squad<2)return null;const ai=c.ai;let best=null,bd
   if(!best)return null;if(ai.target&&ai.target.state==='alive'&&dist(ai.target,c)<300)return null;
   if(bd<40){doRevive(c,best,dt);return[0,0,false];}
   const dx=best.x-c.x,dy=best.y-c.y;return steer(c,dx/bd,dy/bd).concat([true]);}
-// @module src/js/28-llamas-vending.js: Loot llamas, vending machines, and the interact (E) action.
+// @module src/js/30-llamas-vending.js: Loot llamas, vending machines, and the interact (E) action.
 // Main: openLlama, buyVend, interact, spawnLootSpecials
 // See also: pickups, input
 /* ================= loot llamas + vending machines ================= */
@@ -2584,7 +2897,7 @@ function interact(){const p=G.player;if(reviveTarget(p))return;const n=nearInter
 function cleanupLoot(){for(const L of G.llamas||[])scene.remove(L.m);for(const V of G.vends||[])scene.remove(V.m);for(const o of OB.filter(o=>o.vend))removeOb(o);}
 function animateLoot(dt,t){for(const L of G.llamas||[])if(!L.open){L.m.position.y=L.z+Math.abs(Math.sin(t*2+L.x))*3;L.m.rotation.y+=dt*0.4;}
   for(const V of G.vends||[])V.m.userData.item.rotation.y+=dt*1.5;}
-// @module src/js/29-update.js: The simulation step: update(dt) moves everything each frame; character physics and collisions; the sky.
+// @module src/js/31-update.js: The simulation step: update(dt) moves everything each frame; character physics and collisions; the sky.
 // Main: update, updateChar, collide, respawnSpot, updateSky
 // See also: every gameplay module
 /* ================= physics & update ================= */
@@ -2604,7 +2917,7 @@ function updateSky(c,dt,ix,iy){
   if(isMate(c)&&G.player.state==='sky'){c.landX=G.player.x+(c.offX||0);c.landY=G.player.y+(c.offY||0);}
   if(!c.isPlayer||autoOn(c)){if(c.landX==null){const s=freeSpot(WORLD/2,WORLD/2,WORLD*0.4,0,null);c.landX=s.x;c.landY=s.y;}const dx=c.landX-c.x,dy=c.landY-c.y,d=Math.hypot(dx,dy);if(d>20){ix=dx/d;iy=dy/d;}else ix=iy=0;c.face=Math.atan2(iy||Math.sin(c.face),ix||Math.cos(c.face));}
   const gnd=groundAt(c.x,c.y,c.z);if(!c.glide&&c.z-gnd<240){c.glide=true;if(c.isPlayer)sfx('glide');}
-  const sp=c.glide?330:270;c.x=clamp(c.x+ix*sp*dt,14,WORLD-14);c.y=clamp(c.y+iy*sp*dt,14,WORLD-14);
+  const sp=c.glide?400:325;c.x=clamp(c.x+ix*sp*dt,14,WORLD-14);c.y=clamp(c.y+iy*sp*dt,14,WORLD-14);
   c.vz=c.glide?lerp(c.vz,-110,Math.min(1,dt*3)):Math.max(c.vz-GRAV()*dt,-380);c.z+=c.vz*dt;c.moving=false;
   if(c.z<=gnd){c.z=gnd;c.vz=0;c.state='alive';c.glide=false;c.onGround=true;sfx('land',c);burst(c.x,c.y,c.z+2,8,'puff','#ffffff',70);if(c.isPlayer)G.pitch=-0.12;}
 }
@@ -2619,6 +2932,7 @@ function updateChar(c,dt){
   if(st&&!NETC()){if(Math.hypot(c.x-st.x,c.y-st.y)>st.r){c.stormTick+=dt;if(c.stormTick>=0.5){c.stormTick-=0.5;damage(c,SDPS[st.stage]*0.5,null,'storm');}if(c.state!=='alive')return;}else c.stormTick=0;}
   if(c.vehicle){c.moving=false;return;}
   let[mx,my,sprint]=c.isPlayer&&!autoOn(c)?playerInput(c,dt):c.zombie?zombieUpdate(c,dt):botUpdate(c,dt);if(autoOn(c))autoCam(c,dt);
+  if(XM[G.mode]&&XM[G.mode].hold&&XM[G.mode].hold(c)){mx=my=0;sprint=false;}
   if(c.isPlayer&&!NETC()&&keys.has('e')){const rt=reviveTarget(c);if(rt){doRevive(c,rt,dt);mx=my=0;}}
   updateBurst(c,dt);
   if(c.emote){c.emote.t+=dt;if(!c.emote.loop&&c.emote.t>(c.isPlayer?6:2.5))c.emote=null;else{mx=my=0;sprint=false;}}
@@ -2627,7 +2941,8 @@ function updateChar(c,dt){
     if(c.bubbled<=0){sfx('pop',c);burst(c.x,c.y,c.z+24,14,'confetti','#ffb3e6',140);addText(c.x,c.y,c.z+60,'POP!','#ff9ad5',15);}return;}
   if(c.stun>0){c.stun-=dt;c.spin+=dt*14;mx=my=0;}
   c.wet=inWater(c.x,c.y)&&c.z<4;
-  const base=c.isPlayer?195:c.zombie?Math.min(G.diff.zSpeed+G.z.wave*2.5,G.diff.zSpeed+40):G.diff.speed;
+  // everyone runs 20% faster than before 0.2 (the island got bigger); zombies keep their speed
+  const base=c.isPlayer?235:c.zombie?Math.min(G.diff.zSpeed+G.z.wave*2.5,G.diff.zSpeed+40):G.diff.speed*1.2;
   const sp=base*(c.wet?(MAP.slow||0.55):1)*(sprint?1.38:1)*(c.useT>0?0.55:1),icy=tileAt(c.x,c.y)===5&&c.z<4;
   if(c.isPlayer){const cr=keys.has('q')&&c.onGround&&!c.air;if(cr&&!c.crouch&&Math.hypot(c.vx,c.vy)>230&&!(c.slideT>0)){const l=Math.hypot(c.vx,c.vy)||1;c.slideT=0.85;c.slideDx=c.vx/l;c.slideDy=c.vy/l;sfx('whoosh',c);}c.crouch=cr;}
   let spd=sp;if(c.slideT>0){c.slideT-=dt;mx=c.slideDx;my=c.slideDy;spd=(180+330*Math.max(0,c.slideT)/0.85)*(icy?1.4:1);if(Math.random()<dt*20)burst(c.x,c.y,c.z+2,1,'puff','#ffffff',30);}else if(c.crouch)spd=sp*0.5;
@@ -2646,7 +2961,7 @@ function updateChar(c,dt){
   // vertical
   const gnd=groundAt(c.x,c.y,c.z);
   if(c.onGround){if(gnd>=c.z-0.5)c.z=gnd;else if(c.z-gnd<STEP*1.6&&!c.air)c.z=gnd;else c.onGround=false;}
-  if(!c.onGround){c.vz-=GRAV()*dt;c.z+=c.vz*dt;const g2=groundAt(c.x,c.y,c.z-c.vz*dt);if(c.z<=g2){if(c.vz<-500)sfx('land',c);c.z=g2;c.vz=0;c.onGround=true;c.air=null;}
+  if(!c.onGround){c.vz-=GRAV()*dt;c.z+=c.vz*dt;const g2=groundAt(c.x,c.y,c.z-c.vz*dt);if(c.z<=g2){if(c.vz<-500)sfx('land',c);c.z=g2;c.vz=0;c.onGround=true;c.air=null;c.dj=false;} // landing gives the double jump back
     for(const o of cellOf(c.x,c.y)){if(c.vz>0&&inFoot(o,c.x,c.y,0)&&c.z+CH>o.z0&&c.z<o.z0){c.z=o.z0-CH;c.vz=0;}}}
   if(c.padCd<=0&&!c.zombie&&c.z<10)for(const pd of PADS){if(Math.hypot(c.x-pd.x,c.y-pd.y)<26){let dx=mx,dy=my;
     if(!dx&&!dy){dx=WORLD/2-c.x;dy=WORLD/2-c.y;const l=Math.hypot(dx,dy)||1;dx/=l;dy/=l;}const lg=MAP.lowG;c.air={vx:dx*(lg?360:420),vy:dy*(lg?360:420)};c.vz=lg?560:720;c.onGround=false;c.padCd=1.5;sfx('boing',c);addText(c.x,c.y,c.z+50,lg?'WHEEE!':'BOING!','#ff7b1c',16);break;}}
@@ -2722,7 +3037,7 @@ function update(dt){
   if(G.toastT>0){G.toastT-=dt;if(G.toastT<=0)$('prompt').hidden=true;}
   if(G.endAt&&G.time>=G.endAt&&!G.ended)endGame();
 }
-// @module src/js/30-visuals.js: Making the 3D scene match the simulation each frame: models, projectiles, effects, the camera.
+// @module src/js/32-visuals.js: Making the 3D scene match the simulation each frame: models, projectiles, effects, the camera.
 // Main: syncVisuals, animateWorld, updateCamera
 // See also: models, update
 /* ================= visuals ================= */
@@ -2756,7 +3071,7 @@ function syncVisuals(dt){
   for(const car of G.cars){if(car.dead)continue;const cm=car.m;cm.position.set(car.x,car.z,car.y);cm.rotation.set(car.onGround?0:-clamp(car.vz/1500,-0.35,0.35),Math.PI/2-car.ang,0,'YXZ');
     cm.userData.wheels.forEach((w,i)=>{w.rotation.x=car.wheelRot;w.rotation.y=i<2?-car.steer*0.5:0;});}
   for(const c of G.chars){if(!c.m)buildCharModel(c);const m=c.m,g=m.g;
-    g.visible=!(c.state==='gone'||c.state==='bus')&&!(c.invuln>0&&Math.floor(t*12)%2);
+    g.visible=!(c.state==='gone'||c.state==='bus')&&!(c.invuln>0&&Math.floor(t*12)%2)&&(c===p||Math.hypot(c.x-camera.position.x,c.y-camera.position.z)<3200);
     if(!g.visible)continue;
     g.position.set(c.x,c.z-(c.wet?5:0),c.y);g.rotation.set(0,Math.PI/2-c.face,0);
     setHeld(c);
@@ -2786,6 +3101,12 @@ function syncVisuals(dt){
     if(m.tag){if(c.zombie){m.tag.visible=(HBARS||c.hp<c.maxHp)&&c.state==='alive';if(m.tag.visible&&c.tagHp!==c.hp){c.tagHp=c.hp;c.name='';drawTag(c);}}
       else{m.tag.visible=(c.state==='alive'||c.state==='dbno')&&(isMate(c)||Math.hypot(c.x-p.x,c.y-p.y)<(HBARS?750:420));{const tk=c.hp+c.shield*1000+(c.state==='dbno'?1e6+Math.round(c.bleed):0)+(HBARS?0.5:0);if(m.tag.visible&&c.tagHp!==tk){c.tagHp=tk;drawTag(c);}}}}
     if(m.ring)m.ring.visible=c.state==='alive';}
+  // far-away small things are not drawn (they would be lost in the haze anyway, and the big island has many); checked 5 times a second
+  if(!G.cullT||t-G.cullT>0.2){G.cullT=t;const cx=camera.position.x,cz=camera.position.z,near=(x,y,r)=>(x-cx)*(x-cx)+(y-cz)*(y-cz)<r*r;
+    for(const it of G.items)if(it.mesh)it.mesh.visible=near(it.x,it.y,1700);
+    for(const ch of G.chests)if(ch.mesh)ch.mesh.visible=near(ch.x,ch.y,1900);
+    for(const L of G.llamas||[])if(L.m)L.m.visible=near(L.x,L.y,2200);
+    for(const V of G.vends||[])if(V.m)V.m.visible=near(V.x,V.y,2200);}
   // items
   for(const it of G.items){if(!it.mesh)it.mesh=itemMesh(it);it.mesh.position.set(it.x,it.z+18+Math.sin(t*3+it.bob)*3,it.y);it.mesh.userData.inner.rotation.y=t*1.6+it.bob;if(it.mesh.userData.mythic)it.mesh.userData.mythic.material.color.setHSL((t*0.25)%1,1,0.6);}
   for(const pr of G.projs){if(!pr.mesh)pr.mesh=projMesh(pr);pr.mesh.position.set(pr.x,pr.z,pr.y);
@@ -2802,7 +3123,7 @@ function syncVisuals(dt){
   for(let i=G.beams.length-1;i>=0;i--){const b=G.beams[i];b.life-=dt;const k=Math.max(0,b.life/b.max);b.m1.material.opacity=0.5*k;b.m2.material.opacity=k;if(b.life<=0){scene.remove(b.mesh);G.beams.splice(i,1);}}
   for(let i=G.texts.length-1;i>=0;i--){const tx=G.texts[i];tx.life-=dt;tx.mesh.position.y+=36*dt;{const k=1+Math.max(0,(tx.life-tx.max+0.15))*4;tx.mesh.scale.set(tx.s*4*k,tx.s*k,1);}tx.mesh.material.opacity=Math.min(1,tx.life/0.3);if(tx.life<=0){scene.remove(tx.mesh);tx.mesh.material.dispose();G.texts.splice(i,1);}}
   // storm
-  const st=G.storm;stormMesh.visible=!!(st&&st.r<1650);nextRing.visible=!!(st&&st.nextIdx!=null);
+  const st=G.storm;stormMesh.visible=!!(st&&st.r<SR[0]-100);nextRing.visible=!!(st&&st.nextIdx!=null); // (the wall was a fixed 1650: on the big island it never showed) F18: the next-circle line had ended up inside this comment
   if(st){stormMesh.position.set(st.x,-50,st.y);stormMesh.scale.set(st.r*2,1500,st.r*2);if(st.nextIdx!=null){const n=st.C[st.nextIdx],r=SR[st.nextIdx];nextRing.position.set(n.x,3,n.y);nextRing.scale.set(r*2,1,r*2);}}
   updateCamera(dt);updateGhost();animateLoot(dt,t);if(XM[G.mode]&&XM[G.mode].visual)XM[G.mode].visual(dt,t);
   {let inB=null;for(const b of BUILDINGS){const inside=p.x>b.x&&p.x<b.x+b.w&&p.y>b.y&&p.y<b.y+b.h;
@@ -2813,7 +3134,7 @@ function syncVisuals(dt){
 }
 function animateWorld(dt,t,focus){
   for(const f of flames){if(f.lava){const ph=(t*0.7+f.ph)%1;f.b.scale.set(6+ph*14,3+ph*4,6+ph*14);f.b.material.opacity=1-ph;}else{const s=1+Math.sin(t*9+f.ph)*0.15+Math.sin(t*15+f.ph)*0.08;f.o.scale.y=34*f.s*s;f.i.scale.y=20*f.s*(2-s);}}
-  if(skyMesh)skyMesh.position.copy(camera.position);if(starPts)starPts.position.copy(camera.position);
+  if(skyMesh)skyMesh.position.copy(camera.position);if(starPts)starPts.position.copy(camera.position);updateSkyDecor(dt);
   if(ambPts){const a=ambPts.geometry.attributes.position,arr=a.array;ambPts.position.set(focus.x,0,focus.y);
     for(let i=0;i<arr.length;i+=3){if(MAP.amb==='snow'){arr[i+1]-=60*dt;arr[i]+=Math.sin(t+i)*10*dt;if(arr[i+1]<0)arr[i+1]=500;}
       else if(MAP.amb==='embers'){arr[i+1]+=45*dt;arr[i]+=Math.sin(t*2+i)*14*dt;if(arr[i+1]>500)arr[i+1]=0;}else{arr[i+1]+=Math.sin(t*0.6+i)*6*dt;arr[i]+=8*dt;if(arr[i]>700)arr[i]=-700;}}a.needsUpdate=true;}
@@ -2830,6 +3151,7 @@ function animateWorld(dt,t,focus){
   pGeo.setDrawRange(0,n);pGeo.attributes.position.needsUpdate=true;pGeo.attributes.color.needsUpdate=true;puGeo.setDrawRange(0,m);puGeo.attributes.position.needsUpdate=true;
 }
 function updateCamera(dt){
+  autoAimOnLand(dt);
   if(G.victory&&G.player.state==='alive'){const p=G.player,a=G.time*0.5;if(camera.fov!==70){camera.fov=70;camera.updateProjectionMatrix();}$('scope').hidden=true;
     camera.position.set(p.x+Math.cos(a)*105,p.z+50,p.y+Math.sin(a)*105);camPos.copy(camera.position);camera.lookAt(p.x,p.z+30,p.y);return;}
   const p=specFollow()||G.player;let fx=p.x,fy=p.y,fz=p.z+42,dist0=125,sh=26;if(p.vehicle){dist0=215;sh=0;fz=p.z+64;}
@@ -2845,7 +3167,7 @@ function updateCamera(dt){
   camera.position.set(cx,cz,cy);camPos.copy(camera.position);
   camera.lookAt(cx+d.x*100,cz+d.z*100,cy+d.y*100);
 }
-// @module src/js/31-hud.js: The in-game HUD: health, shield, weapon slots, materials, the minimap.
+// @module src/js/33-hud.js: The in-game HUD: health, shield, weapon slots, materials, the minimap.
 // Main: updateHUD, drawMini, makeMiniBG
 // See also: hud-helpers
 /* ================= HUD ================= */
@@ -2918,7 +3240,7 @@ function drawMini(){
   const p=G.player;const px=(p.state==='gone'?p.koX:p.x)*k,py=(p.state==='gone'?p.koY:p.y)*k;m.save();m.translate(px,py);m.rotate(G.yaw);m.fillStyle='#ffcb1f';m.strokeStyle='#1b2235';m.lineWidth=2;
   m.beginPath();m.moveTo(12,0);m.lineTo(-8,-8);m.lineTo(-4,0);m.lineTo(-8,8);m.closePath();m.stroke();m.fill();m.restore();
 }
-// @module src/js/32-screens.js: Starting, pausing and ending a match, reading the match options, and going back to menus.
+// @module src/js/34-screens.js: Starting, pausing and ending a match, reading the match options, and going back to menus.
 // Main: readOpts, applyOpts, startGame, setPaused, endGame, toMenu
 // See also: game-state, menus
 /* ================= screens ================= */
@@ -2972,7 +3294,7 @@ function endGame(){if(NETH())netHostEnd();if(G.net)NET.lastNet=true;else NET.las
 }
 $('lockerBtn').addEventListener('click',()=>{prevScreen=curScreen;showScreen('locker');renderLocker();});$('lockerBtn2').addEventListener('click',()=>$('lockerBtn').click());
 $('lockDone').addEventListener('click',()=>{showScreen(prevScreen&&prevScreen!=='locker'?prevScreen:'welcome');});
-// @module src/js/33-ticket-shop.js: The Ticket Shop screen: today's deal, buying with a "tap again to buy" check, previews.
+// @module src/js/35-ticket-shop.js: The Ticket Shop screen: today's deal, buying with a "tap again to buy" check, previews.
 // Main: renderShop, openShop, closeShop, shopCard
 // See also: cosmetics, xp-levels
 /* ================= Ticket Shop ================= */
@@ -2985,7 +3307,7 @@ function renderShop(){$('shopTk').textContent=PROG.tickets;const d=dealItem();$(
 function openShop(){prevScreen=curScreen==='shop'?prevScreen:curScreen;showScreen('shop');shopSel=null;shopSure=null;$('shopMsg').textContent='';renderShop();}
 function closeShop(){if(shopPreview){shopPreview=null;rebuildLobby();}showScreen(prevScreen&&prevScreen!=='shop'?prevScreen:'welcome');}
 $('shop').addEventListener('click',ev=>{const b=ev.target.closest('[data-buy]');const card=ev.target.closest('.sitem');if(!card)return;const key=card.dataset.key,[t,id]=key.split(':'),e=SHOP.find(x=>x.t===t&&x.it.id===id);
-  if(b){if(shopSure!==key||performance.now()-shopSureT>4000){shopSure=key;shopSureT=performance.now();sfx('pickup');renderShop();return;}
+  if(b){if(shopSure!==key||performance.now()-shopSureT>8000){shopSure=key;shopSureT=performance.now();sfx('pickup');renderShop();return;}
     const price=shopPrice(e);if(PROG.tickets<price)return;PROG.tickets-=price;PROG.owned.push(key);PROG.locker[t]=id;if(t==='outfit')PROG.locker.back='outfit';saveProg();shopSure=null;shopPreview=null;rebuildLobby();
     audioInit();sfx('victory');renderShop();$('shopMsg').textContent='🎉 You got '+e.it.name+'! You are wearing it now, and it is in your Locker.';return;}
   shopSure=null;shopSel=key;if(owns(t,id)){PROG.locker[t]=id;if(t==='outfit')PROG.locker.back='outfit';saveProg();shopPreview=null;}else shopPreview={t,id};rebuildLobby();sfx('pickup');renderShop();});
@@ -2993,7 +3315,7 @@ $('shopBtn').addEventListener('click',openShop);$('shopBtn2').addEventListener('
 $('playBtn').addEventListener('click',startGame);$('againBtn').addEventListener('click',()=>{if(NET.lastNet&&NET.R)toMenu('mplobby');else startGame();});$('menuBtn').addEventListener('click',()=>toMenu('menu'));$('homeBtn').addEventListener('click',()=>toMenu('welcome'));
 $('resumeBtn').addEventListener('click',()=>setPaused(false));$('quitBtn').addEventListener('click',()=>toMenu('welcome'));
 $('muteBtn').addEventListener('click',e=>{setMuted(!AU.muted);e.currentTarget.blur();});
-// @module src/js/34-menus.js: Menus: welcome, play screen, settings pages, About, Help (with live 3D pictures), volume.
+// @module src/js/36-menus.js: Menus: welcome, play screen, settings pages, About, Help (with live 3D pictures), volume.
 // Main: SCREENS, showScreen, openSettings, setPage, renderProfile, HELP_PAGES, renderHelp
 // See also: screens, lobby-locker
 /* ================= menus: welcome · play · settings · about · help ================= */
@@ -3094,8 +3416,8 @@ const HELP_SCENES={
     return{cam:()=>{if(!D)return;camera.position.copy(W3(D.x+120,D.y+100,D.z-10));camera.lookAt(W3(D.x,D.y,D.z-40));},
       ann:S=>{if(!D)return;const[f1,f2]=proj(D.x,D.y,D.z+10);const[tx,ty]=S.map(f1,f2);hLabel(S,'🚁 Rescue drone',tx-170,ty-60,tx,ty);hLabel(S,'It carries you back into the game!',S.W/2,S.H-40,null,null,'#5cff7a');}};})};
 const HELP_PAGES=[
-  {t:'🎮 Move & aim',shots:['aim'],body:()=>TOUCH.on?`<ul><li><b>Left side:</b> touch and drag to move. Push far forward to sprint.</li><li><b>Right side:</b> drag to look around and aim.</li><li><b>FIRE</b> shoots. You can slide your finger on it to aim too.</li><li><b>JUMP</b> jumps, gets you off the bus and opens your glider.</li><li><b>CROUCH</b> while sprinting = slide!</li><li><b>🤖</b> turns on <b>autopilot</b>: your player (and your car) plays by itself until you tap 🤖 again.</li><li>Tap a <b>weapon slot</b> to switch weapons. <b>🔭</b> opens the scope.</li></ul>`
-    :`<ul><li><b>W A S D</b> to move, <b>Shift</b> to sprint.</li><li><b>Move the mouse</b> to aim, <b>click</b> to shoot (hold for auto).</li><li><b>Space</b> jumps, gets you off the bus and opens your glider.</li><li><b>Q</b> crouch. Crouch while sprinting = slide!</li><li><b>O</b> turns on <b>🤖 autopilot</b>: your player (and your car) plays by itself until you press O again.</li><li><b>1–5</b> or the mouse wheel switch weapons. <b>Right-click</b> or <b>R</b> = scope.</li></ul>`},
+  {t:'🎮 Move & aim',shots:['aim'],body:()=>TOUCH.on?`<ul><li><b>Left side:</b> touch and drag to move. Push far forward to sprint.</li><li><b>Right side:</b> drag to look around and aim.</li><li><b>FIRE</b> shoots. You can slide your finger on it to aim too.</li><li><b>JUMP</b> jumps, gets you off the bus and opens your glider. Tap it again in the air to <b>double jump</b>!</li><li><b>CROUCH</b> while sprinting = slide!</li><li><b>🤖</b> turns on <b>autopilot</b>: your player (and your car) plays by itself until you tap 🤖 again.</li><li>Tap a <b>weapon slot</b> to switch weapons. <b>🔭</b> opens the scope.</li></ul>`
+    :`<ul><li><b>W A S D</b> to move, <b>Shift</b> to sprint.</li><li><b>Move the mouse</b> to aim, <b>click</b> to shoot (hold for auto).</li><li><b>Space</b> jumps, gets you off the bus and opens your glider. Press it again in the air to <b>double jump</b>!</li><li><b>Q</b> crouch. Crouch while sprinting = slide!</li><li><b>O</b> turns on <b>🤖 autopilot</b>: your player (and your car) plays by itself until you press O again.</li><li><b>1–5</b> or the mouse wheel switch weapons. <b>Right-click</b> or <b>R</b> = scope.</li></ul>`},
   {t:'🔫 Weapons & loot',shots:['loot'],body:()=>`<ul><li>Walk over weapons to pick them up. You can carry 4 plus your pickaxe.</li><li>The <b>glow colour</b> is the rarity: <b style="color:${RAR_COL[0]}">Common</b>, <b style="color:${RAR_COL[1]}">Uncommon</b>, <b style="color:${RAR_COL[2]}">Rare</b>, <b style="color:${RAR_COL[3]}">Epic</b>, <b style="color:${RAR_COL[4]}">Legendary</b>. Rarer = stronger!</li><li><b>Loot Llamas</b> 🦙 are full of rare loot and materials.</li><li><b>Vending machines</b> 🛒 sell a weapon for materials.</li><li>Your <b>Mythic Laser Blaster</b> is always in slot 2.</li><li>Bandages, med kits and shield potions: hold ${TOUCH.on?'FIRE':'click'} to use them.</li></ul>`},
   {t:'🔨 Building',shots:['build'],body:()=>TOUCH.on?`<ul><li>Tap <b>🔨 BUILD</b> to show the building buttons.</li><li><b>WALL</b>, <b>RAMP</b>, <b>FLOOR</b>, <b>ROOF</b>: tap to place, hold to keep building.</li><li><b>EDIT</b> turns your wall into a door or window.</li><li>The material button switches between wood, stone and metal. Metal is strongest!</li><li>Swing your pickaxe at trees, rocks and walls to collect materials.</li><li>Tap <b>⚔️ COMBAT</b> to go back to fighting.</li></ul>`
     :`<ul><li><b>Z</b> wall · <b>X</b> ramp · <b>C</b> floor · <b>V</b> roof. Click to place, hold to keep building.</li><li>Look up to build higher.</li><li><b>G</b> edits a wall into a door or window.</li><li><b>T</b> switches wood, stone and metal. Metal is strongest!</li><li>Swing your pickaxe at trees, rocks and walls to collect materials.</li></ul>`},
@@ -3103,9 +3425,10 @@ const HELP_PAGES=[
   {t:'🚁 Getting bonked',shots:['drone'],body:()=>`<ul><li>When you run out of health you get knocked out, but a <b>rescue drone</b> flies you back in after a few seconds.</li><li>In Battle Royale, drones stop at the <b>final circle</b>. Then it's last one standing!</li><li>In <b>Squads</b> you get knocked down first. A teammate can revive you by holding ${TOUCH.on?'the green REVIVE button':'E'} next to you.</li><li>Heal up with bandages, med kits and shield potions.</li></ul>`},
   {t:'🏆 How to win',shots:[],body:()=>`<p>Every game mode has its own way to win:</p><div class="hwin">${[['🪂 Battle Royale','Be the last one (or last squad) standing when the storm closes.'],['⚔️ Team Battle','Red team needs 20 knockouts before blue does.'],['🧟 Zombie Survival','Survive as many zombie waves as you can. Build walls!'],['🏎️ Car Race','Drive through the glowing gates in order. Finish 3 laps first.'],['🌋 Floor is Lava','Build up and stay above the rising lava the longest.'],['👑 Capture the Crown','Grab the crown and hold it to score points.'],['🚩 Capture the Flag','Steal the blue flag and bring it back to your base.'],['⛰️ King of the Hill','Stand in the golden circle to score. It moves around!'],['🏗️ Build Battle','Build the tallest tower before time runs out.'],['🎯 Training Room','No winning here: practice your aim, building and every weapon.']].map(([a,b])=>`<div><b>${a}</b>${b}</div>`).join('')}</div>`},
   {t:'🌐 Play with friends',shots:[],body:()=>`<ul><li>Tap <b>🌐 Multiplayer</b> on the welcome screen and type your <b>name</b>.</li><li><b>One player hosts:</b> tap <b>Host a game</b> and read out the 4-letter <b>room code</b>.</li><li><b>Everyone else joins:</b> tap <b>Join</b> and type the code. The host sees <b>🙋 wants to join</b> and taps <b>✅ Allow</b> (or <b>❌ Kick</b>).</li><li>The host picks the <b>game</b>, the <b>map</b> and the <b>teams</b>: <i>Host picks</i> (tap a player to move them), <i>🎲 Random</i>, <i>Pick your own</i> (tap Join Red/Blue…), or <i>Everyone vs everyone</i>.</li><li>Bots fill the empty spots. The host presses <b>START</b> and everyone drops into the same match!</li><li>Up to 8 real players, in every game mode: Battle Royale, Team Battle, Zombie Survival (team up against the waves), Car Race, Floor is Lava, Capture the Crown, Capture the Flag, King of the Hill, Build Battle and the Training Room.</li><li>Hold <b>Tab</b> (or tap <b>🏆</b>) for the <b>scoreboard</b>: everyone's knockouts and ping.</li><li>Out of the match? You <b>watch a teammate</b>. Press Space, click or tap JUMP to switch who you watch.</li><li>Friends who arrive late can <b>jump into a match that already started</b> by taking over a bot (the host can turn this off in Settings → 🌐 Multiplayer).</li><li>After the match, <b>Play again</b> takes everyone back to the room.</li></ul>`},
-  {t:'🔧 Connection trouble',shots:[],body:()=>`<ul><li>Everyone plays from <b>the same game page on claude.ai</b>, so it has to be <b>shared</b> with each player (the Share button at the top of the page). To <b>host</b>, a player needs <b>“can edit”</b> access.</li><li>On the <b>Bonk Royale website</b>, friends just open the same website address. No account needed.</li><li>Every device needs to be <b>online</b> during the match.</li><li>Run <b>Settings → 🌐 Multiplayer → Connection test</b>. Green checks mean you're ready.</li><li>Use <b>Test with a friend</b> to see how fast two devices talk. Under 150 ms feels smooth.</li><li>“No game found”: check the 4 letters, and make sure the host is still on the room screen.</li><li>If the host leaves, the match ends for everyone. If a player leaves, a bot takes over their character.</li></ul>`},
+  {t:'🔧 Connection trouble',shots:[],body:()=>`<ul><li>Everyone opens <b>the same Bonk Royale website</b> (or its app on the home screen). No account needed.</li><li>Everyone needs the <b>same version</b>: Stable, Beta and Alpha are separate websites, and players on different ones can't join each other.</li><li>At home, a <b>home server</b> is even faster (see 🏠 Home server).</li><li>Every device needs to be <b>online</b> during the match.</li><li>Run <b>Settings → 🌐 Multiplayer → Connection test</b>. Green checks mean you're ready.</li><li>Use <b>Test with a friend</b> to see how fast two devices talk. Under 150 ms feels smooth.</li><li>“No game found”: check the 4 letters, and make sure the host is still on the room screen.</li><li>If the host leaves, the match ends for everyone. If a player leaves, a bot takes over their character.</li></ul>`},
+  {t:"🎤 Mr. Bonk's Show",shots:[],body:()=>`<p>A game show in four rounds. Win rounds to get points. The most points after round 4 wins <b>${SHOW_PRIZE} tickets</b>!</p><ol><li><b>Last to Leave the Circle:</b> stay inside the glowing circle while it shrinks. Step out and you are out.</li><li><b>Red Light, Green Light:</b> run to the finish on <b>🟢 GREEN</b>. On <b>🔴 RED</b>, freeze! Move and you go back to the start.</li><li><b>Hide and Seek:</b> hide inside the big ring. Seekers count to 15, then hunt. If a seeker touches you, you are out. Stay hidden until time runs out to win!</li><li><b>The Button Challenge:</b> one button wins the round. The others are traps (BOING!). Find the winner first!</li></ol><p>No fighting in this mode, and it works in multiplayer too.</p>`},
   {t:'🛡️ Safety & chat',shots:[],body:()=>`<ul><li><b>Nobody gets in without the host's OK.</b> Anyone with the code can <i>ask</i> to join. The host sees their name and taps <b>✅ Allow</b> or <b>❌ Kick</b>. During a match, the request pops up at the top of the screen.</li><li>In the room, the host can tap <b>✖</b> next to a player to remove them.</li><li><b>Chat is off</b> unless the host turns it on (in the room, or in Settings → 🌐 Multiplayer).</li><li>When chat is on, press <b>Enter</b> or tap <b>💬</b> to type, or tap a quick message like <b>GG!</b>.</li><li><b>Swear words are hidden</b> in English, Spanish, French, Portuguese, German and Italian. They turn into ★★★. A player name with a swear word in it just shows as <b>Player</b>.</li><li>Only play with people you know, and never share your address, school or passwords in chat.</li></ul>`},
-  {t:'🏠 Home server',shots:[],body:()=>`<p>Playing at home with family? A Windows PC can run the game for everyone on the same Wi-Fi. It's faster than claude.ai, and nobody needs an account.</p><ol><li>Put the whole <b>Bonk Royale</b> game folder on the PC (it has <b>Start Bonk Server.bat</b> in it).</li><li>Double-click <b>Start Bonk Server</b>. A window opens with an address like <b>http://192.168.1.20:8080</b>.</li><li>The first time, Windows may ask about the firewall: tick <b>Private networks</b> and click <b>Allow</b>.</li><li>On each iPad, phone or laptop on the same Wi-Fi, type that address into Safari or Chrome. Then use <b>🌐 Multiplayer</b> as usual: one player hosts and the others type the code.</li><li>Keep the server window open while you play. Close it when you're done.</li></ol><ul><li>The lobby says <b>🏠 Home server</b> when it's working.</li><li>Your locker, tickets and settings are saved separately for each address, so the home-server game starts fresh.</li><li>Only devices on your own Wi-Fi can reach the server, not the whole internet.</li></ul>`},
+  {t:'🏠 Home server',shots:[],body:()=>`<p>Playing at home with family? A Windows PC can run the game for everyone on the same Wi-Fi. It's faster than going over the internet, and nobody needs an account.</p><ol><li>Put the whole <b>Bonk Royale</b> game folder on the PC (it has <b>Start Bonk Server.bat</b> in it).</li><li>Double-click <b>Start Bonk Server</b>. A window opens with an address like <b>http://192.168.1.20:8080</b>.</li><li>The first time, Windows may ask about the firewall: tick <b>Private networks</b> and click <b>Allow</b>.</li><li>On each iPad, phone or laptop on the same Wi-Fi, type that address into Safari or Chrome. Then use <b>🌐 Multiplayer</b> as usual: one player hosts and the others type the code.</li><li>Keep the server window open while you play. Close it when you're done.</li></ol><ul><li>The lobby says <b>🏠 Home server</b> when it's working.</li><li>Your locker, tickets and settings are saved separately for each address, so the home-server game starts fresh.</li><li>Only devices on your own Wi-Fi can reach the server, not the whole internet.</li></ul>`},
   {t:'👕 Level up & style',shots:[],body:()=>`<ul><li>Every match gives you <b>XP</b>. Level up to unlock outfits, gliders, pickaxes, back bling and gun wraps in the <b>Locker</b>.</li><li>Finish <b>challenges</b> (shown in the lobby) for bonus XP and tickets.</li><li>Earn <b>🎟️ tickets</b> by playing, then spend them in the <b>Ticket Shop</b>. Tap an item to try it on first!</li><li><b>Gun wraps</b> change the colour of every gun you hold, and even your laser beams.</li><li>${TOUCH.on?'Want your buttons somewhere else? Settings → Controls → <b>Customize touch controls</b>.':'Playing on a tablet? Touch controls turn on by themselves.'}</li></ul>`}];
 function renderHelp(){const P=HELP_PAGES[helpIdx];htmlSink($('helpTabs')).html=HELP_PAGES.map((p,i)=>`<button type="button" class="ltab${i===helpIdx?' on':''}" data-i="${i}">${p.t}</button>`).join('');
   const shots=P.shots.map(k=>`<div class="hshot">${helpShots&&helpShots[k]?`<img src="${helpShots[k]}" alt="${esc(P.t)} picture">`:helpBusy?'📸 Taking pictures…':'Picture not available'}</div>`).join('');
@@ -3118,7 +3441,7 @@ $('wHelp').addEventListener('click',()=>{helpIdx=0;showScreen('help');renderHelp
 $('helpTabs').addEventListener('click',e=>{const b=e.target.closest('[data-i]');if(b){helpIdx=+b.dataset.i;renderHelp();}});
 $('helpPrev').addEventListener('click',()=>{helpIdx=Math.max(0,helpIdx-1);renderHelp();});$('helpNext').addEventListener('click',()=>{helpIdx=Math.min(HELP_PAGES.length-1,helpIdx+1);renderHelp();});
 $('helpDone').addEventListener('click',()=>showScreen('welcome'));
-// @module src/js/35-net-connection.js: Multiplayer: the connection object MP, room codes, which transport is in use (mpVia), the status text, and the release-track badge.
+// @module src/js/37-net-connection.js: Multiplayer: the connection object MP, room codes, which transport is in use (mpVia), the status text, and the release-track badge.
 // Main: MP, mpCode, mpRoomName, mpVia, MP_HOW, mpStatusText
 // See also: net-transport-*, net-lobby
 /* ================= multiplayer: connection layer =================
@@ -3127,7 +3450,8 @@ $('helpDone').addEventListener('click',()=>showScreen('welcome'));
    set up through the room so game traffic goes device-to-device over the local Wi-Fi. */
 const MP={room:null,avail:null,conn:false,err:null,name:(store.get('bonk-name')||'').slice(0,16),test:null,friend:null};
 const mpCode=()=>{const A='BCDFGHJKLMNPQRSTVWXZ';let s='';for(let i=0;i<4;i++)s+=A[Math.floor(Math.random()*A.length)];return s;};
-const mpRoomName=code=>'bonk-'+code.toLowerCase();
+// F15: Beta and Alpha have their own rooms, so players on different sites never land in the same game (Stable keeps the 0.1 names)
+const mpRoomName=code=>'bonk-'+(typeof BONK_TRACK!=='undefined'&&BONK_TRACK!=='stable'?BONK_TRACK+'-':'')+code.toLowerCase();
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 // show which release track this is (Beta and Alpha get a badge on the welcome screen)
 (()=>{const names={stable:'Stable',beta:'Beta',alpha:'Alpha'},desc={stable:'the main version',beta:'next features, almost ready',alpha:'the newest features, still being tested'};const t=names[BONK_TRACK]?BONK_TRACK:'stable';
@@ -3135,17 +3459,17 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
   $('trackInfo').textContent='Version track: '+names[t]+' ('+desc[t]+'). Each track keeps its own saves.';})();
 // which way this copy of the game links players: claude.ai rooms, test tabs, a home server, or direct links on the public website
 const mpVia=()=>!MP.room?null:MP.room.local?'local':MP.room.home?'home':MP.room.p2p?'p2p':'claude';
-const MP_HOW={claude:'Everyone plays from this same game page on claude.ai, so it must be shared with each player. To host, a player needs “can edit” access. Games go through the internet, so every device needs to be online.',
+const MP_HOW={claude:'Everyone plays from this same shared game page. Every device needs to be online.',
   local:'Test mode: this links browser tabs on one computer.',
   home:'You are playing through a home server. Everyone must be on the same Wi-Fi and open the address shown in the server window.',
   p2p:'Friends open this same website and type the code. Devices connect straight to the host (a free matchmaking service introduces them), so every device needs internet.'};
 function mpStatusText(lobby){if(MP.avail===null)return'⏳ Checking…';const v=mpVia();
   if(!MP.avail&&MP.err==='nortc')return'⚪ This browser cannot do online play. Try Safari, Chrome or Edge.';
-  if(!MP.avail)return v==='p2p'||MP.err==='peerjs'?'⚪ Online play could not load. Check the internet connection and reload.':lobby?'⚪ Online play needs the game opened from its claude.ai link (signed in), a home server, or the Bonk Royale website.':'⚪ Online play is not available here';
+  if(!MP.avail)return v==='p2p'||MP.err==='peerjs'?'⚪ Online play could not load. Check the internet connection and reload.':lobby?'⚪ Online play needs the Bonk Royale website or a home server.':'⚪ Online play is not available here';
   if(v==='local')return'🧪 Test mode: linking browser tabs on this computer';
   if(!MP.conn)return v==='home'?'🟡 Connecting to the home server…':'🟡 Connecting…';
   return v==='home'?'🏠 Home server: fast play on this Wi-Fi':v==='p2p'?'🌍 Online: devices connect directly':'🟢 Online play is available';}
-// @module src/js/36-net-log.js: The connection log: every join, leave, disconnect, timeout and pause, with the reason; shown and copyable in Settings.
+// @module src/js/38-net-log.js: The connection log: every join, leave, disconnect, timeout and pause, with the reason; shown and copyable in Settings.
 // Main: NETLOG, netLog, netLogRender, netLogText
 // See also: every net module
 /* ================= multiplayer connection log =================
@@ -3171,7 +3495,7 @@ addEventListener('pagehide',()=>{if(NET.R)netLog('page closing');});
   clr.addEventListener('click',()=>{NETLOG.length=0;try{localStorage.removeItem('bonk-netlog');}catch(e){}netLogRender();});})();
 (async()=>{try{if(!window.claude||!window.claude.use){MP.avail=false;mpRender();return;}const r=await window.claude.use('room');MP.room=r;MP.avail=!!r;
   if(r)r.onConnection(c=>{if(MP.conn!==c)netLog(c?'claude.ai room service connected':'claude.ai room service connection lost');MP.conn=c;mpRender();},e=>{MP.err=e.code;MP.avail=false;mpRender();});}catch(e){MP.avail=false;}mpRender();})();
-// @module src/js/37-net-settings-tests.js: Settings → Multiplayer: the connection test, the friend test, and the settings panel.
+// @module src/js/39-net-settings-tests.js: Settings → Multiplayer: the connection test, the friend test, and the settings panel.
 // Main: mpWaitConn, mpSelfTest, mpFriendTest, mpRender
 // See also: net-connection
 async function mpWaitConn(ms){const t0=performance.now();while(MP.room&&!MP.room.connected()&&performance.now()-t0<ms)await sleep(100);return!!(MP.room&&MP.room.connected());}
@@ -3190,7 +3514,7 @@ async function rtcLoopback(ice){const a=new RTCPeerConnection({iceServers:ice}),
   catch(e){return{ok:false,err:String(e&&e.message||e)};}finally{a.close();b.close();}}
 // ---- self test: what this device can do ----
 async function mpSelfTest(){const T=MP.test={running:true,rows:[]};const row=(k,ok,txt)=>{T.rows.push({k,ok,txt});mpRender();};mpRender();
-  if(!MP.room){row('room',false,MP.avail===false?'Online play only works when the game is opened from its claude.ai link (signed in).':'Still connecting… try again in a few seconds.');T.running=false;mpRender();return;}
+  if(!MP.room){row('room',false,MP.avail===false?'Online play works on the Bonk Royale website or a home server.':'Still connecting… try again in a few seconds.');T.running=false;mpRender();return;}
   const c=await mpWaitConn(6000);row('room',c,c?'Connected to the game room service.':'Could not reach the room service. Check the internet connection.');
   if(c){try{const R=await MP.room.join('bonk-selftest-'+Math.random().toString(36).slice(2,8));const t0=performance.now();let rtt=null;const off=R.on('ping',m=>{if(m.sameTab&&rtt==null)rtt=performance.now()-t0;});
       await R.emit('ping',{t:Date.now()});const t1=performance.now();while(rtt==null&&performance.now()-t1<4000)await sleep(30);off();await R.leave();
@@ -3229,7 +3553,7 @@ function mpStopFriend(){const F=MP.friend;if(!F)return;clearInterval(F.timer);if
 // ---- settings page ----
 function mpRender(){const box=$("mpBox");if(!box)return;netLogRender();const T=MP.test,F=MP.friend;
   const status=mpStatusText(false);
-  $('mpStatus').textContent=status+(MP.avail===false?' (open the game from its claude.ai link while signed in, or from a home server).':'');
+  $('mpStatus').textContent=status+(MP.avail===false?' (open the Bonk Royale website, or use a home server).':'');
   $('mpTestOut').innerHTML=T?T.rows.map(r=>`<li>${r.ok?'✅':'⚠️'} ${esc(r.txt)}</li>`).join('')+(T.running?'<li>⏳ Testing…</li>':''):'';
   const fo=$('mpFriendOut');if(!F)fo.innerHTML='';else{
     fo.innerHTML=`<p><b>Code: <span class="mpcode">${esc(F.code)}</span></b> · ${esc(F.status)}</p>`+(F.peer?`<ul><li>${F.rtt!=null?'✅ Through the internet relay: '+F.rtt+' ms':'⏳ Measuring the relay…'}</li><li>${F.direct?'✅ Direct Wi-Fi connection: '+(F.drtt!=null?F.drtt+' ms':'open'):F.direct===false?'⚠️ No direct connection ('+esc(F.why||'')+'). Games would use the relay.':'⏳ Trying a direct Wi-Fi connection…'}</li></ul>`:'');}
@@ -3239,7 +3563,7 @@ $('mpRun').addEventListener('click',()=>mpSelfTest());
 $('mpHost').addEventListener('click',()=>mpFriendTest(mpCode(),true));
 $('mpJoin').addEventListener('click',()=>{const c=($('mpJoinCode').value||'').toUpperCase().replace(/[^A-Z]/g,'');if(c.length===4)mpFriendTest(c,false);else $('mpJoinCode').focus();});
 $('mpFriendStop').addEventListener('click',mpStopFriend);
-// @module src/js/38-net-transport-local.js: Transport for testing: links browser tabs on one computer (?mplocal) with BroadcastChannel.
+// @module src/js/40-net-transport-local.js: Transport for testing: links browser tabs on one computer (?mplocal) with BroadcastChannel.
 // Main: localRoomApi
 // See also: net-connection (docs/MULTIPLAYER.md: transports)
 /* ================= multiplayer transport: test tabs on one computer (?mplocal) ================= */
@@ -3262,12 +3586,9 @@ function localRoomApi(){const me='L'+Math.random().toString(36).slice(2,10),room
     send({type:'p',presence:mine,hello:1});rooms[name]=R;return Promise.resolve(R);}
   return{join:joinLocal,connected:()=>true,onConnection(f){setTimeout(()=>f(true),0);return()=>{};},emit:()=>Promise.resolve(),on:()=>()=>{},local:true};}
 if(!(window.claude&&window.claude.use)&&/mplocal/.test(location.search)){MP.room=localRoomApi();MP.avail=true;MP.conn=true;setTimeout(mpRender,0);}
-// @module src/js/39-net-transport-home.js: Transport for the home server (bonk-server.ps1): the room interface over a WebSocket; faster send rates.
+// @module src/js/41-net-transport-home.js: Transport for the home server (bonk-server.ps1): the room interface over a WebSocket; faster send rates.
 // Main: wsRoomApi, NETFAST
 // See also: bonk-server.ps1
-// Transports: every way of linking players offers the same "room" interface the game uses (join, presence, onPeers, emit, on, leave):
-// claude.ai rooms, the ?mplocal tab stand-in above, and this one - the home server (bonk-server.ps1 on a PC on the same Wi-Fi).
-// the home server has no claude.ai message budget, so it sends updates more often
 const NETFAST=()=>!!(MP.room&&MP.room.home);
 function wsRoomApi(url){let ws=null,me=null,up=false;const rooms={},conn=new Set(),waits={};
   const raw=s=>{if(up&&ws&&ws.readyState===1)ws.send(s);};
@@ -3304,11 +3625,9 @@ function wsRoomApi(url){let ws=null,me=null,up=false;const rooms={},conn=new Set
   return{join,connected:()=>up,onConnection(f){conn.add(f);setTimeout(()=>f(up),0);return()=>conn.delete(f);},emit:()=>Promise.resolve(),on:()=>()=>{},home:true};}
 if(!(window.claude&&window.claude.use)&&window.BONK_WS&&!/mplocal/.test(location.search)){MP.room=wsRoomApi((location.protocol==='https:'?'wss://':'ws://')+location.host+'/bonk-ws');MP.avail=true;
   MP.room.onConnection(c=>{MP.conn=c;mpRender();if(typeof renderMpLobby==='function')renderMpLobby();});setTimeout(mpRender,0);}
-// @module src/js/40-net-transport-p2p.js: Transport for the website: direct WebRTC links through PeerJS. The host is the hub; reliable + fast channels; keep-alives; reconnecting to the matchmaking server.
+// @module src/js/42-net-transport-p2p.js: Transport for the website: direct WebRTC links through PeerJS. The host is the hub; reliable + fast channels; keep-alives; reconnecting to the matchmaking server.
 // Main: peerRoomApi, loadPeerJS, p2pOptions, P2P_PREFIX
 // See also: net-connection
-// Public website: devices link up directly (WebRTC). The first device in a room (the host) claims an id made from the room code and becomes the hub;
-// everyone else connects to it. A free PeerJS matchmaking server only introduces the devices. If a network blocks direct links, a TURN relay carries the data.
 const P2P_PREFIX='bonkroyale3d-v1-';
 function loadScript(src){return new Promise((res,rej)=>{const s=document.createElement('script');s.src=src;s.onload=res;s.onerror=rej;document.head.appendChild(s);});}
 async function loadPeerJS(){if(window.Peer)return;for(const u of['https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js','https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js']){try{await loadScript(u);if(window.Peer)return;}catch(e){}}throw new Error('peerjs');}
@@ -3333,7 +3652,7 @@ function peerRoomApi(){let up=false;const rooms={},conn=new Set();const tell=v=>
     // ---- hub side ----
     const others=(skip,ch,s)=>{for(const[id,l]of links)if(id!==skip)tx(l[ch]&&l[ch].open?l[ch]:l.r,s);};
     function hubLink(c){const id=c.peer,l=links.get(id)||{r:null,u:null,seen:Date.now()};links.set(id,l);l[c.label==='u'?'u':'r']=c;
-      c.on('data',d=>hubRecv(id,String(d),c.label==='u'));c.on('close',()=>{if(links.get(id)===l&&c.label!=='u')hubDrop(id,'the player closed it');});c.on('error',()=>{});
+      c.on('data',d=>hubRecv(id,String(d),c.label==='u'));c.on('close',()=>{if(links.get(id)===l&&c.label!=='u'&&l.r===c)hubDrop(id,'the player closed it');});c.on('error',()=>{});
       if(c.label!=='u')c.on('open',()=>{tx(c,'P|'+me+'|'+mySeq+'|'+JSON.stringify(mine));for(const p of peers.values())if(p.peer!==id)tx(c,'P|'+p.peer+'|'+p.seq+'|'+JSON.stringify(p.presence));});}
     function hubRecv(id,s,unrel){const l=links.get(id);if(l)l.seen=Date.now();const k=s[0];
       if(k==='P'){const m=cut(s,1);if(!m)return;const seq=+m[0];const old=peers.get(id);if(old&&old.seq>=seq)return;setP(id,seq,m[1]);others(id,unrel?'u':'r','P|'+id+'|'+seq+'|'+m[1]);}
@@ -3345,10 +3664,27 @@ function peerRoomApi(){let up=false;const rooms={},conn=new Set();const tell=v=>
       else if(k==='B'){const id=s.slice(2);if(peers.delete(id))notify();}
       else if(k==='E'){m=cut(s,2);if(m)try{hear(m[1],JSON.parse(m[2]),who(m[0],false));}catch(e){}}}
     function asClient(){peer=new Peer(p2pOptions());peer.on('error',e=>{const t=e&&e.type;if(t==='peer-unavailable'){netLog('no room with that code on the matchmaking server');if(done)done();}else netLog('connection error: '+t);});
-      peer.on('open',id=>{me=id;const r=peer.connect(hubId,{label:'r',reliable:true,serialization:'raw'}),u=peer.connect(hubId,{label:'u',reliable:false,serialization:'raw'});toHub={r,u};
-        r.on('open',()=>{hubSeen=Date.now();tx(r,'P|'+mySeq+'|'+JSON.stringify(mine));if(done)done();});
-        for(const c of[r,u]){c.on('data',d=>clientRecv(String(d)));c.on('error',e=>netLog('link to the host failed: '+(e&&(e.type||e.message)||e)));}
-        setTimeout(()=>{if(!dead&&!r.open)netLog('could not reach the host directly after 8 s (a firewall or network may be blocking it)');},8000);r.on('close',()=>{if(!dead){netLog('link to the host closed');if(peers.size){peers.clear();notify();}}});});}
+      peer.on('open',id=>{const first=!me;me=id;if(first)linkToHub();});}
+    function linkToHub(){const r=peer.connect(hubId,{label:'r',reliable:true,serialization:'raw'}),u=peer.connect(hubId,{label:'u',reliable:false,serialization:'raw'});toHub={r,u};
+      const cur=()=>toHub&&toHub.r===r;
+      r.on('open',()=>{hubSeen=Date.now();tx(r,'P|'+mySeq+'|'+JSON.stringify(mine));if(relinkSince)netLog('reconnected to the host'+(viaRelay?' through the relay':''));relinkSince=relinkAt=tries=0;watchIce(r);if(done)done();});
+      for(const c of[r,u]){c.on('data',d=>{if(cur())clientRecv(String(d));});c.on('error',e=>netLog('link to the host failed: '+(e&&(e.type||e.message)||e)));}
+      setTimeout(()=>{if(!dead&&!r.open&&cur()&&!relinkSince)netLog('could not reach the host directly after 8 s (a firewall or network may be blocking it)');},8000);
+      r.on('close',()=>{if(!dead&&cur())relink('the link closed');});}
+    // F4: a phone moving from Wi-Fi to cellular (or any broken path) links to the host again by itself. A fresh link gathers new
+    // network paths, the relay among them; if that does not work, the next try uses the relay only. The match stays on screen meanwhile.
+    let relinkSince=0,relinkAt=0,tries=0,viaRelay=false;
+    function relink(why,relayNow){if(dead||!peer)return;const now=Date.now();if(relinkAt&&now-relinkAt<9000)return;
+      if(!relinkSince){relinkSince=now;netLog('link to the host lost ('+why+'), reconnecting');}else netLog('still reconnecting ('+why+')');
+      tries++;relinkAt=now;if((tries>=2||relayNow)&&!viaRelay){viaRelay=true;peer.options.config=Object.assign({},peer.options.config,{iceTransportPolicy:'relay'});netLog('trying through the relay only');}
+      const old=toHub;toHub=null;try{old&&old.r.close();old&&old.u.close();}catch(e){}
+      if(peer.destroyed){me=null;asClient();return;}if(peer.disconnected)try{peer.reconnect();}catch(e){}
+      linkToHub();}
+    function watchIce(c){const pc=c.peerConnection;if(!pc||!pc.addEventListener)return;
+      pc.addEventListener('iceconnectionstatechange',()=>{const st=pc.iceConnectionState;if(st!=='failed'&&st!=='disconnected')return;
+        setTimeout(()=>{const now=pc.iceConnectionState;if(toHub&&toHub.r===c&&now!=='connected'&&now!=='completed')relink('the network path broke');},st==='failed'?0:2500);});}
+    const onNet=()=>{if(!hub&&toHub&&Date.now()-hubSeen>2000)relink('the network changed');};
+    addEventListener('online',onNet);if(navigator.connection&&navigator.connection.addEventListener)navigator.connection.addEventListener('change',onNet);
     // the host keeps its link to the matchmaking server alive; without it new players cannot find the room (a "stale" room code)
     function start(){peer=new Peer(hubId,p2pOptions());let wired=false;
       peer.on('open',id=>{me=id;hub=true;R.hubbed=true;if(!wired){wired=true;peer.on('connection',hubLink);}else netLog('room can be found again');if(done)done();});
@@ -3361,25 +3697,30 @@ function peerRoomApi(){let up=false;const rooms={},conn=new Set();const tell=v=>
     // every 0.4 s: re-send the latest presence on the reliable link (fast updates go on the quick link, which may drop some), check who is still there
     timer=setInterval(()=>{if(dead)return;if(relSeq!==mySeq){relSeq=mySeq;pushP('r');}const now=Date.now();
       if(hub){keepFindable(now);for(const[id,l]of links){if(now-l.seen>2500)tx(l.r,'H');if(now-l.seen>30000)hubDrop(id,'silent for 30 s');}}
-      else if(toHub){tx(toHub.r,'H');if(hubSeen&&now-hubSeen>30000&&peers.size){netLog('host silent for 30 s');peers.clear();notify();}}},400);
+      else if(relinkSince){if(now-relinkAt>9000)relink('not back yet');if(now-relinkSince>25000&&peers.size){netLog('could not reconnect to the host');peers.clear();notify();}}
+      else if(toHub){tx(toHub.r,'H');if(typeof G!=='undefined'&&G&&G.net&&!G.ended&&hubSeen&&now-hubSeen>6000)relink('no updates for 6 s');
+        else if(hubSeen&&now-hubSeen>30000&&peers.size){netLog('host silent for 30 s');peers.clear();notify();}}},400);
     const R={name,hubbed:null,
       presence(patch){for(const k in patch){if(patch[k]===null)delete mine[k];else mine[k]=patch[k];}mine=Object.assign({},mine);mySeq++;pushP('u');notify();return Promise.resolve();},
       peers:snap,onPeers(f){subs.add(f);setTimeout(()=>f({peers:snap(),joined:snap(),left:[],updated:[]}),0);return()=>subs.delete(f);},
       emit(topic,data){const s=JSON.stringify(data);if(hub)others(null,'r','E|'+me+'|'+topic+'|'+s);else if(toHub)tx(toHub.r,'E|'+topic+'|'+s);hear(topic,data,who(me,true));return Promise.resolve();},
       on(topic,f){(tops[topic]=tops[topic]||[]).push(f);return()=>{tops[topic]=tops[topic].filter(x=>x!==f);};},
       connected:()=>up,onConnection(f){conn.add(f);setTimeout(()=>f(up),0);return()=>conn.delete(f);},
-      leave(){dead=true;clearInterval(timer);try{peer&&peer.destroy();}catch(e){}delete rooms[name];return Promise.resolve();}};
+      leave(){dead=true;clearInterval(timer);removeEventListener('online',onNet);if(navigator.connection&&navigator.connection.removeEventListener)navigator.connection.removeEventListener('change',onNet);
+        try{peer&&peer.destroy();}catch(e){}delete rooms[name];return Promise.resolve();},
+      // for the tests: break the link the way a network change does, and see which path it uses
+      _relink:(why,relayNow)=>relink(why,relayNow),_link:()=>toHub};
     rooms[name]=R;
     return loadPeerJS().then(()=>new Promise(res=>{done=()=>{done=null;res(R);};setTimeout(()=>{if(done)done();},9000);start();}));}
   return{join,connected:()=>up,onConnection(f){conn.add(f);setTimeout(()=>f(up),0);return()=>conn.delete(f);},emit:()=>Promise.resolve(),on:()=>()=>{},p2p:true};}
 if(!(window.claude&&window.claude.use)&&!window.BONK_WS&&!/mplocal/.test(location.search)&&!window.RTCPeerConnection)MP.err='nortc';
 if(!(window.claude&&window.claude.use)&&!window.BONK_WS&&!/mplocal/.test(location.search)&&window.RTCPeerConnection){MP.room=peerRoomApi();MP.avail=true;
   MP.room.onConnection(c=>{MP.conn=c;mpRender();if(typeof renderMpLobby==='function')renderMpLobby();});setTimeout(mpRender,0);}
-// @module src/js/41-net-lobby-setup.js: Multiplayer lobby basics: teams, which modes allow multiplayer, the NET room state, and outfits sent over the network.
+// @module src/js/43-net-lobby-setup.js: Multiplayer lobby basics: teams, which modes allow multiplayer, the NET room state, and outfits sent over the network.
 // Main: NET, NET_TEAMS, NET_MODES, netTeamKind, myLook, lookFromNet, netMe
 // See also: net-lobby, safety
 const NET_TEAMS=[{id:'r',name:'Red',col:'#e2312b'},{id:'b',name:'Blue',col:'#1f6fd6'},{id:'g',name:'Green',col:'#3aa845'},{id:'y',name:'Yellow',col:'#e0a800'}];
-const NET_MODES=['royale','team','zombie','race','floorlava','crown','ctf','koth','buildbattle','training'];
+const NET_MODES=['royale','team','zombie','race','floorlava','crown','ctf','koth','buildbattle','training','show'];
 const NET_TEAMMODES={host:'Host picks',random:'🎲 Random',self:'Pick your own',ffa:'Everyone vs everyone'};
 // how teams work in each mode: 'free' (any teams or FFA), 'rb' (red vs blue only), 'coop' (everyone together)
 const netTeamKind=m=>m==='team'||m==='ctf'?'rb':m==='zombie'||m==='training'?'coop':'free';
@@ -3387,7 +3728,7 @@ const NET={R:null,code:'',role:null,lob:null,offPeers:null,offChat:null,startId:
 function myLook(){const L=PROG.locker;return{o:L.outfit,b:L.back,g:L.glider,p:L.pick,w:L.wrap};}
 function lookFromNet(l){l=l||{};const o=OUTFITS.find(x=>x.id===l.o)||OUTFITS[0];return Object.assign({},o,{back:l.b==='outfit'||!l.b?o.back:l.b,glider:l.g||'classic',pick:l.p||'classic',wrap:l.w||'none',emblem:true});}
 function netMe(){return NET.R&&NET.R.peers().find(p=>p.sameTab);}
-// @module src/js/42-safety.js: Kid safety: the swear filter (names and chat, 6 languages), host approval (Allow / Kick), and chat (off unless the host turns it on).
+// @module src/js/44-safety.js: Kid safety: the swear filter (names and chat, 6 languages), host approval (Allow / Kick), and chat (off unless the host turns it on).
 // Main: clean, cleanName, isSwear, netPlayers, netPending, netAllow, netKick, chatSend, chatHear
 // See also: net-lobby
 /* ================= safety: swear filter (names + chat), host approves who joins, chat (off unless the host turns it on) ================= */
@@ -3417,7 +3758,7 @@ function netKick(peer){const L=NET.lob;if(!L)return;netLog('kicked '+netPeerName
 const NET_ASKSEEN=new Set();const netSay=t=>G&&!G.ended?toast(t):mpLobMsg(t);
 function netAskRender(){const box=$('mpAsk'),pop=$('askPop');const pend=netPending().slice(0,5);
   for(const p of pend)if(!NET_ASKSEEN.has(p.peer)){NET_ASKSEEN.add(p.peer);sfx('alert');}
-  const rows=pend.map(p=>`<div class="askrow"><span>🙋 <b>${esc(cleanName(p.presence.bonk.name)||'Player')}</b> wants to join</span><button type="button" class="brick small" data-allow="${esc(p.peer)}">✅ Allow</button><button type="button" class="brick small" data-kick="${esc(p.peer)}">❌ Kick</button></div>`).join('');
+  const rows=pend.map(p=>`<div class="askrow"><span>🙋 <b>${esc(cleanName(p.presence.bonk.name)||'Player')}</b> wants to join${(p.presence.bonk.ver||'0.1')!==BONK_VERSION?` <i>(⚠️ version ${esc(String(p.presence.bonk.ver||'0.1'))}: they should reload)</i>`:''}</span><button type="button" class="brick small" data-allow="${esc(p.peer)}">✅ Allow</button><button type="button" class="brick small" data-kick="${esc(p.peer)}">❌ Kick</button></div>`).join('');
   const inMatch=!!(G&&G.net&&!G.ended);
   if(box){if(NET.role==='host'){box.hidden=!rows;setHtmlIfChanged(box,rows);}
     else if(NET.R&&NET.lob){const me=netMe(),ok=me&&NET.lob.ok&&NET.lob.ok[me.peer];box.hidden=!!ok;setHtmlIfChanged(box,ok?'':'<p class="askwait">⏳ Waiting for the host to let you in…</p>');}else box.hidden=true;}
@@ -3453,19 +3794,22 @@ let chatFeedT=0;function netSafeHUD(){const on=!!(G&&G.net&&!G.ended&&chatOn());
   addEventListener('keydown',e=>{const tg=e.target;if(e.key!=='Enter'||CHAT.open||(tg&&(tg.tagName==='INPUT'||tg.tagName==='TEXTAREA'||tg.tagName==='SELECT')))return;if(G&&G.net&&!G.ended&&chatOn()){e.preventDefault();chatOpen();}});
   $('mpAsk').addEventListener('click',netAskClick);$('askPop').addEventListener('click',netAskClick);
   document.querySelectorAll('#mpChatSeg input').forEach(r=>r.addEventListener('change',()=>{if(NET.role!=='host'||!NET.lob)return;NET.lob.chat=r.value==='on';MPSET.chat=NET.lob.chat;saveMpSet();netPushLob();chatRender();}));})();
-// @module src/js/43-net-lobby.js: The multiplayer lobby: hosting, joining, leaving, team setup, the lobby screen, START, and the host-missing grace period.
+// @module src/js/45-net-lobby.js: The multiplayer lobby: hosting, joining, leaving, team setup, the lobby screen, START, and the host-missing grace period.
 // Main: netHost, netJoin, netLeave, netOnPeers, renderMpLobby, netHostStart, netStartGame, netClientStart, netHostMissing, netHostGone
 // See also: safety, net-sync
 /* ================= multiplayer: lobby (host / join with a room code, teams) ================= */
 function netDefaultLob(){return{mode:NET_MODES.includes(opts.mode)?opts.mode:'royale',map:opts.map,tm:MPSET.tm,max:MPSET.max,late:MPSET.late,nteams:2,teams:{},ok:{},kick:{},chat:!!MPSET.chat,bots:opts.bots,diff:opts.diff,len:opts.len,storm:opts.storm,start:null};}
 async function netHost(){if(!MP.room)return;mpLobMsg('Opening a room…');try{await mpWaitConn(6000);let code,R;for(let t=0;t<4;t++){code=mpCode();R=await MP.room.join(mpRoomName(code));if(R.hubbed!==false)break;await R.leave();}
-    Object.assign(NET,{R,code,role:'host',lob:netDefaultLob()});netLog('hosting room '+code+' via '+mpVia());await R.presence({bonk:{name:cleanName(MP.name)||'Host',look:myLook(),role:'host',v:1},lob:NET.lob});netWatch();renderMpLobby();}
+    Object.assign(NET,{R,code,role:'host',lob:netDefaultLob()});netLog('hosting room '+code+' via '+mpVia());await R.presence({bonk:{name:cleanName(MP.name)||'Host',look:myLook(),role:'host',v:1,ver:BONK_VERSION},lob:NET.lob});netWatch();renderMpLobby();}
   catch(e){netLog('could not open a room: '+(e&&(e.code||e.message)||e));mpLobMsg('Could not open a room ('+(e&&e.code||e)+'). Try the connection test in Settings → Multiplayer.');}}
 async function netJoin(code){if(!MP.room)return;code=(code||'').toUpperCase().replace(/[^A-Z]/g,'');if(code.length!==4){mpLobMsg('Room codes have 4 letters.');return;}
   mpLobMsg('Looking for room '+code+'…');netLog('joining room '+code+' via '+mpVia());try{await mpWaitConn(6000);const R=await MP.room.join(mpRoomName(code));Object.assign(NET,{R,code,role:'player',lob:null,hostPeer:null});
-    await R.presence({bonk:{name:cleanName(MP.name)||'Player',look:myLook(),role:'player',wish:null,v:1}});netWatch();
+    await R.presence({bonk:{name:cleanName(MP.name)||'Player',look:myLook(),role:'player',wish:null,v:1,ver:BONK_VERSION}});netWatch();
     const t0=performance.now();while(!netHostPeer()&&performance.now()-t0<8000)await sleep(150);
-    if(!netHostPeer()){netLog('no host found in room '+code);await netLeave(true);mpLobMsg('No game found with code '+code+'. Check the letters, and make sure the host is still in the room.');return;}renderMpLobby();}
+    if(!netHostPeer()){netLog('no host found in room '+code);await netLeave(true);mpLobMsg('No game found with code '+code+'. Check the letters, and make sure the host is still in the room.');return;}
+    // F15: both players need the same version (an old copy of the page stays open until it is reloaded)
+    const hv=netHostPeer().presence.bonk.ver||'0.1';if(hv!==BONK_VERSION){netLog('host has version '+hv+', this device has '+BONK_VERSION+': not joining');await netLeave(true);
+      mpLobMsg('That game is on a different version of Bonk Royale (the host has '+hv+', you have '+BONK_VERSION+'). Both players: reload the page (or close and reopen the app), then try again.');return;}renderMpLobby();}
   catch(e){netLog('could not join: '+(e&&(e.code||e.message)||e));mpLobMsg('Could not join ('+(e&&e.code||e)+').');}}
 async function netLeave(quiet){if(NET.R)netLog('left room '+NET.code);NET.hostMissT=0;if(NET.offPeers)NET.offPeers();if(NET.offChat)NET.offChat();if(NET.R)try{await NET.R.leave();}catch(e){}Object.assign(NET,{R:null,code:'',role:null,lob:null,offPeers:null,offChat:null,startId:null,hostPeer:null});NET_ASKSEEN.clear();CHAT.log=[];chatRender();netAskRender();if(!quiet){mpLobMsg('');renderMpLobby();}}
 function netWatch(){if(NET.offPeers)NET.offPeers();if(NET.offChat)NET.offChat();NET.offPeers=NET.R.onPeers(()=>{netOnPeers();});NET.offChat=NET.R.on('cmd',chatHear);}
@@ -3551,7 +3895,7 @@ function netAssignTeams(S){const kind=netTeamKind(S.mode),humans=G.chars.filter(
   if(kind==='rb'){for(const c of humans){const r=byPeer(c);c.team=r&&r.team==='b'?'blue':'red';}
     // bots fill the teams evenly, then everyone starts at their base
     const bots=G.chars.filter(c=>!c.human);let red=humans.filter(c=>c.team==='red').length,blue=humans.length-red;for(const b of bots){if(red<=blue){b.team='red';red++;}else{b.team='blue';blue++;}}
-    const placed=[];for(const c of G.chars){const B=BASES[c.team];const s=freeSpot(B.x,B.y,380,70,placed);c.x=s.x;c.y=s.y;c.z=groundAt(s.x,s.y,10);placed.push(c);c.face=Math.atan2(WORLD/2-c.y,WORLD/2-c.x);}
+    const placed=[];for(const c of G.chars){const B=BASES[c.team];const s=freeSpot(B.x,B.y,380,70,placed);c.x=s.x;c.y=s.y;c.z=groundAt(s.x,s.y,10);placed.push(c);c.face=openFace(c,Math.atan2(WORLD/2-c.y,WORLD/2-c.x));if(c.rin)c.rin.yaw=c.face;}
     for(const c of G.chars)if(c.m)buildCharModel(c);return;}
   const groups={};for(const c of humans){const r=byPeer(c);if(r&&r.team){(groups[r.team]=groups[r.team]||[]).push(c);}}
   const sizes=Object.values(groups).map(a=>a.length);if(!sizes.length){humans.forEach(c=>c.team=null);return;}
@@ -3563,7 +3907,7 @@ function netClientStart(S){mpLobMsg('');netStartGame(S);}
 function netHostMissing(){if(NET.hostMissT)return;NET.hostMissT=performance.now();netLog('host disappeared, waiting 10 s for them to come back');
   setTimeout(()=>{if(NET.hostMissT&&!netHostPeer()){NET.hostMissT=0;netHostGone('the host was gone for 10 s');}},10000);}
 function netHostGone(why){if(!G||!G.net||G.ended)return;netLog('match over: '+(why||'host left'));announce('The host left','The match is over. Back to the lobby…',3);G.net.gone=true;setTimeout(()=>{if(G&&G.net&&G.net.gone)toMenu('mplobby');},3000);}
-// @module src/js/44-net-mode-state.js: Multiplayer: each mode's extra state (flags, crown, hill, lava, race, zombie waves) packed into host updates.
+// @module src/js/46-net-mode-state.js: Multiplayer: each mode's extra state (flags, crown, hill, lava, race, zombie waves) packed into host updates.
 // Main: XMNET, byCid, netPts
 // See also: modes-extra, net-sync
 /* ================= multiplayer: each mode's own state (flags, crown, hill, lava, race, zombie waves) ================= */
@@ -3571,6 +3915,7 @@ const byCid=id=>G&&G.net&&G.net.byId?G.net.byId.get(id)||null:null;
 function netPts(){return G.chars.filter(c=>!c.zombie).map(c=>[c.cid,Math.floor(c.pts||0)]);}
 function netPtsApply(p){for(const[id,v]of p||[]){const c=byCid(id);if(c)c.pts=v;}}
 const XMNET={
+  show:SHOW_NET, // Mr. Bonk's Challenge Show (defined with the mode, in its own module)
   ctf:{s:()=>({f:['red','blue'].map(t=>{const F=G.flags[t];return[ri(F.x),ri(F.y),ri(F.z),F.carrier?F.carrier.cid+1:0,F.home?1:0];})}),
     a:s=>{['red','blue'].forEach((t,i)=>{const F=G.flags&&G.flags[t],a=s.f[i];if(!F||!a)return;F.x=a[0];F.y=a[1];F.z=a[2];F.carrier=a[3]?byCid(a[3]-1):null;F.home=!!a[4];});}},
   crown:{s:()=>({c:[ri(G.crown.x),ri(G.crown.y),ri(G.crown.z),G.crown.carrier?G.crown.carrier.cid+1:0],p:netPts()}),
@@ -3584,9 +3929,9 @@ const XMNET={
   zombie:{s:()=>{const Z=G.z;return{z:[Z.wave,Z.cleared,Z.state==='break'?0:1,r2(Z.t),Z.toSpawn]};},
     a:s=>{const Z=G.z;Z.wave=s.z[0];Z.cleared=s.z[1];Z.state=s.z[2]?'wave':'break';Z.t=s.z[3];Z.toSpawn=s.z[4];}}};
 // big announcements that are the same for everyone get shared; personal ones stay on the host's screen
-const NET_ANN_OK=/^(\d|GO!|Wave \d|The hill moved|Red team scores|Blue team scores|Here comes the lava|Lava in|Supply drop|The crown)/;
+const NET_ANN_OK=/^(🎤|🟢|🔴|\d|GO!|Wave \d|The hill moved|Red team scores|Blue team scores|Here comes the lava|Lava in|Supply drop|The crown)/;
 let NET_NOFWD=false;
-// @module src/js/45-net-sync.js: Multiplayer live sync: host updates (snapshots) and events, the world cast for joiners, joiner input, interpolation, and the client frame.
+// @module src/js/47-net-sync.js: Multiplayer live sync: host updates (snapshots) and events, the world cast for joiners, joiner input, interpolation, and the client frame.
 // Main: NETC, NETH, netSnap, netHostTick, netEv, netApplyEv, netClientSnap, netInterp, clientFrame, netClientSendInput
 // See also: net-remote-players, net-lobby (docs/MULTIPLAYER.md)
 /* ================= multiplayer: live sync =================
@@ -3607,7 +3952,7 @@ function netNear(x,y){if(!G)return false;for(const c of G.chars)if(c.remote&&Mat
 function netFeedHtml(h){const nm=esc(G.player.name||'Host');return String(h).split('<b style="color:#ffcb1f">You</b>').join('<b>'+nm+'</b>').split('<b style="color:#ffcb1f">you</b>').join('<b>'+nm+'</b>');}
 function netHostInit(){const N=G.net;Object.assign(N,{seq:0,nid:0,evq:[],cq:[],items:new Map(),pieces:new Map(),traps:new Map(),chests:new Set(),llamas:new Set(),snapT:0,evT:0,castT:0,rr:0,need:{}});
   G.chars.forEach((c,i)=>c.cid=i);N.cidNext=G.chars.length;N.cast=netBuildCast();netSendCast();}
-function netBuildCast(){return{id:G.net.start.id,ch:G.chars.map(c=>({id:c.cid,rc:c.raceCar?G.cars.indexOf(c.raceCar):-1,n:c.name,c:c.col,l:c.leg,z:c.zombie?1:0,k:c.zombie?null:OUTFITS.some(o=>o.id===(c.look&&c.look.id))?lookPack(c.look):Object.assign({full:1},c.look),t:c.team||null,p:c===G.player?((netMe()||{}).peer||null):c.peer||null,mh:c.maxHp||100})),
+function netBuildCast(){return{id:G.net.start.id,ch:G.chars.map(c=>({id:c.cid,rc:c.raceCar?G.cars.indexOf(c.raceCar):-1,n:c.name,c:c.col,l:c.leg,z:c.zombie?1:0,k:c.zombie?null:OUTFITS.some(o=>o.id===(c.look&&c.look.id))?lookPack(c.look):Object.assign({full:1},c.look),t:c.team||null,p:c===G.player?((netMe()||{}).peer||null):c.peer||null,mh:c.maxHp||100,f:Math.round((c.face||0)*100)/100})),
   st:G.storm?{C:G.storm.C}:null,bus:G.bus?{x0:G.bus.x0,y0:G.bus.y0,x1:G.bus.x1,y1:G.bus.y1,dur:G.bus.dur,z:G.bus.z,ang:G.bus.ang}:null,
   ll:(G.llamas||[]).map(L=>[ri(L.x),ri(L.y),ri(L.z),r2(L.m.rotation.y)]),vd:(G.vends||[]).map(V=>[ri(V.x),ri(V.y),ri(V.z),V.id,V.r]),
   cars:G.cars.map(c=>[ri(c.x),ri(c.y),ri(c.z),r2(c.ang),c.col]),len:G.len,t0:G.t0,squad:G.squad};}
@@ -3661,12 +4006,13 @@ function netHostEnd(){const N=G.net;if(!N||N.ended)return;N.ended=true;const res
 // ---- client ----
 function netClientInit(){const N=G.net;Object.assign(N,{casts:{},ready:false,buf:new Map(),lastSeq:0,need:0,aseq:0,acts:[],inT:0,hostT:null,hostRecv:0,wf:{}});
   announce('Joining the match…','Getting the island from the host.',3);
-  if(!NET.listening){NET.listening=true;NET.R.on('ev',m=>netClientEv(m.data));NET.R.on('cast',m=>netClientCast(m.data));NET.R.on('wf',m=>netClientWorld(m.data));}}
+  // F5: listen on each new room connection (after leaving and re-joining, the old listeners belong to the old room)
+  if(NET.listening!==NET.R){NET.listening=NET.R;NET.R.on('ev',m=>netClientEv(m.data));NET.R.on('cast',m=>netClientCast(m.data));NET.R.on('wf',m=>netClientWorld(m.data));}}
 function netClientCast(d){if(!NETC()||!d||d.id!==G.net.start.id||G.net.ready)return;const N=G.net;N.casts[d.i]=d.d;if(Object.keys(N.casts).length<d.n)return;
   let C;try{C=JSON.parse(Array.from({length:d.n},(_,i)=>N.casts[i]).join(''));}catch(e){N.casts={};return;}netClientBuild(C);}
 function netClientBuild(C){const N=G.net,myPeer=(netMe()||{}).peer;
   for(const c of G.chars)removeModel(c);G.chars=[];
-  N.byId=new Map();for(const e of C.ch){const c=makeChar(e.n,e.c,false);c.cid=e.id;c.rcIdx=e.rc;N.byId.set(e.id,c);c.leg=e.l;c.maxHp=e.mh;c.hp=e.mh;c.team=e.t;c.peer=e.p;if(e.z){c.zombie=true;}else c.look=lookUnpack(e.k);if(e.p)c.human=true;
+  N.byId=new Map();for(const e of C.ch){const c=makeChar(e.n,e.c,false);c.cid=e.id;c.rcIdx=e.rc;N.byId.set(e.id,c);c.leg=e.l;c.maxHp=e.mh;c.hp=e.mh;c.team=e.t;c.peer=e.p;if(e.f!=null)c.face=e.f;if(e.z){c.zombie=true;}else c.look=lookUnpack(e.k);if(e.p)c.human=true;
     if(e.p&&e.p===myPeer){c.isPlayer=true;c.ai=null;G.player=c;G.lp=c;makeHuman(c);c.mats=G.mats;c.slots[1]={id:'laser',r:5};c.cur=1;}
     buildCharModel(c);G.chars.push(c);}
   for(const it of G.items)removeModel(it);G.items=[];for(const p of G.projs)removeModel(p);G.projs=[];for(const t of G.traps)removeModel(t);G.traps=[];
@@ -3705,7 +4051,7 @@ function netApplyEv(e){const k=e[0];
   else if(k==='rc'){const c=byCid(e[1]);if(c&&c!==G.player){c.name=cleanName(e[2])||'Player';c.look=lookUnpack(e[3]);c.peer=e[4];c.human=true;c.team=e[5];removeModel(c);buildCharModel(c);}}
   else if(k==='end')netClientEnd(e[1],e[2]);}
 function netPersonal(t,d){const p=G.player;if(t==='toast')toast(d);else if(t==='ann')announce(d[0],d[1],d[2],d[3]);else if(t==='xp')xpEvent(d[0],d[1]);else if(t==='sfx')sfx(d);
-  else if(t==='kb'){p.kx+=d[0];p.ky+=d[1];}else if(t==='elim'){G.elimN++;showElim(d);}}
+  else if(t==='kb'){p.kx+=d[0];p.ky+=d[1];}else if(t==='tp'){p.x=d[0];p.y=d[1];p.z=d[2];p.vx=p.vy=p.vz=0;p.onGround=true;}else if(t==='vz'){p.vz=d;p.onGround=false;}else if(t==='elim'){G.elimN++;showElim(d);}}
 function netClientSnap(S){const N=G.net;if(!N.ready||!S||(S.id&&S.id!==N.start.id))return;
   // a paused host keeps sending the same time: still a sign of life, and it carries the pause flag
   if(S.t===N.lastSnapT){N.hostPaused=!!S.hp;N.hostRecv=performance.now();N.hostT=S.t;return;}N.lastSnapT=S.t;N.hostT=S.t;N.hostRecv=performance.now();G.time=S.t;{const now=N.hostRecv;if(N.lastArr){const d=now-N.lastArr;N.avgI=N.avgI?N.avgI*0.9+d*0.1:d;N.jit=(N.jit||0)*0.9+Math.abs(d-N.avgI)*0.1;N.interpD=clamp((N.avgI*1.3+N.jit*2)/1000,0.05,0.2);}N.lastArr=now;}const me=(netMe()||{}).peer;
@@ -3750,7 +4096,7 @@ function netClientProjs(dt){for(let i=G.projs.length-1;i>=0;i--){const p=G.projs
   if(dead){removeModel(p);G.projs.splice(i,1);}}}
 // what this player pressed, sent to the host
 function netClientKey(k){const N=G.net,p=G.player;if(['r','=','+','-','o','escape','p','m'].includes(k)&&!(k==='r'&&G.mode==='race'))return k==='o';
-  N.acts.push([++N.aseq,k]);if(N.acts.length>12)N.acts.shift();N.inT=0;
+  N.acts.push([++N.aseq,k]);if(N.acts.length>12)N.acts.shift();N.inT=0;if(k===' ')netBusJumpSent();
   if(k>='1'&&k<='5'){N.curT=performance.now();return false;}if(['z','x','c','v','t'].includes(k))return false;
   if(k===' '&&(p.state==='sky'||(p.state==='alive'&&!p.vehicle)))return false;return true;}
 function netClientWheel(dir){const N=G.net;N.acts.push([++N.aseq,dir>0?'wd+':'wd-']);N.curT=performance.now();}
@@ -3763,12 +4109,16 @@ function clientFrame(dt){const N=G.net;if(!N.ready||N.hostT==null)return;
   G.time=Math.min(N.hostT+(performance.now()-N.hostRecv)/1000,N.hostT+0.6);G.shake=Math.max(0,G.shake-dt*30);G.crossHit=Math.max(0,G.crossHit-dt);
   if(G.storm)updateStorm();const p=G.player;if(!G.paused)updateChar(p,dt);
   netInterp(dt);netClientProjs(dt);for(const q of G.pieces)if(q.grow<1){q.grow=Math.min(1,q.grow+dt*6);q.mesh.scale.y=0.05+0.95*q.grow;}
-  if(G.toastT>0){G.toastT-=dt;if(G.toastT<=0)$('prompt').hidden=true;}netClientSendInput(dt);netPingTick();}
+  if(G.toastT>0){G.toastT-=dt;if(G.toastT<=0)$('prompt').hidden=true;}netBusJumpRetry();netClientSendInput(dt);netPingTick();}
+// F6: a jump off the bus that the host hasn't done after 1.2 s is sent again (and logged, so the connection log shows it)
+function netBusJumpSent(){const N=G.net;if(G.player.state!=='bus'||N.busJumpT)return;N.busJumpT=performance.now();netLog('pressed jump on the bus');}
+function netBusJumpRetry(){const N=G.net;if(!N.busJumpT)return;if(G.player.state!=='bus'){N.busJumpT=0;return;}
+  if(performance.now()-N.busJumpT>1200){N.busJumpT=performance.now();N.acts.push([++N.aseq,' ']);if(N.acts.length>12)N.acts.shift();N.inT=0;netLog('still on the bus: sending the jump again');}}
 function netClientEnd(res,fin){if(!NETC()||G.ended)return;if(fin)G.final=fin.map(([id,pl,s])=>({c:byCid(id),place:pl,s})).filter(e=>e.c);const me=(netMe()||{}).peer,r=res[me]||{},p=G.player;p.kos=r.k??p.kos;p.deaths=r.d??p.deaths;if(r.pl)p.place=r.pl;G.win=!!r.w;G.draw=!!r.dr;
   if(G.win&&p.state==='alive'){announce('#1 VICTORY BONK!','You won the match!',4,'victory');sfx('victory');}G.endAt=G.time;setTimeout(()=>{if(G&&!G.ended)endGame();},G.win?2500:400);}
 // touch buttons on a player's device: send the action to the host (and do the movement-only part here)
 function netTouch(a,down){const p=G.player,N=G.net,send=k=>{N.acts.push([++N.aseq,k]);if(N.acts.length>12)N.acts.shift();};
-  if(a==='jump'){if(down){send(' ');if(p.state==='sky'||(p.state==='alive'&&!p.vehicle))playerSpace();}return true;}
+  if(a==='jump'){if(down){send(' ');netBusJumpSent();if(p.state==='sky'||(p.state==='alive'&&!p.vehicle))playerSpace();}return true;}
   if(a==='act'){const ac=TOUCH.act;if(!down){keys.delete('e');return true;}if(!ac)return true;if(ac.k==='revive')keys.add('e');else if(ac.k==='drive'||ac.k==='exit')send('f');else if(ac.k==='reset')send('r');else send('e');vib(15);return true;}
   const A=TACT[a];if(A&&A.piece){if(down){TOUCH.buildUI=true;G.buildMode=A.piece;TOUCH.lastPiece=A.piece;send('bm:'+A.piece);send('clk');buildHeld=true;}else buildHeld=false;return true;}
   if(a==='build'){if(down&&!p.vehicle){TOUCH.buildUI=!TOUCH.buildUI;G.buildMode=TOUCH.buildUI?(TOUCH.lastPiece||'wall'):null;send('bm:'+(G.buildMode||''));}return true;}
@@ -3785,7 +4135,7 @@ function netCheckWin(){const hum=G.chars.filter(c=>c.human);if(G.endAt)return;
   if(done||(hum.length&&hum.every(c=>c.eliminated))){const pWin=done&&(rem.includes(G.player)||(!!G.player.team&&rem.every(c=>c.team===G.player.team)));
     if(pWin){G.win=true;G.player.place=1;G.endAt=G.time+5;startVictory();announce('#1 VICTORY BONK!','Your team is the last one standing!',4.6,'victory');sfx('victory');}
     else G.endAt=G.time+(done?4:3);}}
-// @module src/js/46-net-extras.js: Multiplayer extras: settings (MPSET), spectating, scoreboard, ping, late join, players leaving or coming back (grace period, own character back).
+// @module src/js/48-net-extras.js: Multiplayer extras: settings (MPSET), spectating, scoreboard, ping, late join, players leaving or coming back (grace period, own character back).
 // Main: MPSET, specFollow, renderScoreboard, updateNetHUD, netLateJoin, netReclaim, netPeersChanged, netBotTakeover
 // See also: net-sync, net-lobby
 /* ================= multiplayer extras: spectate, scoreboard, ping, late join ================= */
@@ -3855,14 +4205,14 @@ function netPeersChanged(){if(!NETH())return;const ps=netPlayers(),sid=G.net.sta
 function netBotTakeover(c,peer,why){c.remote=false;c.human=false;c.isPlayer=false;c.awayT=0;(G.net.away=G.net.away||{})[peer]=c;c.awayName=c.name;
   if(!c.ai)c.ai={think:0,target:null,mode:'wander',gx:null,gy:null,reactT:0,seed:1,lastX:c.x,lastY:c.y,stuckT:0,unstuckT:0,ux:0,uy:0,turn:1,aimErr:0,aimErr2:0,wantMove:false};
   netLog(c.name+' '+why+', a bot took over');feed('<b>'+esc(c.name)+'</b> left the game (a bot took over)');delete G.net.peers[peer];}
-// @module src/js/47-boot.js: Start-up and the frame loop: frame(t) runs every frame (simulate, send, draw); boot() sets everything up.
+// @module src/js/49-boot.js: Start-up and the frame loop: frame(t) runs every frame (simulate, send, draw); boot() sets everything up.
 // Main: frame, boot
 // See also: every module (docs/ARCHITECTURE.md: the frame loop)
 /* ================= boot ================= */
 let last=performance.now();
 function frame(t){const dt=Math.min(0.033,(t-last)/1000);last=t;if(innerWidth!==W||innerHeight!==H)viewportChanged();
   if(G&&!G.ended&&NETC())clientFrame(dt);else if(G&&!G.paused&&!G.ended&&!TOUCH.portrait)update(dt);if(G&&!G.ended&&NETH())netHostTick(dt);updateTouchUI();MUS.want=musicPick();
-  syncVisuals(dt);renderer.render(scene,camera);if(G&&!G.ended)updateHUD();
+  syncVisuals(dt);renderer.render(scene,camera);if(G&&!G.ended)updateHUD();autoGfxTick();
   requestAnimationFrame(frame);}
 function boot(data){
   const saved=(data&&data.opts)||store.get('bbr3d-opts');
