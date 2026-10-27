@@ -666,7 +666,7 @@ body.tediting .tb.ghost{opacity:.3}body.tediting #lobbyBar{display:none!importan
 // Release track of this copy: "stable" (main), "beta" or "alpha" (newest features). Set when a copy is published.
 const BONK_TRACK="stable";
 // Version: 0.1 is the first numbered release; every push to GitHub after that adds 0.1. "-dev" = not released yet.
-const BONK_VERSION="0.3.5";
+const BONK_VERSION="0.3.6";
 // Relay (TURN) for the website's direct links, from the owner's Metered.ca account (free plan, no card on file).
 // Only used when two devices cannot link directly (cellular data, strict school/office networks). These details are
 // public inside the website; the worst case of misuse is running out of the free monthly allowance, never a bill.
@@ -2233,7 +2233,7 @@ function makeHuman(c){c.human=true;c.mats=c.mats||{wood:60,stone:0,metal:0};c.ma
 function makeRemote(c,peer){makeHuman(c);c.remote=true;c.peer=peer;c.rin={yaw:c.face||0,pitch:0,fire:false,aim:null,k:null};c.rkeys=new Set();c.actQ=[];c.actSeq=0;c.isPlayer=false;
   if(c.ai)c.ai.target=null;return c;}
 // messages for one remote player's screen (toasts, announcements, XP, knockback) — sent with the next update
-function tellOrAnnounce(c,big,sub,dur,cls){if(c.remote)netTell(c,'ann',[big,sub,dur,cls]);else announce(big,sub,dur,cls);}
+function tellOrAnnounce(c,big,sub,dur,cls){if(c.remote)netTell(c,'ann',[big,sub,dur,cls]);else if(c.isPlayer)announce(big,sub,dur,cls);} // F34: a message for a bot is never shown on your screen
 function netTell(c,type,data){if(!c||!c.remote)return;c.outbox.push([type,data]);if(c.outbox.length>40)c.outbox.splice(0,c.outbox.length-40);}
 function asRemote(c,fn){const lp=G.player,sv={mats:G.mats,matSel:G.matSel,buildMode:G.buildMode,yaw:G.yaw,pitch:G.pitch,swap:G.swap,bT:G.bT,toastT:G.toastT,crossHit:G.crossHit,shake:G.shake,
     md:mouseDown,ad:aimDown,bh:buildHeld,keys:[...keys],lpIs:lp.isPlayer};
@@ -3255,7 +3255,7 @@ XM.show={name:"Mr. Bonk's Challenge Show",
         sfx('pop',c);}}
       if(left<=0)this.endRound(null);}},
   // a swing of the giant foam bat (Bonk Bat Brawl): knocks back anyone in front who is still in; out players can't swing
-  bat(c){const S=G.show;if(!S||S.ph!=='play'||showRound().id!=='circle'||S.out.has(c)||c.state!=='alive'||c.batCd>0)return;c.batCd=0.7;c.swingT=0.25;sfx('whoosh',c);
+  bat(c){const S=G.show;if(!S||S.ph!=='play'||showRound().id!=='circle'||S.out.has(c)||c.state!=='alive'||c.batCd>0)return;c.batCd=c.isPlayer||c.remote?0.35:0.7;c.swingT=0.25;sfx('whoosh',c); // F35: players swing twice as fast (bots keep their pace)
     for(const o of showers()){if(o===c||S.out.has(o)||o.state!=='alive')continue;const dx=o.x-c.x,dy=o.y-c.y,d=Math.hypot(dx,dy);if(d>80||d<1)continue;
       if(Math.cos(Math.atan2(dy,dx)-c.face)<0.35)continue;const k=640,kb=[dx/d*k,dy/d*k];sfx('bonk',o);addText(o.x,o.y,o.z+60,'BONK!','#ffcb1f',17);
       if(o.remote){netTell(o,'kb',kb);netTell(o,'vz',230);}else{o.kx+=kb[0];o.ky+=kb[1];o.vz=230;o.onGround=false;}}},
